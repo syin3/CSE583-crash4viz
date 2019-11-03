@@ -2,8 +2,8 @@
 
 cp -i ../tech/$1 $1
 cp -i ../tech/$2 $2
-jupyter-nbconvert --to slides $1.ipynb --reveal-prefix=reveal.js
-mv slides.slides.html  index.html
+jupyter-nbconvert --to slides $1 --reveal-prefix=reveal.js
+mv slides.slides.html index.html
 mkdir -p /tmp/workspace
 cp -r * /tmp/workspace/
 git add -A .
