@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mv ../tech/$1.ipynb $1.ipynb
+cp -i ../tech/$1.ipynb $1.ipynb
 jupyter-nbconvert --to slides $1.ipynb --reveal-prefix=reveal.js
 mv slides.slides.html  index.html
 mkdir -p /tmp/workspace
