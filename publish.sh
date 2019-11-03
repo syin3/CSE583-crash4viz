@@ -1,9 +1,11 @@
 #!/bin/bash
 
-cp -i ../tech/$1 $1
+# run the following in original folder
+# jupyter notebook --NotebookApp.iopub_data_rate_limit=1e10
+cp -i ../tech/$1.ipynb $1.ipynb
 cp -i ../tech/$2 $2
 jupyter-nbconvert --to slides $1 --reveal-prefix=reveal.js --SlidesExporter.reveal_scroll=True
-mv slides.slides.html index.html
+mv $1.slides.html index.html
 mkdir -p /tmp/workspace
 cp -r * /tmp/workspace/
 git add -A .

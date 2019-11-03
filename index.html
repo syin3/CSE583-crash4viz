@@ -11932,37 +11932,6 @@ a.anchor-link {
 <h3 id="Data-cleaning">Data cleaning<a class="anchor-link" href="#Data-cleaning">&#182;</a></h3>
 </div>
 </div>
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[2]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">clean</span><span class="p">(</span><span class="n">source</span><span class="p">,</span> <span class="n">sink</span><span class="p">):</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">()</span>
-    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="n">sink</span><span class="p">)</span>
-    <span class="k">pass</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[3]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># use case:</span>
-<span class="n">clean</span><span class="p">(</span><span class="s2">&quot;coords.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;coords_cleaned.csv&quot;</span><span class="p">)</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
 </div></section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
@@ -11979,103 +11948,6 @@ a.anchor-link {
 <h4 id="Load-datasets-with-Pandas">Load datasets with Pandas<a class="anchor-link" href="#Load-datasets-with-Pandas">&#182;</a></h4>
 </div>
 </div>
-</div></div><div class="fragment">
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[4]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">readCleanLoc</span><span class="p">(</span><span class="n">source</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    @param source: cleaned csv file of lat/lons</span>
-<span class="sd">    @use case: df_cleaned = readLoc(&quot;coords_gps.csv&quot;)</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-    <span class="c1"># read from file</span>
-    <span class="n">df_cleaned</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">source</span><span class="p">)</span>
-    
-    <span class="c1"># change column name</span>
-    <span class="n">df_cleaned</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">,</span> <span class="s1">&#39;lon&#39;</span><span class="p">]</span>
-    
-    <span class="c1"># assert no nan after cleaning</span>
-    <span class="k">assert</span> <span class="ow">not</span> <span class="n">df_cleaned</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">df_cleaned</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
-</div></div><div class="fragment">
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[37]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">readOrig</span><span class="p">(</span><span class="n">origSource</span><span class="p">,</span> <span class="n">cleanLocSource</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    @param origSource: original dataset file</span>
-<span class="sd">    @param cleanLocSource: cleaned lat/lon file</span>
-<span class="sd">    @use case: df = readOrig(&quot;WA_Rural_St_RtesCrashes_Full.csv&quot;)</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-
-    <span class="c1"># read</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">origSource</span><span class="p">)</span>
-    
-    <span class="c1"># select columns</span>
-    <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;DATE&#39;</span><span class="p">,</span>
-               <span class="s1">&#39;PRIMARY TRAFFICWAY&#39;</span><span class="p">,</span>
-               <span class="s1">&#39;MILEPOST&#39;</span><span class="p">,</span>
-               <span class="s1">&#39;# INJ&#39;</span><span class="p">,</span>
-               <span class="s1">&#39;# FAT&#39;</span><span class="p">,</span>
-               <span class="s1">&#39;WA STATE PLANE SOUTH - X 2010 - FORWARD&#39;</span><span class="p">,</span>
-               <span class="s1">&#39;WA STATE PLANE SOUTH - Y 2010 - FORWARD&#39;</span><span class="p">]</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">columns</span><span class="p">]</span>
-    
-    <span class="c1"># drop rows that have nan in defined columns</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">dropna</span><span class="p">(</span><span class="n">subset</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;WA STATE PLANE SOUTH - X 2010 - FORWARD&#39;</span><span class="p">,</span>
-                      <span class="s1">&#39;WA STATE PLANE SOUTH - Y 2010 - FORWARD&#39;</span><span class="p">])</span>
-    
-    <span class="c1"># must collapse index</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-    
-    <span class="c1"># transform time</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;DATE&#39;</span><span class="p">])</span>
-    <span class="n">df</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dt</span><span class="o">.</span><span class="n">year</span>
-    
-    <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;PRIMARY TRAFFICWAY&#39;</span><span class="p">,</span>
-               <span class="s1">&#39;MILEPOST&#39;</span><span class="p">,</span>
-               <span class="s1">&#39;# INJ&#39;</span><span class="p">,</span>
-               <span class="s1">&#39;# FAT&#39;</span><span class="p">,</span>
-               <span class="s1">&#39;WA STATE PLANE SOUTH - X 2010 - FORWARD&#39;</span><span class="p">,</span>
-               <span class="s1">&#39;WA STATE PLANE SOUTH - Y 2010 - FORWARD&#39;</span><span class="p">,</span>
-               <span class="s1">&#39;year&#39;</span><span class="p">]</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">columns</span><span class="p">]</span>
-    
-    <span class="c1"># change columns name</span>
-    <span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;PRIMARY TRAFFICWAY&#39;</span><span class="p">,</span>
-                  <span class="s1">&#39;MILEPOST&#39;</span><span class="p">,</span>
-                  <span class="s1">&#39;# INJ&#39;</span><span class="p">,</span>
-                  <span class="s1">&#39;# FAT&#39;</span><span class="p">,</span>
-                  <span class="s1">&#39;lat&#39;</span><span class="p">,</span>
-                  <span class="s1">&#39;lon&#39;</span><span class="p">,</span>
-                  <span class="s1">&#39;year&#39;</span><span class="p">]</span>
-    
-    <span class="c1"># update lat lon</span>
-    <span class="n">df_cleaned</span> <span class="o">=</span> <span class="n">readCleanLoc</span><span class="p">(</span><span class="n">cleanLocSource</span><span class="p">)</span>
-    <span class="n">df</span><span class="o">.</span><span class="n">lat</span> <span class="o">=</span> <span class="n">df_cleaned</span><span class="o">.</span><span class="n">lat</span>
-    <span class="n">df</span><span class="o">.</span><span class="n">lon</span> <span class="o">=</span> <span class="n">df_cleaned</span><span class="o">.</span><span class="n">lon</span>
-    
-    <span class="c1"># assert no nan</span>
-    <span class="k">assert</span> <span class="ow">not</span> <span class="n">df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
-    <span class="k">assert</span> <span class="ow">not</span> <span class="n">df_cleaned</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">values</span><span class="o">.</span><span class="n">any</span><span class="p">()</span>
-
-    <span class="k">return</span> <span class="n">df</span>
-</pre></div>
-
-</div>
-</div>
-</div>
-
 </div></div></section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div>
@@ -12087,83 +11959,38 @@ a.anchor-link {
 </div><div class="fragment">
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
-<div class="prompt input_prompt">In&nbsp;[38]:</div>
+<div class="prompt input_prompt">In&nbsp;[7]:</div>
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">plotMap</span><span class="p">(</span><span class="n">origFile</span><span class="p">,</span> <span class="n">cleanLoc</span><span class="p">,</span> <span class="n">mapSink</span><span class="p">):</span>
-    <span class="sd">&#39;&#39;&#39;</span>
-<span class="sd">    @param origFile: original dataset file</span>
-<span class="sd">    @param cleanLoc: cleaned lat/lon file</span>
-<span class="sd">    @param mapSink: saving destination of generated map</span>
-<span class="sd">    &#39;&#39;&#39;</span>
-
-    <span class="c1"># read data</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">readOrig</span><span class="p">(</span><span class="n">origFile</span><span class="p">,</span> <span class="n">cleanLoc</span><span class="p">)</span>
-    <span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;year&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="mi">2017</span><span class="p">]</span>
-    
-    <span class="c1"># create map object</span>
-    <span class="n">accWA</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">Map</span><span class="p">([</span><span class="n">df</span><span class="o">.</span><span class="n">lat</span><span class="o">.</span><span class="n">median</span><span class="p">(),</span> <span class="n">df</span><span class="o">.</span><span class="n">lon</span><span class="o">.</span><span class="n">median</span><span class="p">()],</span>
-                   <span class="c1"># tiles=&quot;cartodbpositron&quot;,</span>
-                   <span class="n">tiles</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">,</span>
-                   <span class="c1"># width=&#39;80%&#39;,</span>
-                   <span class="c1"># height=&#39;80%&#39;,</span>
-                   <span class="n">prefer_canvas</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
-                   <span class="n">zoom_start</span><span class="o">=</span><span class="mi">7</span><span class="p">)</span>
-    <span class="c1"># add tile layer</span>
-    <span class="n">folium</span><span class="o">.</span><span class="n">TileLayer</span><span class="p">(</span><span class="s1">&#39;cartodbpositron&#39;</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;bright&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">accWA</span><span class="p">)</span>
-    <span class="n">folium</span><span class="o">.</span><span class="n">TileLayer</span><span class="p">(</span><span class="s1">&#39;CartoDB dark_matter&#39;</span><span class="p">,</span> <span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;dark&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">accWA</span><span class="p">)</span>
-    
-    <span class="c1"># create crash layer</span>
-    <span class="n">crashes</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">FeatureGroup</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Crashes&#39;</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">accWA</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">crashes</span><span class="p">)</span>
-    
-    <span class="c1"># create cluster layer</span>
-    <span class="n">clusters</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">FeatureGroup</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;Clusters&#39;</span><span class="p">,</span> <span class="n">show</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
-    <span class="n">accWA</span><span class="o">.</span><span class="n">add_child</span><span class="p">(</span><span class="n">clusters</span><span class="p">)</span>
-
-    <span class="c1"># add cluster layer to feature group</span>
-    <span class="n">marClst</span> <span class="o">=</span> <span class="n">folium</span><span class="o">.</span><span class="n">plugins</span><span class="o">.</span><span class="n">FastMarkerCluster</span><span class="p">(</span>
-        <span class="n">data</span><span class="o">=</span><span class="nb">list</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">)),</span> 
-        <span class="n">name</span><span class="o">=</span><span class="s1">&#39;clusters&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">clusters</span><span class="p">)</span>
-
-    <span class="c1"># add layer control</span>
-    <span class="n">folium</span><span class="o">.</span><span class="n">LayerControl</span><span class="p">()</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">accWA</span><span class="p">)</span>
-    
-    <span class="c1"># add points to map</span>
-    <span class="c1"># cnt = 0</span>
-    <span class="k">for</span> <span class="n">_</span><span class="p">,</span> <span class="n">row</span> <span class="ow">in</span> <span class="n">df</span><span class="o">.</span><span class="n">iterrows</span><span class="p">():</span>
-        <span class="n">folium</span><span class="o">.</span><span class="n">CircleMarker</span><span class="p">([</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;lat&#39;</span><span class="p">],</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;lon&#39;</span><span class="p">]],</span>
-                      <span class="n">radius</span><span class="o">=</span><span class="nb">max</span><span class="p">((</span><span class="n">row</span><span class="p">[</span><span class="s1">&#39;# INJ&#39;</span><span class="p">]</span> <span class="o">+</span> <span class="n">row</span><span class="p">[</span><span class="s1">&#39;# FAT&#39;</span><span class="p">]),</span> <span class="mi">1</span><span class="p">),</span>
-                      <span class="c1"># popup=str(row[&#39;# INJ&#39;]) + &#39;, &#39; + str(row[&#39;# FAT&#39;]),</span>
-                      <span class="c1"># fill_color=&quot;#3db7e4&quot;,</span>
-                      <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#007849&quot;</span><span class="p">,</span>
-                      <span class="n">fill</span><span class="o">=</span><span class="kc">False</span>
-                     <span class="p">)</span><span class="o">.</span><span class="n">add_to</span><span class="p">(</span><span class="n">crashes</span><span class="p">)</span>
-        <span class="c1"># cnt += 1</span>
-        <span class="c1"># folium cannot plot too many</span>
-        <span class="c1"># if cnt == 3000:</span>
-            <span class="c1"># break</span>
-            
-    <span class="c1"># save map</span>
-    <span class="n">accWA</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">mapSink</span><span class="p">)</span>
-    
-    <span class="k">return</span> <span class="n">accWA</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">accWA</span> <span class="o">=</span> <span class="n">plotMap</span><span class="p">(</span><span class="s2">&quot;WA_Rural_St_RtesCrashes_Full.csv&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;coords_gps.csv&quot;</span><span class="p">,</span>
+                <span class="s2">&quot;points.html&quot;</span><span class="p">)</span>
+<span class="n">accWA</span>
 </pre></div>
 
 </div>
 </div>
 </div>
 
-</div></div><div class="fragment">
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[39]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">_</span> <span class="o">=</span> <span class="n">plotMap</span><span class="p">(</span><span class="s2">&quot;WA_Rural_St_RtesCrashes_Full.csv&quot;</span><span class="p">,</span> <span class="s2">&quot;coords_gps.csv&quot;</span><span class="p">,</span> <span class="s1">&#39;points.html&#39;</span><span class="p">)</span>
-</pre></div>
+<div class="output_wrapper">
+<div class="output">
 
+
+<div class="output_area">
+
+<div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>IOPub data rate exceeded.
+The notebook server will temporarily stop sending output
+to the client in order to avoid crashing it.
+To change this limit, set the config variable
+`--NotebookApp.iopub_data_rate_limit`.
+</pre>
 </div>
+</div>
+
 </div>
 </div>
 
