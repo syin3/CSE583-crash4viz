@@ -11,14 +11,7 @@
  */
 var RevealNotes = (function() {
 
-    var notesPopup = null;
-
 	function openNotes( notesFilePath ) {
-
-        if (notesPopup && !notesPopup.closed) {
-            notesPopup.focus();
-            return;
-        }
 
 		if( !notesFilePath ) {
 			var jsFileLocation = document.querySelector('script[src$="notes.js"]').src;  // this js file path
@@ -26,12 +19,7 @@ var RevealNotes = (function() {
 			notesFilePath = jsFileLocation + 'notes.html';
 		}
 
-		notesPopup = window.open( notesFilePath, 'reveal.js - Notes', 'width=1100,height=700' );
-
-		if( !notesPopup ) {
-			alert( 'Speaker view popup failed to open. Please make sure popups are allowed and reopen the speaker view.' );
-			return;
-		}
+		var notesPopup = window.open( notesFilePath, 'reveal.js - Notes', 'width=1100,height=700' );
 
 		/**
 		 * Connect to the notes window through a postmessage handshake.
@@ -56,36 +44,16 @@ var RevealNotes = (function() {
 					clearInterval( connectInterval );
 					onConnected();
 				}
-				if( data && data.namespace === 'reveal-notes' && data.type === 'call' ) {
-					callRevealApi( data.methodName, data.arguments, data.callId );
-				}
 			} );
-		}
-
-		/**
-		 * Calls the specified Reveal.js method with the provided argument
-		 * and then pushes the result to the notes frame.
-		 */
-		function callRevealApi( methodName, methodArguments, callId ) {
-
-			var result = Reveal[methodName].apply( Reveal, methodArguments );
-			notesPopup.postMessage( JSON.stringify( {
-				namespace: 'reveal-notes',
-				type: 'return',
-				result: result,
-				callId: callId
-			} ), '*' );
-
 		}
 
 		/**
 		 * Posts the current slide data to the notes window
 		 */
-		function post( event ) {
+		function post() {
 
 			var slideElement = Reveal.getCurrentSlide(),
-				notesElement = slideElement.querySelector( 'aside.notes' ),
-				fragmentElement = slideElement.querySelector( '.current-fragment' );
+				notesElement = slideElement.querySelector( 'aside.notes' );
 
 			var messageData = {
 				namespace: 'reveal-notes',
@@ -100,21 +68,6 @@ var RevealNotes = (function() {
 			if( slideElement.hasAttribute( 'data-notes' ) ) {
 				messageData.notes = slideElement.getAttribute( 'data-notes' );
 				messageData.whitespace = 'pre-wrap';
-			}
-
-			// Look for notes defined in a fragment
-			if( fragmentElement ) {
-				var fragmentNotes = fragmentElement.querySelector( 'aside.notes' );
-				if( fragmentNotes ) {
-					notesElement = fragmentNotes;
-				}
-				else if( fragmentElement.hasAttribute( 'data-notes' ) ) {
-					messageData.notes = fragmentElement.getAttribute( 'data-notes' );
-					messageData.whitespace = 'pre-wrap';
-
-					// In case there are slide notes
-					notesElement = null;
-				}
 			}
 
 			// Look for notes defined in an aside element
@@ -151,28 +104,33 @@ var RevealNotes = (function() {
 
 	}
 
-	return {
-		init: function() {
+	if( !/receiver/i.test( window.location.search ) ) {
 
-			if( !/receiver/i.test( window.location.search ) ) {
+		// If the there's a 'notes' query set, open directly
+		if( window.location.search.match( /(\?|\&)notes/gi ) !== null ) {
+			openNotes();
+		}
 
-				// If the there's a 'notes' query set, open directly
-				if( window.location.search.match( /(\?|\&)notes/gi ) !== null ) {
-					openNotes();
-				}
+		// Open the notes when the 's' key is hit
+		document.addEventListener( 'keydown', function( event ) {
+			// Disregard the event if the target is editable or a
+			// modifier is present
+			if ( document.querySelector( ':focus' ) !== null || event.shiftKey || event.altKey || event.ctrlKey || event.metaKey ) return;
 
-				// Open the notes when the 's' key is hit
-				Reveal.addKeyBinding({keyCode: 83, key: 'S', description: 'Speaker notes view'}, function() {
-					openNotes();
-				} );
+			// Disregard the event if keyboard is disabled
+			if ( Reveal.getConfig().keyboard === false ) return;
 
+			if( event.keyCode === 83 ) {
+				event.preventDefault();
+				openNotes();
 			}
+		}, false );
 
-		},
+		// Show our keyboard shortcut in the reveal.js help overlay
+		if( window.Reveal ) Reveal.registerKeyboardShortcut( 'S', 'Speaker notes view' );
 
-		open: openNotes
-	};
+	}
+
+	return { open: openNotes };
 
 })();
-
-Reveal.registerPlugin( 'notes', RevealNotes );
