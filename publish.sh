@@ -6,6 +6,7 @@ rm index.html
 cp -i ../tech/$1.ipynb $1.ipynb
 cp -i ../tech/folium* .
 cp -i ../tech/bokeh* .
+cp -i ../tech/times.png .
 jupyter-nbconvert --to slides $1 --reveal-prefix=reveal.js --SlidesExporter.reveal_scroll=True
 
 mv $1.slides.html index.html
