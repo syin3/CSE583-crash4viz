@@ -7,7 +7,8 @@ cp -i ../tech/$1.ipynb ./technology\ review/$1.ipynb
 cp -i ../tech/folium_*.html ./technology\ review/plots
 cp -i ../tech/bokeh_*.html ./technology\ review/plots
 cp -i ../tech/times.png ./technology\ review/plots
-jupyter-nbconvert --to slides ./technology\ review/$1.ipynb --reveal-prefix=reveal.js
+jupyter nbconvert ./technology\ review/$1.ipynb --to slides
+#  --reveal-prefix=reveal.js
 
 mv ./technology\ review/$1.slides.html ./technology\ review/index.html
 mkdir -p /tmp/workspace
