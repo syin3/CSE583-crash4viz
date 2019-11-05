@@ -1,15 +1,15 @@
 #!/bin/bash
 
-rm index.html
+rm ./technology\ review/index.html
 # run the following in original folder
 # jupyter notebook --NotebookApp.iopub_data_rate_limit=1e10
-cp -i ../tech/$1.ipynb $1.ipynb
-cp -i ../tech/folium* .
-cp -i ../tech/bokeh* .
-cp -i ../tech/times.png .
-jupyter-nbconvert --to slides $1.ipynb --reveal-prefix=reveal.js
+cp -i ../tech/$1.ipynb ./technology\ review/$1.ipynb
+cp -i ../tech/folium_*.html ./technology\ review/plots
+cp -i ../tech/bokeh_*.html ./technology\ review/plots
+cp -i ../tech/times.png ./technology\ review/plots
+jupyter-nbconvert --to slides ./technology\ review/$1.ipynb --reveal-prefix=reveal.js
 
-mv $1.slides.html index.html
+mv ./technology\ review/$1.slides.html ./technology\ review/index.html
 mkdir -p /tmp/workspace
 cp -r * /tmp/workspace/
 git add -A .
