@@ -6,8 +6,8 @@ import numpy as np
 class Maps:
     
     def clean_dataframe(self):
-        coords = pd.read_csv("coords_gps.csv")
-        crashes = pd.read_csv("WA_Rural_St_RtesCrashes_Full.csv")
+        coords = pd.read_csv("data/coords_gps.csv")
+        crashes = pd.read_csv("data/WA_Rural_St_RtesCrashes_Full.csv")
         # change the coordinates to be regular lat/lon
         crashes = crashes[crashes["WA STATE PLANE SOUTH - X 2010 - FORWARD"].notnull()].reset_index()
         crashes['Latitude'] = np.array(coords['Latitude'])
@@ -16,7 +16,7 @@ class Maps:
         crash_df = crashes.filter(["COUNTY", "MOST SEVERE INJURY TYPE", "WEATHER", "ROADWAY SURFACE CONDITION", "LIGHTING CONDITION", "JUNCTION RELATIONSHIP", "# INJ", "# FAT", "# VEH", "# PEDS", "# BIKES", "Latitude", "Longitude"])
         return crash_df
         
-    def plot_folium(self, feature, map_sink = 'test.html'):
+    def plot_folium(self, feature, map_sink = 'MyMaps/test.html'):
         '''
         @param df: dataframe wrangled for selected feature
         @param map_sink: saving destination of generated map
