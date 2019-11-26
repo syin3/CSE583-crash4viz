@@ -6,7 +6,15 @@ import numpy as np
 
 class Maps:
     
-    def plot_folium_filtered_clusters(self, grp_feature, subgrp_feature, incident_type, df, map_sink = 'MyMaps/test_filt.html'):
+    """Functions for plotting the folium maps that users chose in the interface.
+    For example, they may choose to view clusters or layers, or all the data 
+    marked directly on the map.
+    (Note not all these choices have been coded into the interface.py yet)"""
+    
+    
+    def plot_folium_filtered_clusters(
+        self, grp_feature, subgrp_feature, incident_type, df, 
+        map_sink = 'MyMaps/test_filt.html'):
         
         group_df = df.groupby(grp_feature)
         subgrp_df = group_df.get_group(subgrp_feature)
