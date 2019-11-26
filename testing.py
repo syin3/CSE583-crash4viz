@@ -4,6 +4,11 @@ import folium
 import numpy as np
 
 class Tests:
+    """Can use this to test the GUI if needed, when incorporating unit tests
+    can also put those in here if desired."""
+    
+    def dummy_command(self):
+        pass
     
     def clean_dataframe_test(self):
         coords = pd.read_csv("data/coords_gps.csv")
