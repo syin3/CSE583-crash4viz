@@ -1,27 +1,66 @@
 import os
 import pandas as pd
 import folium
+import folium.plugins
 import numpy as np
 
 class Maps:
     
-    def clean_dataframe(self):
-        coords = pd.read_csv("data/coords_gps.csv")
-        crashes = pd.read_csv("data/WA_Rural_St_RtesCrashes_Full.csv")
-        # change the coordinates to be regular lat/lon
-        crashes = crashes[crashes["WA STATE PLANE SOUTH - X 2010 - FORWARD"].notnull()].reset_index()
-        crashes['Latitude'] = np.array(coords['Latitude'])
-        crashes['Longitude'] = np.array(coords['Longitude'])
-        # filter for general columns of interest
-        crash_df = crashes.filter(["COUNTY", "MOST SEVERE INJURY TYPE", "WEATHER", "ROADWAY SURFACE CONDITION", "LIGHTING CONDITION", "JUNCTION RELATIONSHIP", "# INJ", "# FAT", "# VEH", "# PEDS", "# BIKES", "Latitude", "Longitude"])
-        return crash_df
+    def plot_folium_filtered_clusters(self, grp_feature, subgrp_feature, incident_type, df, map_sink = 'MyMaps/test_filt.html'):
         
-    def plot_folium(self, feature, map_sink = 'MyMaps/test.html'):
+        group_df = df.groupby(grp_feature)
+        subgrp_df = group_df.get_group(subgrp_feature)
+        
+        # create map object centered at the median location of the df
+        lat = df['Latitude'].median()
+        lon = df['Longitude'].median()
+        
+        accWA = folium.Map([lat, lon],
+                        # tiles="cartodbpositron",
+                        # tiles = '',
+                        # width='80%',
+                        # height='80%',
+                        prefer_canvas=True,
+                        zoom_start=8)
+    
+        clusters = []
+        clust = folium.FeatureGroup(name=str(incident_type) + '_Clusters', show=False)
+        clusters.append(clust)
+        accWA.add_child(clusters[-1])
+        
+        # add cluster layer to feature group
+        marClst = folium.plugins.FastMarkerCluster(
+            data=list(zip(subgrp_df['Latitude'], subgrp_df['Longitude']))
+        ).add_to(clusters[-1])
+        
+        for _, row in subgrp_df.iterrows():
+            if row[incident_type] > 0:
+                cirlColor = "#007849" 
+            else:
+                cirlColor = 'steelblue'
+            
+            cirlRadius = np.max(row[incident_type]) * 5
+            
+            folium.CircleMarker([row['Latitude'], row['Longitude']],
+                                        radius=cirlRadius,
+                                        popup=folium.Popup("{}: {}".format(incident_type,
+                                        row[incident_type]), max_width=150),
+                                        weight = 0.2,
+                                        fill_color=cirlColor,
+                                        fill=True,
+                                        fill_opacity=0.4)
+                            
+        # save map
+        accWA.save(map_sink)
+    
+        return accWA
+    
+    
+    def plot_folium(self, feature, df, map_sink = 'MyMaps/test.html'):
         '''
         @param df: dataframe wrangled for selected feature
         @param map_sink: saving destination of generated map
         '''
-        df = Maps.clean_dataframe(self)
         grouping = df.groupby(feature)
 
         # store the different features
