@@ -2,6 +2,9 @@ import os
 import pandas as pd
 import folium
 import numpy as np
+import warnings
+warnings.filterwarnings('ignore')
+
 
 """Common variables and functions that will be called by mapping.py"""
 
