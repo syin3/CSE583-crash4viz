@@ -39,6 +39,22 @@ def set_incidence_options(dropdown, var):
         # Add menu items.
         menu.add_command(label=name, command=lambda name=name: var.set(name))
             
+
+def set_map_options(dropdown, var):
+
+    #vars_dict = mapping_funcs.vars_dict
+    #subgroups_dict = mapping_funcs.subgroups_dict
+    incident_dict = mapping_funcs.incident_dict
+    
+    dropdown.configure(state='normal')
+    menu = dropdown['menu']
+    menu.delete(0, 'end')
+    options = ['Basic road-map', 'Cluster map', 'Layers by year map', 'Cluster & Layer map']
+    for name in options:
+        # Add menu items.
+        menu.add_command(label=name, command=lambda name=name: var.set(name))
+
+
 def show_map():
 
     vars_dict = mapping_funcs.vars_dict
@@ -50,21 +66,59 @@ def show_map():
     incident_type = incident_dict[selection3.get()]
     df = mapping_funcs.clean_dataframe()
     mp = Maps()
-    m = mp.plot_folium_filtered_clusters(grp_feature, subgrp_feature, incident_type, df)
-    return m
     
+    if selection4.get() == 'Basic road-map':
+        m = mp.basic_map(
+            grp_feature, subgrp_feature, incident_type, df)
+        tx = 'Basic map for {}, under {} conditions saved under MyMaps'.format(
+            selection3.get(), selection2.get()) 
+        myLabel = Label(root, text = tx).pack()
+        return m
+    
+    elif selection4.get() == 'Cluster map':
+        m = mp.plot_folium_filtered_clusters(
+            grp_feature, subgrp_feature, incident_type, df)
+        tx = 'Cluster map for {}, under {} conditions saved under MyMaps'.format(
+            selection3.get(), selection2.get()) 
+        myLabel = Label(root, text = tx).pack()
+
+        return m
+    elif selection4.get() == 'Layers by year map':
+        m = mp.plot_folium_filtered_layers(
+            grp_feature, subgrp_feature, incident_type, df)
+        tx = 'Layer map for {}, under {} conditions saved under MyMaps'.format(
+            selection3.get(), selection2.get()) 
+        myLabel = Label(root, text = tx).pack()
+
+        return m
+    elif selection4.get() == 'Cluster & Layer map':
+        m = mp.plot_folium_filtered_clusters_layers(
+            grp_feature, subgrp_feature, incident_type, df)
+        tx = 'Cluster & layer map for {}, under {} conditions saved under MyMaps'.format(
+            selection3.get(), selection2.get()) 
+        myLabel = Label(root, text = tx).pack()
+
+        return m
+        
+
 # create Tkinter variable for group selection
 selection1 = StringVar()
 # sets default value of the drop-down list
 selection1.set('Select group feature to view')
 # set drop-down list for group selection
-options1 = ['Weather', 'Surface Condition', 'Lighting Condition', 'Junction Relationship', 'Time', 'Test']
+options1 = [
+    'Weather',
+    'Surface Condition',
+    'Lighting Condition',
+    'Junction Relationship',
+    'Time', 'Test']
 drop1 = OptionMenu(root, selection1, *options1)
 drop1.grid(row = 0)
 drop1.pack()
 # set up button to recognize group selection and initialize subgroup drop-down accordingly
-button1 = Button(root, text = 'Save group selection', command = lambda: set_options_init(drop2, selection2))
-button1.pack()
+button1 = Button(root,
+                 text = 'Save group selection',
+                 command = lambda: set_options_init(drop2, selection2)).pack()
 
 # set up subgroup selection variable
 selection2 = StringVar()
@@ -75,7 +129,9 @@ drop2 = OptionMenu(root, selection2, options2)
 drop2.configure(state = 'disabled')
 drop2.pack()
 # set up button2 to recognize subgroup selection and initialize incident selection
-button2 = Button(root, text = 'Save subgroup selection', command = lambda: set_incidence_options(drop3, selection3)).pack()
+button2 = Button(root,
+                 text = 'Save subgroup selection',
+                 command = lambda: set_incidence_options(drop3, selection3)).pack()
 
 # set up incident selection
 selection3 = StringVar()
@@ -85,7 +141,20 @@ drop3 = OptionMenu(root, selection3, *options3)
 drop3.configure(state = 'disabled')
 drop3.pack()
 # show the final map based on selections
-button3 = Button(root, text = 'Show map', command = show_map).pack()
+button3 = Button(root,
+                 text = 'Select map type',
+                 command = lambda: set_map_options(drop4, selection4)).pack()
+
+
+# another drop-down showing the type of map you want to see?
+selection4 = StringVar()
+selection4.set('Select type of map to view')
+options4 = ['Select type of map to view']
+drop4 = OptionMenu(root, selection4, *options4)
+drop4.configure(state = 'disabled')
+drop4.pack()
+# show the final map based on selections
+button4 = Button(root, text = 'Show map', command = show_map).pack()
 
 
 root.mainloop()
