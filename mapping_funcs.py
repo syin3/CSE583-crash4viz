@@ -19,6 +19,11 @@ incident_dict['Injuries'] = '# INJ'
 incident_dict['Fatalities'] = '# FAT'
 incident_dict['Number of Vehicles Involved'] = '# VEH'
 
+r_incident_dict = {}
+r_incident_dict['# INJ'] = 'Injuries'
+r_incident_dict['# FAT'] = 'Fatalities'
+r_incident_dict['# VEH'] = 'Number of Vehicles Involved'
+
 subgroups_dict = {}
 subgroups_dict['Weather'] = [
     'Blowing Sand or Dirt or Snow', 
@@ -75,4 +80,8 @@ def clean_dataframe():
     crashes['Longitude'] = np.array(coords['Longitude'])
     # filter for general columns of interest
     crash_df = crashes.filter(["COUNTY", "DATE", "TIME", "MOST SEVERE INJURY TYPE", "WEATHER", "ROADWAY SURFACE CONDITION", "LIGHTING CONDITION", "JUNCTION RELATIONSHIP", "# INJ", "# FAT", "# VEH", "# PEDS", "# BIKES", "Latitude", "Longitude"])
+    years = []
+    for date in crash_df['DATE']:
+        years.append(date.split('/')[2])    
+    crash_df['Year'] = years
     return crash_df
