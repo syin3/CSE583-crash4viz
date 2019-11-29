@@ -75,8 +75,8 @@ subgroups_dict['Junction Relationship'] = [
 
 
 def clean_dataframe():
-    coords = pd.read_csv("data/coords_gps.csv")
-    crashes = pd.read_csv("data/WA_Rural_St_RtesCrashes_Full.csv")
+    coords = pd.read_csv('WAcrashviz/data/coords_gps.csv')
+    crashes = pd.read_csv('WAcrashviz/data/WA_Rural_St_RtesCrashes_Full.csv')
     # change the coordinates to be regular lat/lon
     crashes = crashes[crashes["WA STATE PLANE SOUTH - X 2010 - FORWARD"].notnull()].reset_index()
     crashes['Latitude'] = np.array(coords['Latitude'])

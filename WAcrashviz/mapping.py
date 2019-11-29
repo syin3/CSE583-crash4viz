@@ -3,7 +3,7 @@ import pandas as pd
 import folium
 import folium.plugins
 import numpy as np
-import mapping_funcs
+from . import mapping_funcs
 
 class Maps:
     
@@ -12,7 +12,8 @@ class Maps:
     marked directly on the map.
     (Note not all these choices have been coded into the interface.py yet)"""
 
-    def basic_map(self, grp_feature, subgrp_feature, incident_type, df, map_sink = 'MyMaps/test_filt.html'):
+    def basic_map(self, grp_feature, subgrp_feature, incident_type, df, 
+                  map_sink = 'WAcrashviz/MyMaps/test_filt.html'):
 
         group_df = df.groupby(grp_feature)
         subgrp_df = group_df.get_group(subgrp_feature)
@@ -52,10 +53,11 @@ class Maps:
     
     def plot_folium_filtered_clusters(
         self, grp_feature, subgrp_feature, incident_type, df, 
-        map_sink = 'MyMaps/test_filt.html'):
+        map_sink = 'WAcrashviz/MyMaps/test_filt.html'):
         
         group_df = df.groupby(grp_feature)
         subgrp_df = group_df.get_group(subgrp_feature)
+        incident_dict = mapping_funcs.r_incident_dict
         
         # create map object centered at the median location of the df
         lat = df['Latitude'].median()
@@ -70,7 +72,7 @@ class Maps:
                         zoom_start=8)
     
         clusters = []
-        clust = folium.FeatureGroup(name=str(incident_type) + '_Clusters', show=False)
+        clust = folium.FeatureGroup(name=str(incident_dict[incident_type]) + '_Clusters', show=False)
         clusters.append(clust)
         accWA.add_child(clusters[-1])
         
@@ -103,7 +105,7 @@ class Maps:
 
     def plot_folium_filtered_layers(
         self, grp_feature, subgrp_feature, incident_type, df, 
-        map_sink = 'MyMaps/test_filt.html'):
+        map_sink = 'WAcrashviz/MyMaps/test_filt.html'):
         
         group_df = df.groupby(grp_feature)
         subgrp_df = group_df.get_group(subgrp_feature)
@@ -130,7 +132,8 @@ class Maps:
         layers = []
 
         for year in range(start, end + 1):
-            layer = folium.FeatureGroup(name=str(year) + incident_type, show=False)
+            layer = folium.FeatureGroup(
+                name=str(year) + ': ' + incident_dict[incident_type], show=False)
             layers.append(layer)
             accWA.add_child(layers[-1])
 
@@ -160,7 +163,8 @@ class Maps:
         return accWA
     
     
-    def plot_folium(self, feature, df, map_sink = 'MyMaps/test.html'):
+    def plot_folium(self, feature, df, 
+                    map_sink = 'WAcrashviz/MyMaps/test.html'):
         '''
         @param df: dataframe wrangled for selected feature
         @param map_sink: saving destination of generated map
