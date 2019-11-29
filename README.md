@@ -18,7 +18,7 @@ To install this program, run:
 To launch the crash visualization interface, run (from the top-level of the github repo):
 ```python3 interface.py```
 
-Select the environmental, road, and incident type features you would like to visualize and press 'Show map', the interactable html map will be output into the directory MyMaps.
+Select the environmental, road, and incident type features you would like to visualize and press 'Show map', the interactable html map will be output into the directory ```MyMaps```.
 
 ## Tests
 For users interested in testing the time to completion of each type of map, you can run (from the top-level of the github repo):
