@@ -12,12 +12,12 @@ class Maps:
     marked directly on the map.
     (Note not all these choices have been coded into the interface.py yet)"""
 
-    def basic_map(self, grp_feature, subgrp_feature, incident_type, df, 
-                  map_sink = 'WAcrashviz/MyMaps/test_filt.html'):
+    def basic_map(self, grp_feature, subgrp_feature, incident_type, df):
 
         group_df = df.groupby(grp_feature)
         subgrp_df = group_df.get_group(subgrp_feature)
-        incident_dict = mapping_funcs.r_incident_dict
+        r_incident_dict = mapping_funcs.r_incident_dict
+        incident = r_incident_dict[incident_type]
         
         # create map object centered at the median location of the df
         lat = df['Latitude'].median()
@@ -41,12 +41,14 @@ class Maps:
                     fill_color = cirlColor,
                     fill = True,
                     fill_opacity = 0.8,
-                    popup = f'{incident_dict[incident_type]},{row[incident_type]}'
+                    popup = f'{incident},{row[incident_type]}'
                 ).add_to(accWA)
 
-                                    
+                             
         # save map
-        accWA.save(map_sink)
+        map_dir = mapping_funcs.MAPS_DIR
+        mpsv =  map_dir + f'/{grp_feature}_{incident}_basic_map.html'
+        accWA.save(mpsv)
     
         return accWA
     
@@ -90,7 +92,9 @@ class Maps:
         accWA.add_child(clust)
 
         # save map
-        accWA.save(map_sink)
+        map_dir = mapping_funcs.MAPS_DIR
+        mpsv =  map_dir + f'/{grp_feature}_{incident}_cluster_map.html'
+        accWA.save(mpsv)
     
         return accWA
 
@@ -149,6 +153,8 @@ class Maps:
         folium.LayerControl().add_to(accWA)
         
         # save map
+        map_dir = mapping_funcs.MAPS_DIR
+        mpsv =  map_dir + f'/{grp_feature}_{incident}_layer_map.html'
         accWA.save(map_sink)
     
         return accWA
