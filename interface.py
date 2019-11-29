@@ -4,6 +4,8 @@ import tkinter as tk
 #import mapping_funcs
 from WAcrashviz import mapping_funcs
 from WAcrashviz import mapping
+import warnings
+warnings.filterwarnings('ignore')
 
 class MainApp(tk.Tk):
 
