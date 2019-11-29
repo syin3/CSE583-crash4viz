@@ -32,17 +32,17 @@ class Maps:
             if row[incident_type] > 0:
                 cirlColor = "#007849" 
             
-            cirlRadius = row[incident_type] * 1.5
+                cirlRadius = row[incident_type] * 1.5
             
-            folium.CircleMarker(
-                [row['Latitude'], row['Longitude']],
-                radius = cirlRadius,
-                weight = 0.2,
-                fill_color = cirlColor,
-                fill = True,
-                fill_opacity = 0.8,
-                popup = f'{incident_dict[incident_type]},{row[incident_type]}'
-            ).add_to(accWA)
+                folium.CircleMarker(
+                    [row['Latitude'], row['Longitude']],
+                    radius = cirlRadius,
+                    weight = 0.2,
+                    fill_color = cirlColor,
+                    fill = True,
+                    fill_opacity = 0.8,
+                    popup = f'{incident_dict[incident_type]},{row[incident_type]}'
+                ).add_to(accWA)
 
                                     
         # save map
@@ -71,33 +71,24 @@ class Maps:
                         prefer_canvas=True,
                         zoom_start=8)
     
-        clusters = []
-        clust = folium.FeatureGroup(name=str(incident_dict[incident_type]) + '_Clusters', show=False)
-        clusters.append(clust)
-        accWA.add_child(clusters[-1])
-        
-        # add cluster layer to feature group
-        marClst = folium.plugins.FastMarkerCluster(
-            data=list(zip(subgrp_df['Latitude'], subgrp_df['Longitude']))
-        ).add_to(clusters[-1])
+        clust = folium.plugins.MarkerCluster()
         
         for _, row in subgrp_df.iterrows():
             if row[incident_type] > 0:
                 cirlColor = "#007849" 
-            else:
-                cirlColor = 'steelblue'
-            
-            cirlRadius = row[incident_type] * 100
-            
-            folium.CircleMarker(
-                [row['Latitude'], row['Longitude']],
-                radius=cirlRadius,
-                popup=folium.Popup("{}: {}".format(incident_type, row[incident_type]), max_width=150),
-                weight = 0.2,
-                fill_color=cirlColor,
-                fill=True,
-                fill_opacity=0.4)
-                            
+                cirlRadius = row[incident_type] * 10
+                clust.add_child(folium.Marker(
+                    location = [row['Latitude'], row['Longitude']],
+                    radius=cirlRadius,
+                    popup=folium.Popup("{}: {}".format(
+                        incident_dict[incident_type], row[incident_type]), max_width=150),
+                    weight = 0.2,
+                    fill_color=cirlColor,
+                    fill=True,
+                    fill_opacity=0.4))
+
+        accWA.add_child(clust)
+
         # save map
         accWA.save(map_sink)
     
@@ -142,17 +133,17 @@ class Maps:
                 if row[incident_type] > 0:
                     cirlColor = "#007849" 
             
-                cirlRadius = row[incident_type] * 3
+                    cirlRadius = row[incident_type] * 3
             
-                folium.CircleMarker(
-                    [row['Latitude'], row['Longitude']],
-                    radius=cirlRadius,
-                    weight = 0.2,
-                    fill_color=cirlColor,
-                    fill=True,
-                    fill_opacity=0.8,
-                    popup = f'{incident_dict[incident_type]},{row[incident_type]}'
-                ).add_to(layers[-1])
+                    folium.CircleMarker(
+                        [row['Latitude'], row['Longitude']],
+                        radius=cirlRadius,
+                        weight = 0.2,
+                        fill_color=cirlColor,
+                        fill=True,
+                        fill_opacity=0.8,
+                        popup = f'{incident_dict[incident_type]},{row[incident_type]}'
+                    ).add_to(layers[-1])
 
         # add layer control
         folium.LayerControl().add_to(accWA)
