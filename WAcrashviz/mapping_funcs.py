@@ -20,6 +20,13 @@ vars_dict['Lighting Condition'] = 'LIGHTING CONDITION'
 vars_dict['Junction Relationship'] = 'JUNCTION RELATIONSHIP'
 #vars_dict['TIME'] = 'Time'
 
+# reverse dict to above for writing output maps
+grp_dict = {}
+grp_dict['WEATHER'] = 'Weather'
+grp_dict['ROADWAY SURFACE CONDITION'] = 'Surface_Condition'
+grp_dict['LIGHTING CONDITION'] = 'Lighting_Condition'
+grp_dict['JUNCTION RELATIONSHIP'] = 'Junction_Relationship'
+
 incident_dict = {}
 incident_dict['Injuries'] = '# INJ'
 incident_dict['Fatalities'] = '# FAT'

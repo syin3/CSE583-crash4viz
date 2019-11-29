@@ -4,6 +4,8 @@ import folium
 import folium.plugins
 import numpy as np
 from . import mapping_funcs
+import warnings
+warnings.filterwarnings('ignore')
 
 class Maps:
     
@@ -12,12 +14,18 @@ class Maps:
     marked directly on the map.
     (Note not all these choices have been coded into the interface.py yet)"""
 
-    def basic_map(self, grp_feature, subgrp_feature, incident_type, df):
+    def basic_map(self, grp_feature, subgrp_feature, incident_type, df, map_sink = None):
 
         group_df = df.groupby(grp_feature)
         subgrp_df = group_df.get_group(subgrp_feature)
         r_incident_dict = mapping_funcs.r_incident_dict
         incident = r_incident_dict[incident_type]
+        grp_dict = mapping_funcs.grp_dict
+        
+        if map_sink is None:
+            map_dir = mapping_funcs.MAPS_DIR
+            group = grp_dict[grp_feature]
+            map_sink =  map_dir + f'/{group}_{incident}_basic_map.html'
         
         # create map object centered at the median location of the df
         lat = df['Latitude'].median()
@@ -43,23 +51,26 @@ class Maps:
                     fill_opacity = 0.8,
                     popup = f'{incident},{row[incident_type]}'
                 ).add_to(accWA)
-
-                             
-        # save map
-        map_dir = mapping_funcs.MAPS_DIR
-        mpsv =  map_dir + f'/{grp_feature}_{incident}_basic_map.html'
-        accWA.save(mpsv)
+                  
+        accWA.save(map_sink)
     
         return accWA
     
     
     def plot_folium_filtered_clusters(
         self, grp_feature, subgrp_feature, incident_type, df, 
-        map_sink = 'WAcrashviz/MyMaps/test_filt.html'):
+        map_sink = None):
         
         group_df = df.groupby(grp_feature)
         subgrp_df = group_df.get_group(subgrp_feature)
-        incident_dict = mapping_funcs.r_incident_dict
+        r_incident_dict = mapping_funcs.r_incident_dict
+        incident = r_incident_dict[incident_type]
+        grp_dict = mapping_funcs.grp_dict
+        
+        if map_sink is None:
+            map_dir = mapping_funcs.MAPS_DIR
+            group = grp_dict[grp_feature]
+            map_sink =  map_dir + f'/{group}_{incident}_cluster_map.html'
         
         # create map object centered at the median location of the df
         lat = df['Latitude'].median()
@@ -83,7 +94,7 @@ class Maps:
                     location = [row['Latitude'], row['Longitude']],
                     radius=cirlRadius,
                     popup=folium.Popup("{}: {}".format(
-                        incident_dict[incident_type], row[incident_type]), max_width=150),
+                        incident, row[incident_type]), max_width=150),
                     weight = 0.2,
                     fill_color=cirlColor,
                     fill=True,
@@ -91,20 +102,24 @@ class Maps:
 
         accWA.add_child(clust)
 
-        # save map
-        map_dir = mapping_funcs.MAPS_DIR
-        mpsv =  map_dir + f'/{grp_feature}_{incident}_cluster_map.html'
-        accWA.save(mpsv)
+        accWA.save(map_sink)
     
         return accWA
 
     def plot_folium_filtered_layers(
         self, grp_feature, subgrp_feature, incident_type, df, 
-        map_sink = 'WAcrashviz/MyMaps/test_filt.html'):
+        map_sink = None):
         
         group_df = df.groupby(grp_feature)
         subgrp_df = group_df.get_group(subgrp_feature)
-        incident_dict = mapping_funcs.r_incident_dict
+        r_incident_dict = mapping_funcs.r_incident_dict
+        incident = r_incident_dict[incident_type]
+        grp_dict = mapping_funcs.grp_dict
+        
+        if map_sink is None:
+            map_dir = mapping_funcs.MAPS_DIR
+            group = grp_dict[grp_feature]
+            map_sink =  map_dir + f'/{group}_{incident}_layer_map.html'
         
         # create map object centered at the median location of the df
         lat = df['Latitude'].median()
@@ -128,7 +143,7 @@ class Maps:
 
         for year in range(start, end + 1):
             layer = folium.FeatureGroup(
-                name=str(year) + ': ' + incident_dict[incident_type], show=False)
+                name=str(year) + ': ' + incident, show=False)
             layers.append(layer)
             accWA.add_child(layers[-1])
 
@@ -146,7 +161,7 @@ class Maps:
                         fill_color=cirlColor,
                         fill=True,
                         fill_opacity=0.8,
-                        popup = f'{incident_dict[incident_type]},{row[incident_type]}'
+                        popup = f'{incident},{row[incident_type]}'
                     ).add_to(layers[-1])
 
         # add layer control
@@ -160,13 +175,18 @@ class Maps:
         return accWA
     
     
-    def plot_folium(self, feature, df, 
-                    map_sink = 'WAcrashviz/MyMaps/test.html'):
+    def plot_folium(self, feature, df, map_sink = None):
         '''
         @param df: dataframe wrangled for selected feature
         @param map_sink: saving destination of generated map
         '''
         grouping = df.groupby(feature)
+        grp_dict = mapping_funcs.grp_dict
+        
+        if map_sink is None:
+            map_dir = mapping_funcs.MAPS_DIR
+            group = grp_dict[grp_feature]
+            map_sink =  map_dir + f'/{group}_{incident}_big_map.html'
 
         # store the different features
         groups = []
