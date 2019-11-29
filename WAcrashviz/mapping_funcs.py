@@ -5,9 +5,12 @@ import numpy as np
 import warnings
 warnings.filterwarnings('ignore')
 
+MODULE_DIR = os.path.dirname(__file__)
+MAPS_DIR = os.path.abspath(os.path.join(MODULE_DIR, '../MyMaps'))
+DATA_DIR = MODULE_DIR + '/data/'
+
 
 """Common variables and functions that will be called by mapping.py"""
-
 
 # all possible variables, {label in dataframe: label in GUI}
 vars_dict = {}
@@ -75,8 +78,8 @@ subgroups_dict['Junction Relationship'] = [
 
 
 def clean_dataframe():
-    coords = pd.read_csv('WAcrashviz/data/coords_gps.csv')
-    crashes = pd.read_csv('WAcrashviz/data/WA_Rural_St_RtesCrashes_Full.csv')
+    coords = pd.read_csv(DATA_DIR + 'coords_gps.csv')
+    crashes = pd.read_csv(DATA_DIR + 'WA_Rural_St_RtesCrashes_Full.csv')
     # change the coordinates to be regular lat/lon
     crashes = crashes[crashes["WA STATE PLANE SOUTH - X 2010 - FORWARD"].notnull()].reset_index()
     crashes['Latitude'] = np.array(coords['Latitude'])
