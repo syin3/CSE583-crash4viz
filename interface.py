@@ -4,7 +4,6 @@ import tkinter as tk
 #import mapping_funcs
 from WAcrashviz import mapping_funcs
 from WAcrashviz import mapping
-from WAcrashviz import testing
 
 class MainApp(tk.Tk):
 
