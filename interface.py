@@ -28,7 +28,7 @@ class MainApp(tk.Tk):
         on user selections."""
 
         self.title('Traffic Feature Mapper')
-        self.minsize(800, 900)
+        self.minsize(700, 700)
         self.selection1 = tk.StringVar()
         self.selection1.set('Select group feature to view')
         options1 = [
@@ -78,6 +78,7 @@ class MainApp(tk.Tk):
         # show the final map based on selections
         self.button4 = tk.Button(self, text='Show map',
                                  command=self.show_map).pack()
+
 
 
     def set_options_init(self, dropdown, var):
