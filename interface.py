@@ -1,15 +1,12 @@
 """Structure and main execution of the GUI. All the functionalities of the
-WAcrashviz package will be initiated through this interface. The final map
+wacrashviz package will be initiated through this interface. The final map
  gets output based on user selections."""
 
 import tkinter as tk
-#import  mapping
-#import testing
-#import mapping_funcs
 import warnings
+from wacrashviz import mapping_funcs
+from wacrashviz import mapping
 warnings.filterwarnings('ignore')
-from WAcrashviz import mapping_funcs
-from WAcrashviz import mapping
 
 class MainApp(tk.Tk):
 
@@ -85,8 +82,8 @@ class MainApp(tk.Tk):
         """Change the options in the second drop-down menu based on the user's
         selection in the first drop-down menu."""
 
-        vars_dict = mapping_funcs.vars_dict
-        subgroups_dict = mapping_funcs.subgroups_dict
+        vars_dict = mapping_funcs.VARS_DICT
+        subgroups_dict = mapping_funcs.SUBGROUPS_DICT
 
         if self.selection1.get() in vars_dict.keys():
             dropdown.configure(state='normal') # enable drop-down
@@ -102,9 +99,9 @@ class MainApp(tk.Tk):
         selection in the second drop-down menu (whose options depend on the
         first drop-down menu's selection)."""
 
-        #vars_dict = mapping_funcs.vars_dict
-        #subgroups_dict = mapping_funcs.subgroups_dict
-        incident_dict = mapping_funcs.incident_dict
+        #vars_dict = mapping_funcs.VARS_DICT
+        #subgroups_dict = mapping_funcs.SUBGROUPS_DICT
+        incident_dict = mapping_funcs.INCIDENT_DICT
 
         dropdown.configure(state='normal') #
         menu = dropdown['menu']
@@ -133,9 +130,9 @@ class MainApp(tk.Tk):
         output text to inidicate where the final interactable html map is saved
         for the user."""
 
-        vars_dict = mapping_funcs.vars_dict
-        #subgroups_dict = mapping_funcs.subgroups_dict
-        incident_dict = mapping_funcs.incident_dict
+        vars_dict = mapping_funcs.VARS_DICT
+        #subgroups_dict = mapping_funcs.SUBGROUPS_DICT
+        incident_dict = mapping_funcs.INCIDENT_DICT
 
         grp_feature = vars_dict[self.selection1.get()]
         subgrp_feature = self.selection2.get()
@@ -148,30 +145,30 @@ class MainApp(tk.Tk):
                 grp_feature, subgrp_feature, incident_type, data)
             my_text = 'Basic map for {}, under {} conditions saved under MyMaps'.format(
                 self.selection3.get(), self.selection2.get())
-            tk.Label(root, text=my_text).pack()
+            tk.Label(ROOT, text=my_text).pack()
 
         if self.selection4.get() == 'Cluster map':
             my_map.plot_folium_filtered_clusters(
                 grp_feature, subgrp_feature, incident_type, data)
             my_text = 'Cluster map for {}, under {} conditions saved under MyMaps'.format(
                 self.selection3.get(), self.selection2.get())
-            tk.Label(root, text=my_text).pack()
+            tk.Label(ROOT, text=my_text).pack()
 
         if self.selection4.get() == 'Layers by year map':
             my_map.plot_folium_filtered_layers(
                 grp_feature, subgrp_feature, incident_type, data)
             my_text = 'Layer map for {}, under {} conditions saved under MyMaps'.format(
                 self.selection3.get(), self.selection2.get())
-            tk.Label(root, text=my_text).pack()
+            tk.Label(ROOT, text=my_text).pack()
 
         if self.selection4.get() == 'Cluster & Layer map':
             my_map.plot_folium_filtered_clusters_layers(
                 grp_feature, subgrp_feature, incident_type, data)
             my_text = 'Cluster & layer map for {}, under {} conditions saved under MyMaps'.format(
                 self.selection3.get(), self.selection2.get())
-            tk.Label(root, text=my_text).pack()
+            tk.Label(ROOT, text=my_text).pack()
 
 
 if __name__ == '__main__':
-    root = MainApp(None)
-    root.mainloop()
+    ROOT = MainApp(None)
+    ROOT.mainloop()
