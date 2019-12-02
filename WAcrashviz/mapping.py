@@ -44,7 +44,7 @@ class Maps:
             if row[incident_type] > 0:
                 cirlcolor = "#007849" 
             
-                cirlradius = row[incident_type] * 1.5
+                cirlradius = row[incident_type] * 2
             
                 folium.CircleMarker(
                     [row['Latitude'], row['Longitude']],
@@ -95,7 +95,7 @@ class Maps:
         for _, row in subgrp_df.iterrows():
             if row[incident_type] > 0:
                 cirlcolor = "#007849" 
-                cirlradius = row[incident_type] * 10
+                cirlradius = row[incident_type] * 2
                 clust.add_child(folium.Marker(
                     location = [row['Latitude'], row['Longitude']],
                     radius=cirlradius,
@@ -160,7 +160,7 @@ class Maps:
                 if row[incident_type] > 0:
                     cirlcolor = "#007849" 
             
-                    cirlradius = row[incident_type] * 3
+                    cirlradius = row[incident_type] * 2
             
                     folium.CircleMarker(
                         [row['Latitude'], row['Longitude']],
@@ -180,7 +180,74 @@ class Maps:
     
         return acc_wa
     
-    
+    def plot_folium_filtered_clusters_layers(
+        self, grp_feature, subgrp_feature, incident_type, data,
+        map_sink = None):
+        """Creates a map with layers showing the selected incident_type by
+        year grouped into clusters by region."""
+
+        group_df = data.groupby(grp_feature)
+        subgrp_df = group_df.get_group(subgrp_feature)
+        r_incident_dict = mapping_funcs.r_incident_dict
+        incident = r_incident_dict[incident_type]
+        grp_dict = mapping_funcs.grp_dict
+        
+        if map_sink is None:
+            map_dir = mapping_funcs.MAPS_DIR
+            group = grp_dict[grp_feature]
+            map_sink =  map_dir + f'/{group}_{incident}_layer_cluster_map.html'
+        
+        # create map object centered at the median location of the df
+        lat = data['Latitude'].median()
+        lon = data['Longitude'].median()
+        
+        acc_wa = folium.Map([lat, lon],
+                        # tiles="cartodbpositron",
+                        tiles = '',
+                        # width='80%',
+                        # height='80%',
+                        prefer_canvas=True,
+                        zoom_start=8)
+
+        # add tile layer
+        folium.TileLayer('openstreetmap').add_to(acc_wa)
+        #folium.TileLayer('CartoDB dark_matter', name = 'dark').add_to(acc_wa)
+
+        start = 2008
+        end = 2017
+        layers = []
+
+        for year in range(start, end + 1):
+            layer = folium.FeatureGroup(
+                name=str(year) + ': ' + incident, show=False)
+            layers.append(layer)
+            acc_wa.add_child(layers[-1])
+
+            clust = folium.plugins.MarkerCluster()
+
+            for _, row in subgrp_df[subgrp_df['Year'] == str(year)].iterrows():
+                
+                if row[incident_type] > 0:
+                    cirlcolor = "#007849" 
+            
+                    cirlradius = row[incident_type] * 2
+        
+                    clust.add_child(folium.Marker(
+                                location = [row['Latitude'], row['Longitude']],
+                                radius=cirlradius,
+                                popup=folium.Popup("{}: {}".format(
+                                    incident, row[incident_type]), max_width=150),
+                                weight = 0.2,
+                                fill_color=cirlcolor,
+                                fill=True,
+                                fill_opacity=0.4)).add_to(layers[-1])
+
+        # add layer control
+        folium.LayerControl().add_to(acc_wa)
+        
+        # save map
+        acc_wa.save(map_sink)
+
     def plot_folium(self, feature, data, map_sink = None):
         '''Creates a very large map with layers, generates data for all 
         possible groups. Will probably remove this map as it isn't really
