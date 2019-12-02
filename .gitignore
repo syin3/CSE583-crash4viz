@@ -1,0 +1,15 @@
+.ipynb_checkpoints/**
+.vscode/**
+data_wrangle.ipynb
+gui_folium.ipynb
+group_project_work.ipynb
+technology review/.ipynb_checkpoints/**
+crashviz/**
+__pycache__/**
+wacrashviz/.DS_Store
+wacrashviz/__pycache__/**
+wacrashviz/.ipynb_checkpoints/**
+wacrashviz/MyMaps/**
+wacrashviz/tests/__pycache__/**
+.DS_Store
+technology review/**
