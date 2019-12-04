@@ -11,5 +11,7 @@ wacrashviz/__pycache__/**
 wacrashviz/.ipynb_checkpoints/**
 wacrashviz/MyMaps/**
 wacrashviz/tests/__pycache__/**
+wacrashviz/tests/.DS_Store
+wacrashviz/.DS_Store
 .DS_Store
 technology review/**
