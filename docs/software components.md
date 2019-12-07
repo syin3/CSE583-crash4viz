@@ -1,4 +1,5 @@
 Software components: 
+
     (1) Data manager: 
         Provides an interface to the dataset and further provides application features. Since our product allows users to select conditions of all aspects, the most important task for the data manager is to query the dataset. More specifically, the manager will “select” data based on users’ input, such as “2017 + rainy + young driver” fed to data manager will return crash records that 
             (a) Happens in 2017;
