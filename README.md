@@ -1,4 +1,7 @@
 # Crash4viz
+[![Coverage Status](https://coveralls.io/repos/github/fangtianqi941128/WA-Crash-Viz-and-Analysis/badge.svg?branch=master)](https://coveralls.io/github/fangtianqi941128/WA-Crash-Viz-and-Analysis?branch=master)
+[![Build Status](https://travis-ci.com/syin3/WA-Crash-Viz-and-Analysis.svg?branch=master)](https://travis-ci.com/syin3/WA-Crash-Viz-and-Analysis)
+
 This is a project of CSE583 by Katharine Chen, Tianqi Fang, Yutong Liu, Shuyi Yin.
 
 ## Goal
