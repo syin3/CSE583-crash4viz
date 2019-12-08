@@ -12,7 +12,7 @@ plots the milepost markers on map
 
 # ### import
 
-# In[4]:
+# In[1]:
 
 
 import numpy as np
@@ -22,7 +22,7 @@ import folium
 
 # ### plot
 
-# In[5]:
+# In[2]:
 
 
 def plotMilePost(mile_shapefile, mapSaveLoc):
@@ -85,10 +85,10 @@ def plotMilePost(mile_shapefile, mapSaveLoc):
 
 # ### use case
 
-# In[6]:
+# In[ ]:
 
 
-_ = plotMilePost('./milepost/SRMilepostMarkers.shp', 'waMilePost.html')
+_ = plotMilePost('../../data/milepost/SRMilepostMarkers.shp', '../../outputs/waMilePost.html')
 
 
 # In[ ]:
