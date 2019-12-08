@@ -4,8 +4,8 @@ wacrashviz package will be initiated through this interface. The final map
 
 import tkinter as tk
 import warnings
-from wacrashviz import mapping_funcs
-from wacrashviz import mapping
+from crash4viz import mapping_funcs
+from crash4viz import mapping
 warnings.filterwarnings('ignore')
 
 class MainApp(tk.Tk):

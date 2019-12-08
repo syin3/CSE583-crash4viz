@@ -12,8 +12,8 @@ CURRENTDIR = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfram
 PARENTDIR = os.path.dirname(CURRENTDIR)
 PARENT = os.path.dirname(PARENTDIR)
 sys.path.insert(0, PARENT)
-from wacrashviz import mapping
-from wacrashviz import mapping_funcs
+from crash4viz import mapping
+from crash4viz import mapping_funcs
 
 TEST_OUTPUT = 'test_output/generation_times.tsv'
 

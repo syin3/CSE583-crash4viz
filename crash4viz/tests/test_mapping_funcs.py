@@ -9,7 +9,7 @@ CURRENTDIR = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentfram
 PARENTDIR = os.path.dirname(CURRENTDIR)
 PARENT = os.path.dirname(PARENTDIR)
 sys.path.insert(0, PARENT)
-from wacrashviz import mapping_funcs
+from crash4viz import mapping_funcs
 import warnings
 
 class TestMappingFuncs(unittest.TestCase):
