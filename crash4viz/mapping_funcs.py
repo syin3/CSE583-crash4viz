@@ -16,23 +16,27 @@ DATA_DIR = MODULE_DIR + '/tests/test_data/'
 
 # all possible variables, {label in dataframe: label in GUI}
 VARS_DICT = {}
-VARS_DICT['Weather'] = 'WEATHER'
-VARS_DICT['Surface Condition'] = 'ROADWAY SURFACE CONDITION'
-VARS_DICT['Lighting Condition'] = 'LIGHTING CONDITION'
-VARS_DICT['Junction Relationship'] = 'JUNCTION RELATIONSHIP'
-#VARS_DICT['TIME'] = 'Time'
+VARS_DICT['Urban / Rural'] = 'rur_urb'
+VARS_DICT['Weather'] = 'weather'
+VARS_DICT['Lighting Condition'] = 'LIGHT'
+VARS_DICT['Surface Condition'] = 'SURF_TYP'
+VARS_DICT['Severity'] = 'SEVERITY'
+
+# VARS_DICT['Junction Relationship'] = 'JUNCTION RELATIONSHIP'
+# VARS_DICT['TIME'] = 'Time'
 
 # reverse dict to above for writing output maps
 GRP_DICT = {}
-GRP_DICT['WEATHER'] = 'Weather'
-GRP_DICT['ROADWAY SURFACE CONDITION'] = 'Surface_Condition'
-GRP_DICT['LIGHTING CONDITION'] = 'Lighting_Condition'
-GRP_DICT['JUNCTION RELATIONSHIP'] = 'Junction_Relationship'
+VARS_DICT['rur_urb'] = 'Urban / Rural'
+VARS_DICT['weather'] = 'Weather'
+VARS_DICT['LIGHT'] = 'Lighting Condition'
+VARS_DICT['SURF_TYP'] = 'Surface Condition'
+VARS_DICT['SEVERITY'] = 'Severity'
 
 INCIDENT_DICT = {}
 INCIDENT_DICT['Injuries'] = '# INJ'
 INCIDENT_DICT['Fatalities'] = '# FAT'
-INCIDENT_DICT['Number of Vehicles Involved'] = '# VEH'
+INCIDENT_DICT['Number of Vehicles Involved'] = 'veh_count'
 
 R_INCIDENT_DICT = {}
 R_INCIDENT_DICT['# INJ'] = 'Injuries'

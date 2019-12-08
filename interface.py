@@ -24,16 +24,19 @@ class MainApp(tk.Tk):
         """Initiate the interface with certain features that will update based
         on user selections."""
 
-        self.title('Traffic Feature Mapper')
+        self.title('WA Crash Feature Mapper')
         self.minsize(700, 700)
         self.selection1 = tk.StringVar()
         self.selection1.set('Select group feature to view')
         options1 = [
+            'Urban / Rural',
             'Weather',
-            'Surface Condition',
             'Lighting Condition',
-            'Junction Relationship',
-            'Time', 'Test']
+            'Surface Condition',
+            'Severity',
+            # 'Junction Relationship',
+            # 'Time', ,
+            'Test']
         self.drop1 = tk.OptionMenu(self, self.selection1, *options1)
         self.drop1.grid(row=0)
         self.drop1.pack()
@@ -143,28 +146,28 @@ class MainApp(tk.Tk):
         if self.selection4.get() == 'Basic road-map':
             my_map.basic_map(
                 grp_feature, subgrp_feature, incident_type, data)
-            my_text = 'Basic map for {}, under {} conditions saved under MyMaps'.format(
+            my_text = 'Basic map for {}, under {} conditions saved in "outputs" folder'.format(
                 self.selection3.get(), self.selection2.get())
             tk.Label(ROOT, text=my_text).pack()
 
         if self.selection4.get() == 'Cluster map':
             my_map.plot_folium_filtered_clusters(
                 grp_feature, subgrp_feature, incident_type, data)
-            my_text = 'Cluster map for {}, under {} conditions saved under MyMaps'.format(
+            my_text = 'Cluster map for {}, under {} conditions saved in "outputs" folder'.format(
                 self.selection3.get(), self.selection2.get())
             tk.Label(ROOT, text=my_text).pack()
 
         if self.selection4.get() == 'Layers by year map':
             my_map.plot_folium_filtered_layers(
                 grp_feature, subgrp_feature, incident_type, data)
-            my_text = 'Layer map for {}, under {} conditions saved under MyMaps'.format(
+            my_text = 'Layer map for {}, under {} conditions saved in "outputs" folder'.format(
                 self.selection3.get(), self.selection2.get())
             tk.Label(ROOT, text=my_text).pack()
 
         if self.selection4.get() == 'Cluster & Layer map':
             my_map.plot_folium_filtered_clusters_layers(
                 grp_feature, subgrp_feature, incident_type, data)
-            my_text = 'Cluster & layer map for {}, under {} conditions saved under MyMaps'.format(
+            my_text = 'Cluster & layer map for {}, under {} conditions saved in "outputs" folder'.format(
                 self.selection3.get(), self.selection2.get())
             tk.Label(ROOT, text=my_text).pack()
 

@@ -17,7 +17,7 @@ class Maps:
     selections."""
 
     def basic_map(self, grp_feature, subgrp_feature, incident_type, data, map_sink=None):
-        """Creates a map with no layers or clusters, the chosent incident_type
+        """Creates a map with no layers or clusters, the chosen incident_type
         is marked directly on the map at the lat/lon location that it occurs."""
 
         group_df = data.groupby(grp_feature)
@@ -32,8 +32,8 @@ class Maps:
             map_sink = map_dir + f'/{group}_{incident}_basic_map.html'
 
         # create map object centered at the median location of the df
-        lat = data['Latitude'].median()
-        lon = data['Longitude'].median()
+        lat = data['lat'].median()
+        lon = data['lon'].median()
 
         acc_wa = folium.Map([lat, lon],
                             prefer_canvas=True,
@@ -47,7 +47,7 @@ class Maps:
                 cirlradius = row[incident_type] * 2
 
                 folium.CircleMarker(
-                    [row['Latitude'], row['Longitude']],
+                    [row['lat'], row['lon']],
                     radius=cirlradius,
                     weight=0.2,
                     fill_color=cirlcolor,
@@ -79,8 +79,8 @@ class Maps:
             map_sink = map_dir + f'/{group}_{incident}_cluster_map.html'
 
         # create map object centered at the median location of the df
-        lat = data['Latitude'].median()
-        lon = data['Longitude'].median()
+        lat = data['lat'].median()
+        lon = data['lon'].median()
 
         acc_wa = folium.Map([lat, lon],
                             # tiles="cartodbpositron",
@@ -97,7 +97,7 @@ class Maps:
                 cirlcolor = "#007849"
                 cirlradius = row[incident_type] * 2
                 clust.add_child(folium.Marker(
-                    location=[row['Latitude'], row['Longitude']],
+                    location=[row['lat'], row['lon']],
                     radius=cirlradius,
                     popup=folium.Popup("{}: {}".format(
                         incident, row[incident_type]), max_width=150),
@@ -130,8 +130,8 @@ class Maps:
             map_sink = map_dir + f'/{group}_{incident}_layer_map.html'
 
         # create map object centered at the median location of the df
-        lat = data['Latitude'].median()
-        lon = data['Longitude'].median()
+        lat = data['lat'].median()
+        lon = data['lon'].median()
 
         acc_wa = folium.Map([lat, lon],
                             # tiles="cartodbpositron",
@@ -163,7 +163,7 @@ class Maps:
                     cirlradius = row[incident_type] * 2
 
                     folium.CircleMarker(
-                        [row['Latitude'], row['Longitude']],
+                        [row['lat'], row['lon']],
                         radius=cirlradius,
                         weight=0.2,
                         fill_color=cirlcolor,
@@ -198,8 +198,8 @@ class Maps:
             map_sink = map_dir + f'/{group}_{incident}_layer_cluster_map.html'
 
         # create map object centered at the median location of the df
-        lat = data['Latitude'].median()
-        lon = data['Longitude'].median()
+        lat = data['lat'].median()
+        lon = data['lon'].median()
 
         acc_wa = folium.Map([lat, lon],
                             # tiles="cartodbpositron",
@@ -233,7 +233,7 @@ class Maps:
                     cirlradius = row[incident_type] * 2
 
                     clust.add_child(folium.Marker(
-                        location=[row['Latitude'], row['Longitude']],
+                        location=[row['lat'], row['lon']],
                         radius=cirlradius,
                         popup=folium.Popup("{}: {}".format(
                             incident, row[incident_type]), max_width=150),
@@ -268,8 +268,8 @@ class Maps:
         for group in grouping:
             groups.append(group)
 
-        lat = data['Latitude'].median()
-        lon = data['Longitude'].median()
+        lat = data['lat'].median()
+        lon = data['lon'].median()
         # create map object
         acc_wa = folium.Map([lat, lon],
                             # tiles="cartodbpositron",
