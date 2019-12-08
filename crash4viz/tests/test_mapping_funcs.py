@@ -24,9 +24,9 @@ class TestMappingFuncs(unittest.TestCase):
     def test_clean_dataframe(self):
         """Test that the dataframe has been wrangled correctly."""
 
-        data = mapping_funcs.clean_dataframe()
+        data = mapping_funcs.read_dataframe()
 
-        num_columns = 16
+        num_columns = 43
 
         self.assertEqual(len(data.columns), num_columns,
                          "Dataframe not wrangled correctly")
@@ -41,7 +41,7 @@ class TestMappingFuncs(unittest.TestCase):
         self.assertRegex(mapping_funcs.MAPS_DIR, '/outputs',
                          "Maps are not being saved in MyMaps directory")
 
-        self.assertRegex(mapping_funcs.DATA_DIR, '/data/',
+        self.assertRegex(mapping_funcs.DATA_DIR, '/test-data/',
                          "Path to HSIS crash data is incorrect")
 
 if __name__ == '__main__':
