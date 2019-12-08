@@ -40,7 +40,7 @@ class TestMapping(unittest.TestCase):
         test_subgrp_feature = 'Raining'
         test_incident_type = '# INJ'
         test_inc = r_incident_dict[test_incident_type]
-        test_df = mapping_funcs.clean_dataframe()
+        test_df = mapping_funcs.read_dataframe()
         testmap = mapping.Maps()
         map_sink = CURRENTDIR + '/test_output/'
         map_sink = map_sink + f'{test_grp}_{test_inc}_basic_map_test.html'
@@ -74,7 +74,7 @@ class TestMapping(unittest.TestCase):
         test_subgrp_feature = 'Raining'
         test_incident_type = '# INJ'
         test_inc = r_incident_dict[test_incident_type]
-        test_df = mapping_funcs.clean_dataframe()
+        test_df = mapping_funcs.read_dataframe()
         testmap = mapping.Maps()
         map_sink = CURRENTDIR + '/test_output/'
         map_sink = map_sink + f'{test_grp}_{test_inc}_cluster_map_test.html'
@@ -107,7 +107,7 @@ class TestMapping(unittest.TestCase):
         test_subgrp_feature = 'Raining'
         test_incident_type = '# INJ'
         test_inc = r_incident_dict[test_incident_type]
-        test_df = mapping_funcs.clean_dataframe()
+        test_df = mapping_funcs.read_dataframe()
         testmap = mapping.Maps()
         map_sink = CURRENTDIR + '/test_output/'
         map_sink = map_sink + f'{test_grp}_{test_inc}_layer_map_test.html'
@@ -137,7 +137,7 @@ class TestMapping(unittest.TestCase):
         grp_dict = mapping_funcs.GRP_DICT
         test_grp_feature = 'WEATHER'
         test_grp = grp_dict[test_grp_feature]
-        test_df = mapping_funcs.clean_dataframe()
+        test_df = mapping_funcs.read_dataframe()
         testmap = mapping.Maps()
         map_sink = CURRENTDIR + '/test_output/'
         map_sink = map_sink + f'{test_grp}_big_map_test.html'
