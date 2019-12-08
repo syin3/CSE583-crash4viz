@@ -137,7 +137,7 @@ class MainApp(tk.Tk):
         grp_feature = vars_dict[self.selection1.get()]
         subgrp_feature = self.selection2.get()
         incident_type = incident_dict[self.selection3.get()]
-        data = mapping_funcs.clean_dataframe()
+        data = mapping_funcs.read_dataframe()
         my_map = mapping.Maps()
 
         if self.selection4.get() == 'Basic road-map':

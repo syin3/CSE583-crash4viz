@@ -10,7 +10,7 @@ warnings.filterwarnings('ignore')
 
 MODULE_DIR = os.path.dirname(__file__)
 MAPS_DIR = os.path.abspath(os.path.join(MODULE_DIR, '/outputs'))
-DATA_DIR = MODULE_DIR + '/data/'
+DATA_DIR = MODULE_DIR + '/tests/test-data/'
 print(MAPS_DIR)
 print(DATA_DIR)
 exit()
@@ -88,6 +88,12 @@ SUBGROUPS_DICT['Junction Relationship'] = [
     'Roundabout Related but not at Roundabout']
 # SUBGROUPS_DICT['TIME'] = [] could add something about time
 
+def read_dataframe():
+    """
+    read a 2017 dataset
+    """
+    df = pd.read_csv(DATA_DIR + 'sample.csv')
+    return df
 
 # def clean_dataframe():
 #     """Cleaning the data used in in the app for pertinent information so it can

@@ -41,7 +41,7 @@ class TestMappingFuncs(unittest.TestCase):
         self.assertRegex(mapping_funcs.MAPS_DIR, '/outputs',
                          "Maps are not being saved in MyMaps directory")
 
-        self.assertRegex(mapping_funcs.DATA_DIR, '../data/',
+        self.assertRegex(mapping_funcs.DATA_DIR, '/data/',
                          "Path to HSIS crash data is incorrect")
 
 if __name__ == '__main__':
