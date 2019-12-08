@@ -9,9 +9,11 @@ import numpy as np
 warnings.filterwarnings('ignore')
 
 MODULE_DIR = os.path.dirname(__file__)
-MAPS_DIR = os.path.abspath(os.path.join(MODULE_DIR, '../outputs'))
-DATA_DIR = MODULE_DIR + '../data/'
-
+MAPS_DIR = os.path.abspath(os.path.join(MODULE_DIR, '/outputs'))
+DATA_DIR = MODULE_DIR + '/data/'
+print(MAPS_DIR)
+print(DATA_DIR)
+exit()
 
 """Common variables and functions that will be called by mapping.py"""
 
@@ -87,31 +89,31 @@ SUBGROUPS_DICT['Junction Relationship'] = [
 # SUBGROUPS_DICT['TIME'] = [] could add something about time
 
 
-def clean_dataframe():
-    """Cleaning the data used in in the app for pertinent information so it can
-    be called on efficiently when generating the map based on user inputs at
-    the interface."""
+# def clean_dataframe():
+#     """Cleaning the data used in in the app for pertinent information so it can
+#     be called on efficiently when generating the map based on user inputs at
+#     the interface."""
 
-    coords = pd.read_csv(DATA_DIR + 'coords_gps.csv')
-    crashes = pd.read_csv(DATA_DIR + 'WA_Rural_St_RtesCrashes_Full.csv')
-    # change the coordinates to be regular lat/lon
-    crashes = crashes[crashes["WA STATE PLANE SOUTH - X 2010 - FORWARD"].notnull()].reset_index()
-    crashes['Latitude'] = np.array(coords['Latitude'])
-    crashes['Longitude'] = np.array(coords['Longitude'])
-    # filter for general columns of interest
-    crash_df = crashes.filter(["COUNTY",
-                               "DATE",
-                               "TIME",
-                               "MOST SEVERE INJURY TYPE",
-                               "WEATHER",
-                               "ROADWAY SURFACE CONDITION",
-                               "LIGHTING CONDITION",
-                               "JUNCTION RELATIONSHIP",
-                               "# INJ", "# FAT", "# VEH",
-                               "# PEDS", "# BIKES",
-                               "Latitude", "Longitude"])
-    years = []
-    for date in crash_df['DATE']:
-        years.append(date.split('/')[2])
-    crash_df['Year'] = years
-    return crash_df
+#     coords = pd.read_csv(DATA_DIR + 'coords_gps.csv')
+#     crashes = pd.read_csv(DATA_DIR + 'WA_Rural_St_RtesCrashes_Full.csv')
+#     # change the coordinates to be regular lat/lon
+#     crashes = crashes[crashes["WA STATE PLANE SOUTH - X 2010 - FORWARD"].notnull()].reset_index()
+#     crashes['Latitude'] = np.array(coords['Latitude'])
+#     crashes['Longitude'] = np.array(coords['Longitude'])
+#     # filter for general columns of interest
+#     crash_df = crashes.filter(["COUNTY",
+#                                "DATE",
+#                                "TIME",
+#                                "MOST SEVERE INJURY TYPE",
+#                                "WEATHER",
+#                                "ROADWAY SURFACE CONDITION",
+#                                "LIGHTING CONDITION",
+#                                "JUNCTION RELATIONSHIP",
+#                                "# INJ", "# FAT", "# VEH",
+#                                "# PEDS", "# BIKES",
+#                                "Latitude", "Longitude"])
+#     years = []
+#     for date in crash_df['DATE']:
+#         years.append(date.split('/')[2])
+#     crash_df['Year'] = years
+#     return crash_df
