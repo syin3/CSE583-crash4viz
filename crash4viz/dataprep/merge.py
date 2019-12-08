@@ -12,7 +12,7 @@ reads in NOAA converted coordinates and merge with accident, road, grade, curve 
 
 # ### import
 
-# In[19]:
+# In[1]:
 
 
 import os
@@ -46,7 +46,7 @@ def read_noaa_coords(yr, directory):
             records = pd.read_csv(directory + '/' + file)
             records = records[columns]
         else:
-            records.append(pd.read_csv(directory + '/' + file)[columns]).reset_index(drop=True)
+            records = records.append(pd.read_csv(directory + '/' + file)[columns]).reset_index(drop=True)
         
         count += 1
     
@@ -100,7 +100,7 @@ def acc_merge(acc_file_list, noaa_coords, directory):
 
 # #### read files with keyword and directory
 
-# In[15]:
+# In[5]:
 
 
 def read_files(directory, keyword):
@@ -113,7 +113,7 @@ def read_files(directory, keyword):
 
 # #### final meta merge func
 
-# In[17]:
+# In[6]:
 
 
 def meta_merge(crashes, curv, grad, occ, road, veh):
@@ -178,7 +178,7 @@ def meta_merge(crashes, curv, grad, occ, road, veh):
 
 # ### read NOAA converted coordinates
 
-# In[5]:
+# In[7]:
 
 
 noaa_coords = {}
@@ -190,7 +190,7 @@ for yr in range(2013, 2018):
 
 # #### detect and read all acc files
 
-# In[6]:
+# In[8]:
 
 
 acc_file_list = detect_files("../../data/hsis-csv", 'acc')
@@ -201,7 +201,7 @@ crashes = acc_merge(acc_file_list, noaa_coords, '../../data/hsis-csv')
 
 # #### read them first
 
-# In[16]:
+# In[9]:
 
 
 curv = read_files("../../data/hsis-csv", 'curv')
@@ -213,12 +213,12 @@ veh = read_files("../../data/hsis-csv", 'veh')
 
 # #### meta merge
 
-# In[26]:
+# In[10]:
 
 
 met = meta_merge(crashes, curv, grad, occ, road, veh)
 for yr in range(2013, 2018):
-    met[yr].to_csv('../../data/crash-merged/{}.csv'.format(yr))
+    met[yr].to_csv('../../data/crash-merged/{}.csv'.format(yr), index=False)
 
 
 # In[ ]:
