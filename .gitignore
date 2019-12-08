@@ -6,12 +6,11 @@ group_project_work.ipynb
 technology review/.ipynb_checkpoints/**
 crashviz/**
 __pycache__/**
-wacrashviz/.DS_Store
-wacrashviz/__pycache__/**
-wacrashviz/.ipynb_checkpoints/**
-wacrashviz/MyMaps/**
-wacrashviz/tests/__pycache__/**
-wacrashviz/tests/.DS_Store
-wacrashviz/.DS_Store
+crash4viz/.DS_Store
+crash4viz/__pycache__/**
+crash4viz/.ipynb_checkpoints/**
+crash4viz/tests/__pycache__/**
+crash4viz/tests/.DS_Store
+crash4viz/.DS_Store
 .DS_Store
 technology review/**
