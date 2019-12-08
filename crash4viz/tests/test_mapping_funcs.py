@@ -35,13 +35,13 @@ class TestMappingFuncs(unittest.TestCase):
         """Test that the paths defined in the module that direct to important
         resources is correct."""
 
-        self.assertRegex(mapping_funcs.MODULE_DIR, 'wacrashviz',
-                         "Path to wacrashviz module is incorrect")
+        self.assertRegex(mapping_funcs.MODULE_DIR, 'crash4viz',
+                         "Path to crash4viz module is incorrect")
 
-        self.assertRegex(mapping_funcs.MAPS_DIR, '/MyMaps',
+        self.assertRegex(mapping_funcs.MAPS_DIR, '/outputs',
                          "Maps are not being saved in MyMaps directory")
 
-        self.assertRegex(mapping_funcs.DATA_DIR, '/data/',
+        self.assertRegex(mapping_funcs.DATA_DIR, '../data/',
                          "Path to HSIS crash data is incorrect")
 
 if __name__ == '__main__':
