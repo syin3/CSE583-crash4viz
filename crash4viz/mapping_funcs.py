@@ -11,9 +11,6 @@ warnings.filterwarnings('ignore')
 MODULE_DIR = os.path.dirname(__file__)
 MAPS_DIR = os.path.abspath(os.path.join(MODULE_DIR, '/outputs'))
 DATA_DIR = MODULE_DIR + '/tests/test-data/'
-print(MAPS_DIR)
-print(DATA_DIR)
-exit()
 
 """Common variables and functions that will be called by mapping.py"""
 
