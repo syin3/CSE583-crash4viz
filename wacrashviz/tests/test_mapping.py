@@ -15,7 +15,7 @@ sys.path.insert(0, PARENT)
 from wacrashviz import mapping
 from wacrashviz import mapping_funcs
 
-TEST_OUTPUT = 'test_output/generation_times.tsv'
+TEST_OUTPUT = CURRENTDIR + '/test_output/generation_times.tsv'
 
 class TestMapping(unittest.TestCase):
     """Test the different map options we have, the inputs to these mapping
@@ -57,7 +57,7 @@ class TestMapping(unittest.TestCase):
         time_to_generate = 'basic map generation time is ' + str(total)
 
 
-        with open(TEST_OUTPUT, 'a') as output:
+        with open(TEST_OUTPUT, 'a+') as output:
             output.write(time_to_generate)
 
     def test_cluster_map(self):
@@ -90,7 +90,7 @@ class TestMapping(unittest.TestCase):
         total = t_one - t_zero
         time_to_generate = 'cluster map generation time is ' + str(total)
 
-        with open(TEST_OUTPUT, 'a') as output:
+        with open(TEST_OUTPUT, 'a+') as output:
             output.write(time_to_generate)
 
     def test_layer_map(self):
@@ -123,7 +123,7 @@ class TestMapping(unittest.TestCase):
         total = t_one - t_zero
         time_to_generate = 'layer map generation time is ' + str(total)
 
-        with open(TEST_OUTPUT, 'a') as output:
+        with open(TEST_OUTPUT, 'a+') as output:
             output.write(time_to_generate)
 
     def test_gigantic_map(self):
@@ -151,7 +151,7 @@ class TestMapping(unittest.TestCase):
         total = t_one - t_zero
         time_to_generate = 'gigantic map generation time is ' + str(total)
 
-        with open(TEST_OUTPUT, 'a') as output:
+        with open(TEST_OUTPUT, 'a+') as output:
             output.write(time_to_generate)
 
 if __name__ == '__main__':
