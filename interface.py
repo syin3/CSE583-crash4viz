@@ -4,11 +4,32 @@ wacrashviz package will be initiated through this interface. The final map
 
 import tkinter as tk
 import warnings
+warnings.filterwarnings('ignore')
+import pandas as pd
+
 from crash4viz import mapping_funcs
 from crash4viz import mapping
 from crash4viz import mlpredict
-import pandas as pd
-warnings.filterwarnings('ignore')
+
+def generate_ml(self, year):
+    """
+    generate statistical analysis plots in the outputs folder
+    """
+
+    merged_data = pd.read_csv(mapping_funcs.DATA_DIR + '/{}.csv'.format(year))
+    mlpredict.month_plot(merged_data)
+    mlpredict.weekday_plot(merged_data)
+    mlpredict.weather_plot(merged_data)
+    mlpredict.road_plot(merged_data)
+    mlpredict.light_plot(merged_data)
+    mlpredict.ml_prediction(merged_data)
+
+    year_plot_list = []
+    for years in range(2013, 2018):
+        year_plot_list.append(
+            pd.read_csv(mapping_funcs.DATA_DIR + '/{}.csv'.format(years)).shape[0]
+            )
+    mlpredict.year_plot(year_plot_list)
 
 class MainApp(tk.Tk):
 
@@ -34,9 +55,13 @@ class MainApp(tk.Tk):
         options0 = ['2013', '2014', '2015', '2016', '2017']
         self.drop0 = tk.OptionMenu(self, self.selection0, *options0)
         self.drop0.pack()
-        self.button0 = tk.Button(self,
-                                 text='Save year selection',
-                                 command=lambda: self.enable_next_dropdown(self.drop1)).pack()
+
+        # self.button0
+        tk.Button(
+            self,
+            text='Save year selection',
+            command=lambda: self.enable_next_dropdown(self.drop1)
+            ).pack()
 
         self.selection1 = tk.StringVar()
         self.selection1.set('Select county to view')
@@ -82,10 +107,12 @@ class MainApp(tk.Tk):
         self.drop1 = tk.OptionMenu(self, self.selection1, *options1)
         self.drop1.configure(state='disabled')
         self.drop1.pack()
-        self.button1 = tk.Button(self,
-                                 text='Save county selection',
-                                 command=lambda: self.enable_next_dropdown(
-                                     self.drop2)).pack()
+        # self.button1
+        tk.Button(
+            self,
+            text='Save county selection',
+            command=lambda: self.enable_next_dropdown(self.drop2)
+            ).pack()
 
         self.selection2 = tk.StringVar()
         self.selection2.set('Select group feature to view')
@@ -98,10 +125,12 @@ class MainApp(tk.Tk):
         self.drop2.configure(state='disabled')
         self.drop2.pack()
 
-        self.button2 = tk.Button(self,
-                                 text='Save group selection',
-                                 command=lambda: self.set_options_init(
-                                     self.drop3, self.selection3)).pack()
+        # self.button2 =
+        tk.Button(
+            self,
+            text='Save group selection',
+            command=lambda: self.set_options_init(self.drop3, self.selection3)
+            ).pack()
 
         self.selection3 = tk.StringVar()
         self.selection3.set('Select subgroup feature to view')
@@ -109,10 +138,12 @@ class MainApp(tk.Tk):
         self.drop3 = tk.OptionMenu(self, self.selection3, options3)
         self.drop3.configure(state='disabled')
         self.drop3.pack()
-        self.button3 = tk.Button(self,
-                                 text='Save subgroup selection',
-                                 command=lambda: self.set_map_options(
-                                     self.drop4, self.selection4)).pack()
+        # self.button3 =
+        tk.Button(
+            self,
+            text='Save subgroup selection',
+            command=lambda: self.set_map_options(self.drop4, self.selection4)
+            ).pack()
 
         self.selection4 = tk.StringVar()
         self.selection4.set('Select type of map to view')
@@ -121,19 +152,31 @@ class MainApp(tk.Tk):
         self.drop4.configure(state='disabled')
         self.drop4.pack()
         # show the final map based on selections
-        self.button4 = tk.Button(self, text='Show map',
-                                 command=self.show_map).pack()
 
-        self.button5 = tk.Button(self, text='Generate ML reports',
-                                 command=lambda: self.generate_ml(self.selection0.get())).pack()
+        # self.button4 =
+        tk.Button(
+            self,
+            text='Show map', command=self.show_map
+            ).pack()
+
+        # self.button5 =
+        tk.Button(
+            self,
+            text='Generate ML reports',
+            command=lambda: self.generate_ml(self.selection0.get())
+            ).pack()
 
     def enable_next_dropdown(self, dropdown):
+        """
+        Enables next dropdown
+        """
         dropdown.configure(state='normal') # enable drop-down
-        pass
-        
+
     def set_options_init(self, dropdown, var):
-        """Change the options in the third drop-down menu based on the user's
-        selection in the second drop-down menu."""
+        """
+        Change the options in the third drop-down menu based on the user's
+        selection in the second drop-down menu.
+        """
 
         vars_dict = mapping_funcs.VARS_DICT
         subgroups_dict = mapping_funcs.SUBGROUPS_DICT
@@ -146,11 +189,12 @@ class MainApp(tk.Tk):
             for name in options:
                 # Add menu items.
                 menu.add_command(label=name, command=lambda name=name: var.set(name))
-        pass
 
     def set_map_options(self, dropdown, var):
-        """Set the different options for types of maps that the user can see
-        based on their selections in the previous drop-down menus."""
+        """
+        Set the different options for types of maps that the user can see
+        based on their selections in the previous drop-down menus.
+        """
 
         dropdown.configure(state='normal')
         menu = dropdown['menu']
@@ -161,27 +205,7 @@ class MainApp(tk.Tk):
                    'Cluster & Layer map']
         for name in options:
             menu.add_command(label=name, command=lambda name=name: var.set(name))
-        pass
 
-
-    def generate_ml(self, year):
-        
-        merged_data = pd.read_csv(mapping_funcs.DATA_DIR + '/{}.csv'.format(year))
-        mlpredict.month_plot(merged_data)
-        mlpredict.weekday_plot(merged_data)
-        mlpredict.weather_plot(merged_data)
-        mlpredict.road_plot(merged_data)
-        mlpredict.light_plot(merged_data)
-        mlpredict.ml_prediction(merged_data)
-
-        year_plot_list = []
-        for year in range(2013, 2018):
-            year_plot_list.append(
-                pd.read_csv(mapping_funcs.DATA_DIR + '/{}.csv'.format(year)).shape[0]
-                )
-        mlpredict.year_plot(year_plot_list)
-        pass
-        
     def show_map(self):
         """Output the map that was chosen for the features that were selected,
         output text to inidicate where the final interactable html map is saved
@@ -189,7 +213,6 @@ class MainApp(tk.Tk):
 
         vars_dict = mapping_funcs.VARS_DICT
         subgroups_dict = mapping_funcs.R_SUBGROUPS_DICT
-        incident_dict = mapping_funcs.R_INCIDENT_DICT
         county_dict = mapping_funcs.R_COUNTY_DICT
 
         year = self.selection0.get()
@@ -197,7 +220,7 @@ class MainApp(tk.Tk):
         county_name = mapping_funcs.COUNTY_DICT[county]
         grp_feature = vars_dict[self.selection2.get()]
         subgrp_feature = subgroups_dict[self.selection2.get()][self.selection3.get()]
-        my_map = mapping.Maps() 
+        my_map = mapping.Maps()
 
         data = mapping_funcs.read_dataframe(year)
         dataframe = data[data.COUNTY == county]
@@ -205,36 +228,41 @@ class MainApp(tk.Tk):
         subgrp_df = group_df.apply(lambda g: g[g['weather'] == subgrp_feature])
         grp_dict = mapping_funcs.GRP_DICT
         group = grp_dict[grp_feature]
-            
+
         if self.selection4.get() == 'Basic road-map':
-            
+
             my_map.basic_map(county_name, county, group, dataframe, subgrp_df)
             if subgrp_df.shape[0] == 0:
-                my_text = f'No data for the provided {group} selection, an empty map was generated into the "outputs" folder'
+                my_text = f'No data for the provided {group} selection, \
+                an empty map was generated into the "outputs" folder'
             else:
                 my_text = 'Basic map for {}, under {} conditions saved in "outputs" folder'.format(
                     self.selection3.get(), self.selection2.get())
             tk.Label(ROOT, text=my_text).pack()
 
         if self.selection4.get() == 'Cluster map':
-            my_map.plot_folium_filtered_clusters(county_name, county, group, dataframe, subgrp_df)
+            my_map.plot_folium_filtered_clusters(
+                county_name, county, group, dataframe, subgrp_df)
             if subgrp_df.shape[0] == 0:
-                my_text = f'No data for the provided {group} selection, an empty map was generated into the "outputs" folder'
+                my_text = f'No data for the provided {group} selection,\
+                an empty map was generated into the "outputs" folder'
             else:
-                my_text = 'Cluster map for {}, under {} conditions saved in "outputs" folder'.format(
-                    self.selection3.get(), self.selection2.get())
+                my_text = 'Cluster map for {}, under {} conditions saved in \
+                    "outputs" folder'.format(self.selection3.get(), self.selection2.get())
             tk.Label(ROOT, text=my_text).pack()
 
         if self.selection4.get() == 'Layers by year map':
-            my_map.plot_folium_filtered_layers(group, county_name, county, grp_feature, subgrp_feature)
+            my_map.plot_folium_filtered_layers(
+                group, county_name, county, grp_feature, subgrp_feature)
             my_text = 'Layer map for {}, under {} conditions saved in "outputs" folder'.format(
                 self.selection3.get(), self.selection2.get())
             tk.Label(ROOT, text=my_text).pack()
 
         if self.selection4.get() == 'Cluster & Layer map':
-            my_map.plot_folium_filtered_clusters_layers(county_name, county, group, grp_feature, subgrp_feature)
-            my_text = 'Cluster & layer map for {}, under {} conditions saved in "outputs" folder'.format(
-                self.selection3.get(), self.selection2.get())
+            my_map.plot_folium_filtered_clusters_layers(
+                county_name, county, group, grp_feature, subgrp_feature)
+            my_text = 'Cluster & layer map for {}, under {} conditions saved \
+                in "outputs" folder'.format(self.selection3.get(), self.selection2.get())
             tk.Label(ROOT, text=my_text).pack()
 
 
