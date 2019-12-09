@@ -35,7 +35,7 @@ def year_plot(merged_data_2013, merged_data_2014,
     plt.ylabel('Accidents count')
     plt.xlabel("Year")
 
-    if plot_sink=None:
+    if plot_sink is None:
         plot_sink = mapping_funcs.MAPS_DIR
     plt.savefig(plot_sink + '/year_plot.png')
 
@@ -59,7 +59,7 @@ def month_plot(dataframe, plot_sink=None):
     plt.xlabel("Month")
     plt.xticks(ind, ('Jan', 'Feb', 'Mar', 'April', 'May',
                      "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"))
-    if plot_sink=None:
+    if plot_sink is None:
         plot_sink = mapping_funcs.MAPS_DIR
     plt.savefig(plot_sink + '/month_plot.png')
 
@@ -82,7 +82,7 @@ def weekday_plot(dataframe, plot_sink=None):
     plt.bar(y, x)
     plt.ylabel('Accidents count')
     plt.xlabel('Weekday')
-    if plot_sink=None:
+    if plot_sink is None:
         plot_sink = mapping_funcs.MAPS_DIR
     plt.savefig(plot_sink + '/weekday_plot.png')
 
@@ -117,7 +117,7 @@ def weather_plot(dataframe, plot_sink):
     ax1.set_title("Accidents percentage count by weather")
     plt.pie(x, labels=labels, counterclock=True,
             labeldistance=1.05, autopct='%.0f%%', pctdistance=0.8, shadow=True)
-    if plot_sink=None:
+    if plot_sink is None:
         plot_sink = mapping_funcs.MAPS_DIR
     plt.savefig(plot_sink + '/weather_plot.png')
 
@@ -150,7 +150,7 @@ def road_plot(dataframe, plot_sink):
     plt.pie(x, labels=labels, counterclock=True,
             labeldistance=1.05, autopct='%.0f%%',
             pctdistance=0.88, shadow=True)
-    if plot_sink=None:
+    if plot_sink is None:
         plot_sink = mapping_funcs.MAPS_DIR
     plt.savefig(plot_sink + '/road_plot.png')
 
@@ -183,7 +183,7 @@ def light_plot(dataframe, plot_sink=None):
     plt.pie(x, labels=labels, counterclock=True,
             labeldistance=1.05, autopct='%.0f%%', pctdistance=0.8, shadow=True)
     plt.rcParams['font.size'] = 15
-    if plot_sink=None:
+    if plot_sink is None:
         plot_sink = mapping_funcs.MAPS_DIR
     plt.savefig(plot_sink + '/light_plot.png')
 
@@ -281,7 +281,7 @@ def ml_prediction(dataframe, plot_sink=None):
     plt.ylabel('Importance')
     plt.xlabel('Variable')
     plt.title('Variable Importances')
-    if plot_sink=None:
+    if plot_sink is None:
         plot_sink = mapping_funcs.MAPS_DIR
     plt.savefig(plot_sink + '/weather_factor_importance.png')
 
