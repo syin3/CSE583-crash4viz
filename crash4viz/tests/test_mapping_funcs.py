@@ -27,7 +27,7 @@ class TestMappingFuncs(unittest.TestCase):
         year = '2013'
         data = mapping_funcs.read_dataframe(year)
 
-        num_columns = 43
+        num_columns = 22
 
         self.assertEqual(len(data.columns), num_columns,
                          "Dataframe not wrangled correctly")
