@@ -37,7 +37,7 @@ class MainApp(tk.Tk):
         self.button0 = tk.Button(self,
                                  text='Save year selection',
                                  command=lambda: self.enable_next_dropdown(self.drop1)).pack()
-        
+
         self.selection1 = tk.StringVar()
         self.selection1.set('Select county to view')
         options1 = ['Adams',
@@ -81,7 +81,6 @@ class MainApp(tk.Tk):
                     'Yakima']
         self.drop1 = tk.OptionMenu(self, self.selection1, *options1)
         self.drop1.configure(state='disabled')
-        #self.drop1.grid(row=0)
         self.drop1.pack()
         self.button1 = tk.Button(self,
                                  text='Save county selection',
@@ -97,7 +96,6 @@ class MainApp(tk.Tk):
             'Day of the week']
         self.drop2 = tk.OptionMenu(self, self.selection2, *options2)
         self.drop2.configure(state='disabled')
-        #self.drop2.grid(row=0)
         self.drop2.pack()
 
         self.button2 = tk.Button(self,
@@ -128,7 +126,6 @@ class MainApp(tk.Tk):
 
         self.button5 = tk.Button(self, text='Generate ML reports',
                                  command=lambda: self.generate_ml(self.selection0.get())).pack()
-
 
     def enable_next_dropdown(self, dropdown):
         dropdown.configure(state='normal') # enable drop-down
@@ -196,8 +193,8 @@ class MainApp(tk.Tk):
         county = county_dict[self.selection1.get()]
         county_name = mapping_funcs.COUNTY_DICT[county]
         grp_feature = vars_dict[self.selection2.get()]
-        subgrp_feature = subgroups_dict[self.selection2.get()][self.selection3.get()]
-        my_map = mapping.Maps()
+        subgrp_feature = self.selection3.get()
+        my_map = mapping.Maps() 
 
         data = mapping_funcs.read_dataframe(year)
         dataframe = data[data.COUNTY == county]

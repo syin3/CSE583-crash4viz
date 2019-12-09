@@ -168,7 +168,6 @@ SUBGROUPS_DICT['Day of the week'] = {
     6: 'Saturday',
     7: 'Sunday'}
 
-
 R_SUBGROUPS_DICT = {}
 R_SUBGROUPS_DICT['Weather'] = {
     'Unknown': 0,
