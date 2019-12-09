@@ -84,7 +84,7 @@ def weekday_plot(dataframe, plot_sink=None):
     plt.savefig(plot_sink + '/weekday_plot.png')
 
 
-def weather_plot(dataframe, plot_sink):
+def weather_plot(dataframe, plot_sink = None):
     count_by_weather = dataframe['weather'].value_counts()
     # print(count_by_weather)
 
@@ -119,7 +119,7 @@ def weather_plot(dataframe, plot_sink):
     plt.savefig(plot_sink + '/weather_plot.png')
 
 
-def road_plot(dataframe, plot_sink):
+def road_plot(dataframe, plot_sink=None):
     count_by_road = dataframe['RDSURF'].value_counts()
 
     s = dataframe.groupby(['RDSURF']).median().\
