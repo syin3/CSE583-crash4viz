@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[43]:
 
 
 import pandas as pd
@@ -23,16 +23,18 @@ from matplotlib.pyplot import rc
 severity_dict = {1: 'Property Damage Only', 2: 'Injury Accident', 3: 'Fatal Accident'}
 
 # weather (weather condition)
-weather_dict = {'0': 'Unknown', '1': 'Clear or Partly Cloudy',  
-                '2': 'Overcast', '3': 'Raining', '4': 'Snowing',
-                '5': 'Fog/Smog/Smoke', '6': 'Sleet/Hail/Freezing Rain',
-                '7': 'Severe Crosswind', '8': 'Blowing Sand or Dirt or Snow',
-                '9': 'Other', '10': 'Foggy'}
+# np.nan: 'Unknown'
+weather_dict = {0.0: 'Unknown', 1.0: 'Clear or Partly Cloudy',  
+                2.0: 'Overcast', 3.0: 'Raining', 4.0: 'Snowing',
+                5.0: 'Fog/Smog/Smoke', 6.0: 'Sleet/Hail/Freezing Rain',
+                7.0: 'Severe Crosswind', 8.0: 'Blowing Sand or Dirt or Snow',
+                9.0: 'Other', 10.0: 'Foggy'}
 
 # LIGHT (lighting condition)
+# np.nan: 'Unknown'
 light_dict = {1.0: 'Daylight', 2.0: 'Dawn', 3.0: 'Dusk',
               4.0: 'Dark, Street Lights On', 5.0: 'Dark, Street Lights Off', 
-              6.0: 'No Street Lights', 7.0: 'Other', 9.0: 'Unknown', np.nan: 'Unknown'}
+              6.0: 'No Street Lights', 7.0: 'Other', 9.0: 'Unknown'}
 
 # COUNTY (county where the accident happened)
 county_dict = {0: 'Not Stated', 1:'Adams', 2: 'Asotin', 3: 'Benton', 4: 'Chelan',
@@ -51,33 +53,40 @@ weekday_dict = {1: 'Monday', 2: 'Tuesday', 3: 'Wednesday', 4: 'Thursday', 5: 'Fr
 
 # rur_urb (rural or urban)
 # be careful on nan, use np.isnan() to judge
-rur_urb_dict = {'R': 'rural', 'U': 'urban', np.nan: 'not stated'}
+# np.nan: 'not stated'
+rur_urb_dict = {'R': 'rural', 'U': 'urban'}
 
 # RDSURF (roadway surface condition)
+# np.nan: 'Unknown'
 roadway_surf_dict = {1.0: 'Dry', 2.0: 'Wet', 3.0: 'Snow/Slush', 4.0: 'Ice',
                      5.0: 'Sand/Mud/Dirt', 6.0: 'Oil', 7.0: 'Standing Water',
-                     8.0: 'Other', 9.0: 'Unknown', np.nan: 'Unknown'}
+                     8.0: 'Other', 9.0: 'Unknown'}
 
 
-# In[29]:
+# In[58]:
 
 
 # basic
 # user input: year, county
+
+# changes:
+# zoom level
+# opacity
+# when focus on county, things are too dense
+# moved df = df[df.COUNTY == county] up so that map can start correctly
+
 def plot_basic(year, county, map_sink):
     """
     with specified year and county
     """
 
     df = pd.read_csv('../data/crash-merged/{}.csv'.format(year))
+    df = df[df.COUNTY == county]
     accWA = folium.Map([df.lat.median(), df.lon.median()],
                    tiles = '',
                    prefer_canvas=True,
-                   zoom_start=8)
+                   zoom_start=10)
     folium.TileLayer('cartodbpositron', name = 'bright').add_to(accWA)
-
-    df = df[df.COUNTY == county]
-
 
     for _, row in df.iterrows():
         assert row.COUNTY == county
@@ -120,13 +129,13 @@ def plot_basic(year, county, map_sink):
     return accWA
 
 
-# In[31]:
+# In[59]:
 
 
-_ = plot_basic(2017, 17, "test.html")
+_ = plot_basic(2017, 18, "test.html")
 
 
-# In[34]:
+# In[60]:
 
 
 def plot_layer_by_year(county, map_sink):
@@ -190,11 +199,11 @@ def plot_layer_by_year(county, map_sink):
                                 popup=folium.Popup("{}, {}".format(row.FORM_REPT_NO,
                                                                    severity_dict[row.REPORT]), max_width=150),
                                 # fill_color="#3db7e4",
-                                # color=cirlColor,
+                                color='black',
                                 weight = 0.2,
                                 fill_color=cirleColor,
                                 fill=True,
-                                fill_opacity=0.4
+                                fill_opacity=0.2
                          ).add_to(crashes[-1])
     
         
@@ -208,16 +217,10 @@ def plot_layer_by_year(county, map_sink):
     return accWA
 
 
-# In[35]:
+# In[61]:
 
 
 _ = plot_layer_by_year(17, "test.html")
-
-
-# In[ ]:
-
-
-
 
 
 # In[40]:

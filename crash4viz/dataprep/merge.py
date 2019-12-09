@@ -70,7 +70,7 @@ def detect_files(directory, keyword):
 
 # #### merge noaa coords with acc and clean
 
-# In[4]:
+# In[9]:
 
 
 def acc_merge(acc_file_list, noaa_coords, directory):
@@ -79,7 +79,7 @@ def acc_merge(acc_file_list, noaa_coords, directory):
         yr = file[2:4]
         acc_file = directory + '/' + file
         tmp = pd.read_csv(acc_file)
-        tmp = tmp.dropna(subset=['State_Plane_X', 'State_Plane_Y'])
+        tmp = tmp.dropna(subset=['State_Plane_X', 'State_Plane_Y']).reset_index()
         tmp['ID'] = tmp.index + 1
         crashes[2000+int(yr)] = tmp
     
@@ -94,6 +94,8 @@ def acc_merge(acc_file_list, noaa_coords, directory):
 
     for yr in crashes.keys():
         crashes[yr] = crashes[yr][columns]
+        crashes[yr].LIGHT = pd.to_numeric(crashes[yr].LIGHT, errors='coerce')
+        crashes[yr].weather = pd.to_numeric(crashes[yr].weather, errors='coerce')
     
     return crashes
 
@@ -113,7 +115,7 @@ def read_files(directory, keyword):
 
 # #### final meta merge func
 
-# In[6]:
+# In[20]:
 
 
 def meta_merge(crashes, curv, grad, occ, road, veh):
@@ -170,7 +172,18 @@ def meta_merge(crashes, curv, grad, occ, road, veh):
         records = records.sample(frac=1).drop_duplicates(subset='CASENO').sort_index()
         
         records = records.fillna(value={'pct_grad': 0})
+        
+        columns = ['CASENO', 'FORM_REPT_NO', 'rd_inv', 'milepost', 'RTE_NBR', 'lat', 'lon',
+                   'MONTH', 'DAYMTH', 'WEEKDAY', 'RDSURF', 'LIGHT', 'weather', 'rur_urb',
+                   'REPORT', 'veh_count', 'COUNTY', 'AADT', 'mvmt', 'deg_curv', 'dir_grad',
+                   'pct_grad']
+        records = records[columns]
+        
+        for i in range(records.shape[0]):
+            if not isinstance(records.iloc[i, -2], str):
+                records.iloc[i, -2] = '0'
     
+        records = records.dropna()
         # when everything is done, save
         meta[yr] = records
     return meta
@@ -190,7 +203,7 @@ for yr in range(2013, 2018):
 
 # #### detect and read all acc files
 
-# In[8]:
+# In[10]:
 
 
 acc_file_list = detect_files("../../data/hsis-csv", 'acc')
@@ -201,7 +214,7 @@ crashes = acc_merge(acc_file_list, noaa_coords, '../../data/hsis-csv')
 
 # #### read them first
 
-# In[9]:
+# In[11]:
 
 
 curv = read_files("../../data/hsis-csv", 'curv')
@@ -213,12 +226,13 @@ veh = read_files("../../data/hsis-csv", 'veh')
 
 # #### meta merge
 
-# In[10]:
+# In[21]:
 
 
 met = meta_merge(crashes, curv, grad, occ, road, veh)
 for yr in range(2013, 2018):
     met[yr].to_csv('../../data/crash-merged/{}.csv'.format(yr), index=False)
+    print('finished {}'.format(yr))
 
 
 # In[ ]:
