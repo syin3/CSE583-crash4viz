@@ -10,51 +10,67 @@ import folium
 import folium.plugins
 from . import mapping_funcs
 warnings.filterwarnings('ignore')
+import pandas as pd
 
 class Maps:
 
     """Class encompassing all the functions for generating maps based on user
     selections."""
 
-    def basic_map(self, grp_feature, subgrp_feature, incident_type, data, map_sink=None):
+    def basic_map(
+            self, county_name, county, group, dataframe, subgrp_df, map_sink=None):
         """Creates a map with no layers or clusters, the chosen incident_type
         is marked directly on the map at the lat/lon location that it occurs."""
 
-        group_df = data.groupby(grp_feature)
-        subgrp_df = group_df.get_group(subgrp_feature)
-        r_incident_dict = mapping_funcs.R_INCIDENT_DICT
-        incident = r_incident_dict[incident_type]
-        grp_dict = mapping_funcs.GRP_DICT
+        severity_dict = mapping_funcs.INCIDENT_DICT
 
         if map_sink is None:
             map_dir = mapping_funcs.MAPS_DIR
-            group = grp_dict[grp_feature]
-            map_sink = map_dir + f'/{group}_{incident}_basic_map.html'
+            map_sink = map_dir + f'/{county_name}_{group}_basic_map.html'
 
         # create map object centered at the median location of the df
-        lat = data['lat'].median()
-        lon = data['lon'].median()
+        lat = dataframe['lat'].median()
+        lon = dataframe['lon'].median()
 
         acc_wa = folium.Map([lat, lon],
                             prefer_canvas=True,
                             zoom_start=8)
 
         for _, row in subgrp_df.iterrows():
+            assert row.COUNTY == county
+            # define circle color by severity
+            if row.REPORT == 2:
+                # injury
+                cirlecolor = "#007849" 
+            elif row.REPORT == 3: 
+                # fatal
+                cirlecolor = 'red'
+            else:
+                # just property damage
+                cirlecolor = 'steelblue'
 
-            if row[incident_type] > 0:
-                cirlcolor = "#007849"
+            # define circle radius by severity
+            if row.REPORT == 1:
+                # property
+                cirleradius = 4
+            elif row.REPORT == 2:
+                # injury
+                cirleradius = 8
+            else:
+                # fatal
+                cirleradius = 12
 
-                cirlradius = row[incident_type] * 2
-
-                folium.CircleMarker(
-                    [row['lat'], row['lon']],
-                    radius=cirlradius,
-                    weight=0.2,
-                    fill_color=cirlcolor,
-                    fill=True,
-                    fill_opacity=0.8,
-                    popup=f'{incident},{row[incident_type]}'
-                ).add_to(acc_wa)
+            folium.CircleMarker([row.lat, row.lon],
+                                radius=cirleradius,
+                                popup=folium.Popup("{}, {}".format(row.FORM_REPT_NO,
+                                                                   severity_dict[row.REPORT]), max_width=150),
+                                # fill_color="#3db7e4",
+                                # color=cirlcolor,
+                                weight=0.2,
+                                fill_color=cirlecolor,
+                                fill=True,
+                                fill_opacity=0.4
+            ).add_to(acc_wa)
 
         acc_wa.save(map_sink)
 
@@ -62,185 +78,215 @@ class Maps:
 
 
     def plot_folium_filtered_clusters(
-            self, grp_feature, subgrp_feature, incident_type, data,
-            map_sink=None):
+            self, county_name, county, group, dataframe, subgrp_df, map_sink=None):
         """Create a map with interactable clusters that describes the frequency
         of the chosen incident_type by location."""
 
-        group_df = data.groupby(grp_feature)
-        subgrp_df = group_df.get_group(subgrp_feature)
-        r_incident_dict = mapping_funcs.R_INCIDENT_DICT
-        incident = r_incident_dict[incident_type]
-        grp_dict = mapping_funcs.GRP_DICT
-
+        severity_dict = mapping_funcs.INCIDENT_DICT
+        
         if map_sink is None:
             map_dir = mapping_funcs.MAPS_DIR
-            group = grp_dict[grp_feature]
-            map_sink = map_dir + f'/{group}_{incident}_cluster_map.html'
+            map_sink = map_dir + f'/{county_name}_{group}_cluster_map.html'
 
         # create map object centered at the median location of the df
-        lat = data['lat'].median()
-        lon = data['lon'].median()
+        lat = dataframe['lat'].median()
+        lon = dataframe['lon'].median()
 
         acc_wa = folium.Map([lat, lon],
-                            # tiles="cartodbpositron",
-                            # tiles = '',
-                            # width='80%',
-                            # height='80%',
                             prefer_canvas=True,
                             zoom_start=8)
 
         clust = folium.plugins.MarkerCluster()
 
         for _, row in subgrp_df.iterrows():
-            if row[incident_type] > 0:
-                cirlcolor = "#007849"
-                cirlradius = row[incident_type] * 2
-                clust.add_child(folium.Marker(
+            if row.REPORT == 2:
+                # injury
+                cirlecolor = "#007849" 
+            elif row.REPORT == 3: 
+                # fatal
+                cirlecolor = 'red'
+            else:
+                # just property damage
+                cirlecolor = 'steelblue'
+
+            # define circle radius by severity
+            if row.REPORT == 1:
+                # property
+                cirleradius = 4
+            elif row.REPORT == 2:
+                # injury
+                cirleradius = 8
+            else:
+                # fatal
+                cirleradius = 12
+                # cirlradius = max(row['# INJ'], row['# FAT']) * 3
+
+            clust.add_child(folium.Marker(
                     location=[row['lat'], row['lon']],
-                    radius=cirlradius,
+                    radius=cirleradius,
                     popup=folium.Popup("{}: {}".format(
-                        incident, row[incident_type]), max_width=150),
+                        row.FORM_REPT_NO,
+                        severity_dict[row.REPORT]),
+                        max_width=150),
                     weight=0.2,
-                    fill_color=cirlcolor,
+                    fill_color=cirlecolor,
                     fill=True,
                     fill_opacity=0.4))
-
         acc_wa.add_child(clust)
 
         acc_wa.save(map_sink)
 
         return acc_wa
 
-    def plot_folium_filtered_layers(
-            self, grp_feature, subgrp_feature, incident_type, data,
-            map_sink=None):
+    def plot_folium_filtered_layers(self, group, county_name, county, grp_feature, subgrp_feature, map_sink=None):
         """Creates a map with layers showing the selected incident_type by
         year."""
-
-        group_df = data.groupby(grp_feature)
-        subgrp_df = group_df.get_group(subgrp_feature)
-        r_incident_dict = mapping_funcs.R_INCIDENT_DICT
-        incident = r_incident_dict[incident_type]
-        grp_dict = mapping_funcs.GRP_DICT
+        
+        datadir = mapping_funcs.DATA_DIR
+        severity_dict = mapping_funcs.INCIDENT_DICT
 
         if map_sink is None:
             map_dir = mapping_funcs.MAPS_DIR
-            group = grp_dict[grp_feature]
-            map_sink = map_dir + f'/{group}_{incident}_layer_map.html'
+            map_sink = map_dir + f'/{county_name}_{group}_by_year_map.html'
+        
+        # read data
+        dataframe = pd.read_csv(datadir + '/2013.csv')
+        dataframe = dataframe[dataframe.COUNTY == county]
+        acc_wa = folium.Map([dataframe.lat.median(), dataframe.lon.median()],
+                           tiles='',
+                           prefer_canvas=True,
+                           zoom_start=8)
 
-        # create map object centered at the median location of the df
-        lat = data['lat'].median()
-        lon = data['lon'].median()
-
-        acc_wa = folium.Map([lat, lon],
-                            # tiles="cartodbpositron",
-                            tiles='',
-                            # width='80%',
-                            # height='80%',
-                            prefer_canvas=True,
-                            zoom_start=8)
-
-        # add tile layer
-        folium.TileLayer('openstreetmap').add_to(acc_wa)
-        #folium.TileLayer('CartoDB dark_matter', name = 'dark').add_to(acc_wa)
-
-        start = 2008
-        end = 2017
+        folium.TileLayer('cartodbpositron', name='bright').add_to(acc_wa)
         layers = []
 
-        for year in range(start, end + 1):
-            layer = folium.FeatureGroup(
-                name=str(year) + ': ' + incident, show=False)
+        for year in range(2013, 2018):
+            
+            layer = folium.FeatureGroup(name=str(year), show=False)
             layers.append(layer)
             acc_wa.add_child(layers[-1])
+            
+            dataframe = pd.read_csv(datadir + '/{}.csv'.format(year))
+            dataframe = dataframe[dataframe.COUNTY == county]
+            group_df = dataframe.groupby(grp_feature)
+            subgrp_df = group_df.apply(lambda g: g[g['weather'] == subgrp_feature])
+        
+            # add crash events to their layers
+            for _, row in subgrp_df.iterrows():
+            
+                assert row.COUNTY == county
+                # define circle color by severity
+                if row.REPORT == 2:
+                    # injury
+                    cirlecolor = "#007849" 
+                elif row.REPORT == 3: 
+                    # fatal
+                    cirlecolor = 'red'
+                else:
+                    # just property damage
+                    cirlecolor = 'steelblue'
 
-            for _, row in subgrp_df[subgrp_df['Year'] == str(year)].iterrows():
+                # define circle radius by severity
+                if row.REPORT == 1:
+                    # property
+                    cirleradius = 4
+                elif row.REPORT == 2:
+                    # injury
+                    cirleradius = 8
+                else:
+                    # fatal
+                    cirleradius = 12
 
-                if row[incident_type] > 0:
-                    cirlcolor = "#007849"
-
-                    cirlradius = row[incident_type] * 2
-
-                    folium.CircleMarker(
-                        [row['lat'], row['lon']],
-                        radius=cirlradius,
-                        weight=0.2,
-                        fill_color=cirlcolor,
-                        fill=True,
-                        fill_opacity=0.8,
-                        popup=f'{incident},{row[incident_type]}'
-                    ).add_to(layers[-1])
+                folium.CircleMarker([row.lat, row.lon],
+                                    radius=cirleradius,
+                                    popup=folium.Popup("{}, {}".format(row.FORM_REPT_NO,
+                                                                       severity_dict[row.REPORT]), max_width=150),
+                                    weight=0.2,
+                                    fill_color=cirlecolor,
+                                    fill=True,
+                                    fill_opacity=0.4
+                ).add_to(layers[-1])
 
         # add layer control
         folium.LayerControl().add_to(acc_wa)
-
+            
         # save map
         acc_wa.save(map_sink)
-
+    
         return acc_wa
 
+
     def plot_folium_filtered_clusters_layers(
-            self, grp_feature, subgrp_feature, incident_type, data,
+            self, county_name, county, group, grp_feature, subgrp_feature,
             map_sink=None):
         """Creates a map with layers showing the selected incident_type by
         year grouped into clusters by region."""
 
-        group_df = data.groupby(grp_feature)
-        subgrp_df = group_df.get_group(subgrp_feature)
-        r_incident_dict = mapping_funcs.R_INCIDENT_DICT
-        incident = r_incident_dict[incident_type]
-        grp_dict = mapping_funcs.GRP_DICT
+        datadir = mapping_funcs.DATA_DIR
+        severity_dict = mapping_funcs.INCIDENT_DICT
 
         if map_sink is None:
             map_dir = mapping_funcs.MAPS_DIR
-            group = grp_dict[grp_feature]
-            map_sink = map_dir + f'/{group}_{incident}_layer_cluster_map.html'
+            map_sink = map_dir + f'/{county_name}_{group}_cluster_by_year_map.html'
+        
+        # read data
+        dataframe = pd.read_csv(datadir + '/2013.csv')
+        dataframe = dataframe[dataframe.COUNTY == county]
+        acc_wa = folium.Map([dataframe.lat.median(), dataframe.lon.median()],
+                           tiles='',
+                           prefer_canvas=True,
+                           zoom_start=8)
 
-        # create map object centered at the median location of the df
-        lat = data['lat'].median()
-        lon = data['lon'].median()
-
-        acc_wa = folium.Map([lat, lon],
-                            # tiles="cartodbpositron",
-                            tiles='',
-                            # width='80%',
-                            # height='80%',
-                            prefer_canvas=True,
-                            zoom_start=8)
-
-        # add tile layer
-        folium.TileLayer('openstreetmap').add_to(acc_wa)
-        #folium.TileLayer('CartoDB dark_matter', name = 'dark').add_to(acc_wa)
-
-        start = 2008
-        end = 2017
+        folium.TileLayer('cartodbpositron', name='bright').add_to(acc_wa)
         layers = []
 
-        for year in range(start, end + 1):
-            layer = folium.FeatureGroup(
-                name=str(year) + ': ' + incident, show=False)
+        for year in range(2013, 2018):
+            
+            layer = folium.FeatureGroup(name=str(year), show=False)
             layers.append(layer)
             acc_wa.add_child(layers[-1])
-
+            
+            dataframe = pd.read_csv(datadir + '/{}.csv'.format(year))
+            dataframe = dataframe[dataframe.COUNTY == county]
+            group_df = dataframe.groupby(grp_feature)
+            subgrp_df = group_df.apply(lambda g: g[g['weather'] == subgrp_feature])
+            
             clust = folium.plugins.MarkerCluster()
 
-            for _, row in subgrp_df[subgrp_df['Year'] == str(year)].iterrows():
+            for _, row in subgrp_df.iterrows():
+            
+                assert row.COUNTY == county
+                # define circle color by severity
+                if row.REPORT == 2:
+                    # injury
+                    cirlecolor = "#007849" 
+                elif row.REPORT == 3: 
+                    # fatal
+                    cirlecolor = 'red'
+                else:
+                    # just property damage
+                    cirlecolor = 'steelblue'
 
-                if row[incident_type] > 0:
-                    cirlcolor = "#007849"
+                # define circle radius by severity
+                if row.REPORT == 1:
+                    # property
+                    cirleradius = 4
+                elif row.REPORT == 2:
+                    # injury
+                    cirleradius = 8
+                else:
+                    # fatal
+                    cirleradius = 12
 
-                    cirlradius = row[incident_type] * 2
-
-                    clust.add_child(folium.Marker(
-                        location=[row['lat'], row['lon']],
-                        radius=cirlradius,
-                        popup=folium.Popup("{}: {}".format(
-                            incident, row[incident_type]), max_width=150),
-                        weight=0.2,
-                        fill_color=cirlcolor,
-                        fill=True,
-                        fill_opacity=0.4)).add_to(layers[-1])
+                clust.add_child(folium.Marker(
+                    location=[row['lat'], row['lon']],
+                    radius=cirleradius,
+                    popup=folium.Popup("{}, {}".format(row.FORM_REPT_NO,
+                                                       severity_dict[row.REPORT]), max_width=150),
+                    weight=0.2,
+                    fill_color=cirlecolor,
+                    fill=True,
+                    fill_opacity=0.4)).add_to(layers[-1])
 
         # add layer control
         folium.LayerControl().add_to(acc_wa)
