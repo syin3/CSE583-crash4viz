@@ -6,8 +6,9 @@ install:
 - travis_retry pip install -e .
 
 script:
-- flake8
 - python -m unittest discover
+
+script:
 - cd crash4viz/tests
 - pytest test_ml.py
 
