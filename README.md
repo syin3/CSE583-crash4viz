@@ -26,24 +26,16 @@ The project has the following structure:
         |-- setup.py
         |-- crash4viz
         |   |-- __init__.py
-        |   |-- folium.ipynb
-        |   |-- folium.py
         |   |-- mapping.py
         |   |-- mapping_funcs.py
         |   |-- mlpredict.py
         |   |-- dataprep
-        |   |   |-- coords_conversion.ipynb
-        |   |   |-- coords_conversion.py
-        |   |   |-- create-sample.ipynb
-        |   |   |-- create-sample.py
-        |   |   |-- merge.ipynb
-        |   |   |-- merge.py
-        |   |   |-- obsolete-wrangle.ipynb
-        |   |   |-- xlsx2csv.ipynb
-        |   |   |-- xlsx2csv.py
-        |   |-- milepost
-        |   |   |-- plot-milepost.ipynb
-        |   |   |-- plot-milepost.py
+        |   |   |-- s1-xlsx2csv.py
+        |   |   |-- s2-coords_convert.py
+        |   |   |-- s3-merge.py
+        |   |   |-- s4-folium_prep.py
+                |-- milepost
+                        |-- plot-milepost.py
         |   |-- tests
         |       |-- __init__.py
         |       |-- test_mapping.py
