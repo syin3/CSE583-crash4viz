@@ -36,13 +36,14 @@ The project has the following structure:
         |-- data
             |-- hsis-csv/
             |-- crash-merged/
+            |-- ...
         |-- docs
             |-- pre-final pre.pdf
+            |-- examples/
             |-- data handbook/
             |-- design docs/
             |-- final pre/
             |-- tech review/
-        |-- examples/
         |-- outputs/
 
 
