@@ -138,7 +138,9 @@ class Maps:
 
         return acc_wa
 
-    def plot_folium_filtered_layers(self, group, county_name, county, grp_feature, subgrp_feature, map_sink=None):
+    def plot_folium_filtered_layers(
+            self, group, county_name,
+            county, grp_feature, subgrp_feature, map_sink=None):
         """Creates a map with layers showing the selected incident_type by
         year."""
         
