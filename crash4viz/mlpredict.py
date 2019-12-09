@@ -1,5 +1,6 @@
 import tkinter
 import matplotlib as mpl
+mpl.use('TkAgg')
 import matplotlib.pyplot as plt
 import pandas as pd
 import warnings
@@ -7,7 +8,6 @@ import numpy as np
 from . import mapping_funcs
 from sklearn.model_selection import train_test_split
 warnings.filterwarnings('ignore')
-mpl.use('TkAgg')
 
 # Create the data frame of Traffic Accidents from 2013 - 2017
 merged_data_2013 = pd.read_csv(mapping_funcs.DATA_DIR + '/2013.csv')

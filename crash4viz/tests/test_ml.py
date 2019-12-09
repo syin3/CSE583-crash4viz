@@ -3,6 +3,7 @@ import unittest
 import pandas as pd
 import inspect
 import sys
+import tkinter
 CURRENTDIR = os.path.dirname(os.path.abspath(inspect.getfile(inspect.currentframe())))
 PARENTDIR = os.path.dirname(CURRENTDIR)
 PARENT = os.path.dirname(PARENTDIR)
