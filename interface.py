@@ -193,7 +193,7 @@ class MainApp(tk.Tk):
         county = county_dict[self.selection1.get()]
         county_name = mapping_funcs.COUNTY_DICT[county]
         grp_feature = vars_dict[self.selection2.get()]
-        subgrp_feature = self.selection3.get()
+        subgrp_feature = subgroups_dict[self.selection2.get()][self.selection3.get()]
         my_map = mapping.Maps() 
 
         data = mapping_funcs.read_dataframe(year)
