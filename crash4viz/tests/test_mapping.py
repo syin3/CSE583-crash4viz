@@ -15,7 +15,7 @@ sys.path.insert(0, PARENT)
 from crash4viz import mapping
 from crash4viz import mapping_funcs
 
-TEST_OUTPUT = 'test_output/generation_times.tsv'
+TEST_OUTPUT = CURRENTDIR + '/test_output/generation_times.tsv'
 
 class TestMapping(unittest.TestCase):
     """Test the different map options we have, the inputs to these mapping
@@ -32,32 +32,42 @@ class TestMapping(unittest.TestCase):
         generate. However, this will vary depending on how much data belongs
          to the test_grp_feature and test_subgrp_feature. Run from the
          top-most level of the WAcrashviz package."""
+        
+        vars_dict = mapping_funcs.VARS_DICT
+        subgroups_dict = mapping_funcs.R_SUBGROUPS_DICT
+        incident_dict = mapping_funcs.R_INCIDENT_DICT
+        county_dict = mapping_funcs.R_COUNTY_DICT
 
-        r_incident_dict = mapping_funcs.R_INCIDENT_DICT
-        grp_dict = mapping_funcs.GRP_DICT
-        test_grp_feature = 'WEATHER'
-        test_grp = grp_dict[test_grp_feature]
-        test_subgrp_feature = 'Raining'
-        test_incident_type = '# INJ'
-        test_inc = r_incident_dict[test_incident_type]
-        test_df = mapping_funcs.read_dataframe()
+        test_year = '2013'
+        test_county = county_dict['Adams']
+        test_county_name = mapping_funcs.COUNTY_DICT[test_county]
+        test_grp_feature = vars_dict['Weather']
+        test_subgrp_feature = subgroups_dict['Weather']['Raining']
+
+        test_df = mapping_funcs.read_dataframe(test_year)
+        test_dataframe = test_df[test_df.COUNTY == test_county]
+        test_group_df = test_dataframe.groupby(test_grp_feature)
+        test_subgrp_df = test_group_df.apply(lambda g: g[g['weather'] == test_subgrp_feature])
+        test_grp_dict = mapping_funcs.GRP_DICT
+        test_group = test_grp_dict[test_grp_feature]
+
         testmap = mapping.Maps()
         map_sink = CURRENTDIR + '/test_output/'
-        map_sink = map_sink + f'{test_grp}_{test_inc}_basic_map_test.html'
+        map_sink = map_sink + f'{test_group}_basic_map_test.html'
         t_zero = time.time()
         testmap.basic_map(
-            test_grp_feature,
-            test_subgrp_feature,
-            test_incident_type,
-            test_df,
+            test_county_name,
+            test_county,
+            test_group,
+            test_dataframe,
+            test_subgrp_df,
             map_sink)
         t_one = time.time()
 
         total = t_one - t_zero
         time_to_generate = 'basic map generation time is ' + str(total)
 
-
-        with open(TEST_OUTPUT, 'a') as output:
+        with open(TEST_OUTPUT, 'a+') as output:
             output.write(time_to_generate)
 
     def test_cluster_map(self):
@@ -66,31 +76,43 @@ class TestMapping(unittest.TestCase):
         generate. However, this will vary depending on how much data belongs
          to the test_grp_feature and test_subgrp_feature. Run from the
          top-most level of the WAcrashviz package."""
+        
+        vars_dict = mapping_funcs.VARS_DICT
+        subgroups_dict = mapping_funcs.R_SUBGROUPS_DICT
+        incident_dict = mapping_funcs.R_INCIDENT_DICT
+        county_dict = mapping_funcs.R_COUNTY_DICT
 
-        r_incident_dict = mapping_funcs.R_INCIDENT_DICT
-        grp_dict = mapping_funcs.GRP_DICT
-        test_grp_feature = 'WEATHER'
-        test_grp = grp_dict[test_grp_feature]
-        test_subgrp_feature = 'Raining'
-        test_incident_type = '# INJ'
-        test_inc = r_incident_dict[test_incident_type]
-        test_df = mapping_funcs.read_dataframe()
+        test_year = '2013'
+        test_county = county_dict['Adams']
+        test_county_name = mapping_funcs.COUNTY_DICT[test_county]
+        test_grp_feature = vars_dict['Weather']
+        test_subgrp_feature = subgroups_dict['Weather']['Raining']
+
+        test_df = mapping_funcs.read_dataframe(test_year)
+        test_dataframe = test_df[test_df.COUNTY == test_county]
+        test_group_df = test_dataframe.groupby(test_grp_feature)
+        test_subgrp_df = test_group_df.apply(lambda g: g[g['weather'] == test_subgrp_feature])
+        test_grp_dict = mapping_funcs.GRP_DICT
+        test_group = test_grp_dict[test_grp_feature]
+
         testmap = mapping.Maps()
         map_sink = CURRENTDIR + '/test_output/'
-        map_sink = map_sink + f'{test_grp}_{test_inc}_cluster_map_test.html'
+        map_sink = map_sink + f'{test_group}_cluster_map_test.html'
         t_zero = time.time()
+
         testmap.plot_folium_filtered_clusters(
-            test_grp_feature,
-            test_subgrp_feature,
-            test_incident_type,
-            test_df,
+            test_county_name,
+            test_county,
+            test_group,
+            test_dataframe,
+            test_subgrp_df,
             map_sink)
         t_one = time.time()
 
         total = t_one - t_zero
         time_to_generate = 'cluster map generation time is ' + str(total)
 
-        with open(TEST_OUTPUT, 'a') as output:
+        with open(TEST_OUTPUT, 'a+') as output:
             output.write(time_to_generate)
 
     def test_layer_map(self):
@@ -99,59 +121,88 @@ class TestMapping(unittest.TestCase):
         generate. However, this will vary depending on how much data belongs
          to the test_grp_feature and test_subgrp_feature. Run from the
          top-most level of the WAcrashviz package."""
+        
+        vars_dict = mapping_funcs.VARS_DICT
+        subgroups_dict = mapping_funcs.R_SUBGROUPS_DICT
+        incident_dict = mapping_funcs.R_INCIDENT_DICT
+        county_dict = mapping_funcs.R_COUNTY_DICT
 
-        r_incident_dict = mapping_funcs.R_INCIDENT_DICT
-        grp_dict = mapping_funcs.GRP_DICT
-        test_grp_feature = 'WEATHER'
-        test_grp = grp_dict[test_grp_feature]
-        test_subgrp_feature = 'Raining'
-        test_incident_type = '# INJ'
-        test_inc = r_incident_dict[test_incident_type]
-        test_df = mapping_funcs.read_dataframe()
+        test_year = '2013'
+        test_county = county_dict['Adams']
+        test_county_name = mapping_funcs.COUNTY_DICT[test_county]
+        test_grp_feature = vars_dict['Weather']
+        test_subgrp_feature = subgroups_dict['Weather']['Raining']
+
+        test_df = mapping_funcs.read_dataframe(test_year)
+        test_dataframe = test_df[test_df.COUNTY == test_county]
+        test_group_df = test_dataframe.groupby(test_grp_feature)
+        test_subgrp_df = test_group_df.apply(lambda g: g[g['weather'] == test_subgrp_feature])
+        test_grp_dict = mapping_funcs.GRP_DICT
+        test_group = test_grp_dict[test_grp_feature]
+
         testmap = mapping.Maps()
         map_sink = CURRENTDIR + '/test_output/'
-        map_sink = map_sink + f'{test_grp}_{test_inc}_layer_map_test.html'
+        map_sink = map_sink + f'{test_group}_basic_map_test.html'
         t_zero = time.time()
+
         testmap.plot_folium_filtered_layers(
+            test_group,
+            test_county_name,
+            test_county,
             test_grp_feature,
             test_subgrp_feature,
-            test_incident_type,
-            test_df,
             map_sink)
         t_one = time.time()
 
         total = t_one - t_zero
         time_to_generate = 'layer map generation time is ' + str(total)
 
-        with open(TEST_OUTPUT, 'a') as output:
+        with open(TEST_OUTPUT, 'a+') as output:
             output.write(time_to_generate)
 
-    def test_gigantic_map(self):
+    def test_layer_cluster_map(self):
 
         """Use this test to assess how much time the big map takes to
         generate. However, this will vary depending on how much data belongs
          to the test_grp_feature and test_subgrp_feature. Run from the
          top-most level of the WAcrashviz package."""
+        
+        vars_dict = mapping_funcs.VARS_DICT
+        subgroups_dict = mapping_funcs.R_SUBGROUPS_DICT
+        incident_dict = mapping_funcs.R_INCIDENT_DICT
+        county_dict = mapping_funcs.R_COUNTY_DICT
 
-        r_incident_dict = mapping_funcs.R_INCIDENT_DICT
-        grp_dict = mapping_funcs.GRP_DICT
-        test_grp_feature = 'WEATHER'
-        test_grp = grp_dict[test_grp_feature]
-        test_df = mapping_funcs.read_dataframe()
+        test_year = '2013'
+        test_county = county_dict['Adams']
+        test_county_name = mapping_funcs.COUNTY_DICT[test_county]
+        test_grp_feature = vars_dict['Weather']
+        test_subgrp_feature = subgroups_dict['Weather']['Raining']
+
+        test_df = mapping_funcs.read_dataframe(test_year)
+        test_dataframe = test_df[test_df.COUNTY == test_county]
+        test_group_df = test_dataframe.groupby(test_grp_feature)
+        test_subgrp_df = test_group_df.apply(lambda g: g[g['weather'] == test_subgrp_feature])
+        test_grp_dict = mapping_funcs.GRP_DICT
+        test_group = test_grp_dict[test_grp_feature]
+
         testmap = mapping.Maps()
         map_sink = CURRENTDIR + '/test_output/'
-        map_sink = map_sink + f'{test_grp}_big_map_test.html'
+        map_sink = map_sink + f'{test_group}_basic_map_test.html'
         t_zero = time.time()
-        testmap.plot_folium(
+
+        testmap.plot_folium_filtered_clusters_layers(
+            test_county_name,
+            test_county,
+            test_group,
             test_grp_feature,
-            test_df,
+            test_subgrp_feature,
             map_sink)
         t_one = time.time()
 
         total = t_one - t_zero
-        time_to_generate = 'gigantic map generation time is ' + str(total)
+        time_to_generate = 'layered cluster generation time is ' + str(total)
 
-        with open(TEST_OUTPUT, 'a') as output:
+        with open(TEST_OUTPUT, 'a+') as output:
             output.write(time_to_generate)
 
 if __name__ == '__main__':
