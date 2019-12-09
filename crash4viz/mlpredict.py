@@ -17,7 +17,8 @@ merged_data_2017 = pd.read_csv(mapping_funcs.DATA_DIR + '/2017.csv')
 
 
 def year_plot(merged_data_2013, merged_data_2014,
-              merged_data_2015, merged_data_2016, merged_data_2017):
+              merged_data_2015, merged_data_2016,
+              merged_data_2017, plot_sink=None):
 
     fig, ax1 = plt.subplots(figsize=(9, 7))
     fig.subplots_adjust(left=0.115, right=0.88)
@@ -30,10 +31,13 @@ def year_plot(merged_data_2013, merged_data_2014,
     ax1.set_title("Accidents count by year")
     plt.ylabel('Accidents count')
     plt.xlabel("Year")
-    plt.savefig(mapping_funcs.MAPS_DIR + '/year_plot.png')
+
+    if plot_sink is None:
+        plot_sink = mapping_funcs.MAPS_DIR
+    plt.savefig(plot_sink + '/year_plot.png')
 
 
-def month_plot(dataframe):
+def month_plot(dataframe, plot_sink=None):
     count_by_month = dataframe['MONTH'].value_counts()
     x = []
     y = []
@@ -52,10 +56,12 @@ def month_plot(dataframe):
     plt.xlabel("Month")
     plt.xticks(ind, ('Jan', 'Feb', 'Mar', 'April', 'May',
                      "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"))
-    plt.savefig(mapping_funcs.MAPS_DIR + '/month_plot.png')
+    if plot_sink is None:
+        plot_sink = mapping_funcs.MAPS_DIR
+    plt.savefig(plot_sink + '/month_plot.png')
 
 
-def weekday_plot(dataframe):
+def weekday_plot(dataframe, plot_sink=None):
     count_by_weekday = dataframe['WEEKDAY'].value_counts()
     # print(count_by_weekday)
     x = []
@@ -73,10 +79,12 @@ def weekday_plot(dataframe):
     plt.bar(y, x)
     plt.ylabel('Accidents count')
     plt.xlabel('Weekday')
-    plt.savefig(mapping_funcs.MAPS_DIR + '/weekday_plot.png')
+    if plot_sink is None:
+        plot_sink = mapping_funcs.MAPS_DIR
+    plt.savefig(plot_sink + '/weekday_plot.png')
 
 
-def weather_plot(dataframe):
+def weather_plot(dataframe, plot_sink):
     count_by_weather = dataframe['weather'].value_counts()
     # print(count_by_weather)
 
@@ -106,10 +114,12 @@ def weather_plot(dataframe):
     ax1.set_title("Accidents percentage count by weather")
     plt.pie(x, labels=labels, counterclock=True,
             labeldistance=1.05, autopct='%.0f%%', pctdistance=0.8, shadow=True)
-    plt.savefig(mapping_funcs.MAPS_DIR + '/weather_plot.png')
+    if plot_sink is None:
+        plot_sink = mapping_funcs.MAPS_DIR
+    plt.savefig(plot_sink + '/weather_plot.png')
 
 
-def road_plot(dataframe):
+def road_plot(dataframe, plot_sink):
     count_by_road = dataframe['RDSURF'].value_counts()
 
     s = dataframe.groupby(['RDSURF']).median().\
@@ -137,10 +147,12 @@ def road_plot(dataframe):
     plt.pie(x, labels=labels, counterclock=True,
             labeldistance=1.05, autopct='%.0f%%',
             pctdistance=0.88, shadow=True)
-    plt.savefig(mapping_funcs.MAPS_DIR + '/road_plot.png')
+    if plot_sink is None:
+        plot_sink = mapping_funcs.MAPS_DIR
+    plt.savefig(plot_sink + '/road_plot.png')
 
 
-def light_plot(dataframe):
+def light_plot(dataframe, plot_sink=None):
     count_by_LIGHT = dataframe['LIGHT'].value_counts()
     # print(count_by_LIGHT)
 
@@ -168,10 +180,12 @@ def light_plot(dataframe):
     plt.pie(x, labels=labels, counterclock=True,
             labeldistance=1.05, autopct='%.0f%%', pctdistance=0.8, shadow=True)
     plt.rcParams['font.size'] = 15
-    plt.savefig(mapping_funcs.MAPS_DIR + '/light_plot.png')
+    if plot_sink is None:
+        plot_sink = mapping_funcs.MAPS_DIR
+    plt.savefig(plot_sink + '/light_plot.png')
 
 
-def ml_prediction(dataframe):
+def ml_prediction(dataframe, plot_sink=None):
     df = dataframe
     columns = ['CASENO',
                'weather',
@@ -255,7 +269,6 @@ def ml_prediction(dataframe):
     print("The model accuarcy " + str(clf.score(X_train, y_train)))
 
     importances = clf.feature_importances_
-    import matplotlib.pyplot as plt
     # plt.style.use('fivethirtyeight')
     feature_list = ['weather', 'road surface condition', 'Daylight']
     x = list(range(len(importances)))
@@ -266,7 +279,9 @@ def ml_prediction(dataframe):
     plt.ylabel('Importance')
     plt.xlabel('Variable')
     plt.title('Variable Importances')
-    plt.savefig(mapping_funcs.MAPS_DIR + '/weather_factor_importance.png')
+    if plot_sink is None:
+        plot_sink = mapping_funcs.MAPS_DIR
+    plt.savefig(plot_sink + '/weather_factor_importance.png')
 
     # more factors
     from sklearn.preprocessing import LabelEncoder
@@ -298,7 +313,6 @@ def ml_prediction(dataframe):
           str(clf.score(X_train, y_train)))
 
     importances = clf.feature_importances_
-    import matplotlib.pyplot as plt
     # plt.style.use('fivethirtyeight')
     feature_list = ['WEEKDAY',
                     'weather',
