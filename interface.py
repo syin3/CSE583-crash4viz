@@ -6,6 +6,8 @@ import tkinter as tk
 import warnings
 from crash4viz import mapping_funcs
 from crash4viz import mapping
+from crash4viz import mlpredict
+import pandas as pd
 warnings.filterwarnings('ignore')
 
 class MainApp(tk.Tk):
@@ -124,7 +126,8 @@ class MainApp(tk.Tk):
         self.button4 = tk.Button(self, text='Show map',
                                  command=self.show_map).pack()
 
-
+        self.button5 = tk.Button(self, text='Generate ML reports',
+                                 command=lambda: self.generate_ml(self.selection0.get())).pack()
 
 
     def enable_next_dropdown(self, dropdown):
@@ -161,6 +164,24 @@ class MainApp(tk.Tk):
             menu.add_command(label=name, command=lambda name=name: var.set(name))
 
 
+    def generate_ml(self, year):
+        
+        merged_data = pd.read_csv(mapping_funcs.DATA_DIR + f'/{year}.csv')
+        month = mlpredict.month_plot(merged_data)
+        weekday = mlpredict.weekday_plot(merged_data)
+        weather = mlpredict.weather_plot(merged_data)
+        road = mlpredict.road_plot(merged_data)
+        light = mlpredict.light_plot(merged_data)
+        ml_prediction = mlpredict.ml_prediction(merged_data)
+
+        merged_data_2013 = pd.read_csv(mapping_funcs.DATA_DIR + '/2013.csv')
+        merged_data_2014 = pd.read_csv(mapping_funcs.DATA_DIR + '/2014.csv')
+        merged_data_2015 = pd.read_csv(mapping_funcs.DATA_DIR + '/2015.csv')
+        merged_data_2016 = pd.read_csv(mapping_funcs.DATA_DIR + '/2016.csv')
+        merged_data_2017 = pd.read_csv(mapping_funcs.DATA_DIR + '/2017.csv')
+        years = mlpredict.year_plot(merged_data_2013, merged_data_2014,
+                                    merged_data_2015, merged_data_2016, merged_data_2017)
+        
     def show_map(self):
         """Output the map that was chosen for the features that were selected,
         output text to inidicate where the final interactable html map is saved
