@@ -11,6 +11,10 @@ This is a project of CSE583 by Katharine Chen, Tianqi Fang, Yutong Liu, Shuyi Yi
 Our technology review introduces problem background, general use cases, data sets and initial data wrangling. It is online at [technology review](
 https://syin3.github.io/crash4viz/docs/tech%20review/#/).
 
+## Final Presentation
+Our final presentation per request of [CSE583 project requirement](http://uwseds.github.io/projects.html) introduces project background, database design, use cases, design, structure and lessons learned. It is online at [final pre](
+https://syin3.github.io/crash4viz/docs/final%20pre/).
+
 ## Organization of the  project
 
 The project has the following structure:
@@ -23,25 +27,23 @@ The project has the following structure:
             |-- mapping.py
             |-- mapping_funcs.py
             |-- mlpredict.py
-            |-- dataprep
-                |-- ...
+            |-- dataprep/
             |-- tests
-                |-- __init__.py
                 |-- test_mapping.py
                 |-- test_mapping_funcs.py
                 |-- test_ml.py
-                |-- test_output
+                |-- test_output/
         |-- data
-            |-- hsis-csv
-            |-- crash-merged
+            |-- hsis-csv/
+            |-- crash-merged/
         |-- docs
             |-- pre-final pre.pdf
-            |-- data handbook
-            |-- design docs
-            |-- final pre
-            |-- tech review
-        |-- examples
-        |-- outputs
+            |-- data handbook/
+            |-- design docs/
+            |-- final pre/
+            |-- tech review/
+        |-- examples/
+        |-- outputs/
 
 
 ## Install the program
