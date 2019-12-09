@@ -9,7 +9,6 @@ script:
 - flake8
 - cd crash4viz/tests
 - pytest test_ml.py
-# - python -m unittest discover
 
 after_success:
 - coveralls
