@@ -1,20 +1,22 @@
-#  import packeage
+import matplotlib as mpl
+mpl.use('TkAgg')
 import matplotlib.pyplot as plt
 import pandas as pd
 import warnings
 import numpy as np
 from sklearn.model_selection import train_test_split
 warnings.filterwarnings('ignore')
+from . import mapping_funcs
 
 # Create the data frame of Traffic Accidents from 2013 - 2017
-merged_data_2013 = pd.read_csv('../data/crash-merged/2013.csv')
-merged_data_2014 = pd.read_csv('../data/crash-merged/2014.csv')
-merged_data_2015 = pd.read_csv('../data/crash-merged/2015.csv')
-merged_data_2016 = pd.read_csv('../data/crash-merged/2016.csv')
-merged_data_2017 = pd.read_csv('../data/crash-merged/2017.csv')
+merged_data_2013 = pd.read_csv(mapping_funcs.DATA_DIR + '/2013.csv')
+merged_data_2014 = pd.read_csv(mapping_funcs.DATA_DIR + '/2014.csv')
+merged_data_2015 = pd.read_csv(mapping_funcs.DATA_DIR + '/2015.csv')
+merged_data_2016 = pd.read_csv(mapping_funcs.DATA_DIR + '/2016.csv')
+merged_data_2017 = pd.read_csv(mapping_funcs.DATA_DIR + '/2017.csv')
 
-# Create the data frame of Trffice Accidents from 2017
-df_2017 = pd.read_csv("../data/crash-merged/2017.csv")
+# Create the data frame of Traffic Accidents from 2017
+#df_2017 = pd.read_csv("../data/crash-merged/2017.csv")
 
 
 def year_plot(merged_data_2013, merged_data_2014,
@@ -31,11 +33,11 @@ def year_plot(merged_data_2013, merged_data_2014,
     ax1.set_title("Accidents count by year")
     plt.ylabel('Accidents count')
     plt.xlabel("Year")
-    plt.savefig('../outputs/year_plot.png')
+    plt.savefig(mapping_funcs.MAPS_DIR + '/year_plot.png')
 
 
-def month_plot(df_2017):
-    count_by_month = df_2017['MONTH'].value_counts()
+def month_plot(dataframe):
+    count_by_month = dataframe['MONTH'].value_counts()
     x = []
     y = []
     for i in range(0, 12):
@@ -53,11 +55,11 @@ def month_plot(df_2017):
     plt.xlabel("Month")
     plt.xticks(ind, ('Jan', 'Feb', 'Mar', 'April', 'May',
                      "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"))
-    plt.savefig('../outputs/month_plot.png')
+    plt.savefig(mapping_funcs.MAPS_DIR + '/month_plot.png')
 
 
-def weekday_plot(df_2017):
-    count_by_weekday = df_2017['WEEKDAY'].value_counts()
+def weekday_plot(dataframe):
+    count_by_weekday = dataframe['WEEKDAY'].value_counts()
     # print(count_by_weekday)
     x = []
     y = []
@@ -74,14 +76,14 @@ def weekday_plot(df_2017):
     plt.bar(y, x)
     plt.ylabel('Accidents count')
     plt.xlabel('Weekday')
-    plt.savefig('../outputs/weekday_plot.png')
+    plt.savefig(mapping_funcs.MAPS_DIR + '/weekday_plot.png')
 
 
-def weather_plot(df_2017):
-    count_by_weather = df_2017['weather'].value_counts()
+def weather_plot(dataframe):
+    count_by_weather = dataframe['weather'].value_counts()
     # print(count_by_weather)
 
-    s = df_2017.groupby(['weather']).median().\
+    s = dataframe.groupby(['weather']).median().\
         index.get_level_values('weather').tolist()
     # print(s)
     x = []
@@ -107,13 +109,13 @@ def weather_plot(df_2017):
     ax1.set_title("Accidents percentage count by weather")
     plt.pie(x, labels=labels, counterclock=True,
             labeldistance=1.05, autopct='%.0f%%', pctdistance=0.8, shadow=True)
-    plt.savefig('../outputs/weather_plot.png')
+    plt.savefig(mapping_funcs.MAPS_DIR + '/weather_plot.png')
 
 
-def road_plot(df_2017):
-    count_by_road = df_2017['RDSURF'].value_counts()
+def road_plot(dataframe):
+    count_by_road = dataframe['RDSURF'].value_counts()
 
-    s = df_2017.groupby(['RDSURF']).median().\
+    s = dataframe.groupby(['RDSURF']).median().\
         index.get_level_values('RDSURF').tolist()
     # print(s)
     x = []
@@ -138,14 +140,14 @@ def road_plot(df_2017):
     plt.pie(x, labels=labels, counterclock=True,
             labeldistance=1.05, autopct='%.0f%%',
             pctdistance=0.88, shadow=True)
-    plt.savefig('../outputs/road_plot.png')
+    plt.savefig(mapping_funcs.MAPS_DIR + '/road_plot.png')
 
 
-def light_plot(df_2017):
-    count_by_LIGHT = df_2017['LIGHT'].value_counts()
+def light_plot(dataframe):
+    count_by_LIGHT = dataframe['LIGHT'].value_counts()
     # print(count_by_LIGHT)
 
-    s = df_2017.groupby(['LIGHT']).median().\
+    s = dataframe.groupby(['LIGHT']).median().\
         index.get_level_values('LIGHT').tolist()
     # print(s)
     x = []
@@ -169,11 +171,11 @@ def light_plot(df_2017):
     plt.pie(x, labels=labels, counterclock=True,
             labeldistance=1.05, autopct='%.0f%%', pctdistance=0.8, shadow=True)
     plt.rcParams['font.size'] = 15
-    plt.savefig('../outputs/light_plot.png')
+    plt.savefig(mapping_funcs.MAPS_DIR + '/light_plot.png')
 
 
-def ml_prediction(df_2017):
-    df = df_2017
+def ml_prediction(dataframe):
+    df = dataframe
     columns = ['CASENO',
                'weather',
                'RDSURF',
@@ -266,17 +268,17 @@ def ml_prediction(df_2017):
     plt.ylabel('Importance')
     plt.xlabel('Variable')
     plt.title('Variable Importances')
-    plt.savefig('../outputs/weather_factor_importance.png')
+    plt.savefig(mapping_funcs.MAPS_DIR + '/weather_factor_importance.png')
 
     # more factors
     from sklearn.preprocessing import LabelEncoder
     lblE = LabelEncoder()
-    df_2017_clean = df_2017.dropna()
-    for i in df_2017_clean:
-        if df_2017_clean[i].dtype == 'object':
-            df_2017_clean[i] = df_2017_clean[i].astype('str')
-            lblE.fit(df_2017_clean[i])
-            df_2017_clean[i] = lblE.transform(df_2017_clean[i])
+    df_clean = dataframe.dropna()
+    for i in df_clean:
+        if df_clean[i].dtype == 'object':
+            df_clean[i] = df_clean[i].astype('str')
+            lblE.fit(df_clean[i])
+            df_clean[i] = lblE.transform(df_clean[i])
 
     column_1 = ['WEEKDAY',
                 'weather',
@@ -284,7 +286,7 @@ def ml_prediction(df_2017):
                 'LIGHT',
                 'REPORT',
                 'rur_urb']
-    new_df = df_2017_clean[column_1]
+    new_df = df_clean[column_1]
     X_train, X_test, y_train, y_test = train_test_split(new_df.drop('REPORT',
                                                         axis=1),
                                                         new_df.REPORT,
@@ -294,7 +296,7 @@ def ml_prediction(df_2017):
     clf = RandomForestClassifier()
     clf = clf.fit(X_train, y_train)
 
-    print("The model accuarcy with more factors " +
+    print("The model accuracy with more factors " +
           str(clf.score(X_train, y_train)))
 
     importances = clf.feature_importances_
@@ -314,11 +316,11 @@ def ml_prediction(df_2017):
     plt.title('Variable Importances')
 
 
-year_plot(merged_data_2013, merged_data_2014,
-          merged_data_2015, merged_data_2016, merged_data_2017)
-month_plot(df_2017)
-weekday_plot(df_2017)
-weather_plot(df_2017)
-road_plot(df_2017)
-light_plot(df_2017)
-ml_prediction(df_2017)
+#year_plot(merged_data_2013, merged_data_2014,
+          #merged_data_2015, merged_data_2016, merged_data_2017)
+#month_plot(df_2017)
+#weekday_plot(df_2017)
+#weather_plot(df_2017)
+#road_plot(df_2017)
+#light_plot(df_2017)
+#ml_prediction(df_2017)
