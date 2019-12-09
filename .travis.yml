@@ -7,6 +7,7 @@ install:
 
 script:
 - flake8
+- python -m unittest discover
 - cd crash4viz/tests
 - pytest test_ml.py
 
