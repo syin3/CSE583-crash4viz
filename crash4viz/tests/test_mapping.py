@@ -142,7 +142,7 @@ class TestMapping(unittest.TestCase):
 
         testmap = mapping.Maps()
         map_sink = CURRENTDIR + '/test_output/'
-        map_sink = map_sink + f'{test_group}_basic_map_test.html'
+        map_sink = map_sink + f'{test_group}_layer_map_test.html'
         t_zero = time.time()
 
         testmap.plot_folium_filtered_layers(
@@ -187,7 +187,7 @@ class TestMapping(unittest.TestCase):
 
         testmap = mapping.Maps()
         map_sink = CURRENTDIR + '/test_output/'
-        map_sink = map_sink + f'{test_group}_basic_map_test.html'
+        map_sink = map_sink + f'{test_group}_layer_cluster_map_test.html'
         t_zero = time.time()
 
         testmap.plot_folium_filtered_clusters_layers(
