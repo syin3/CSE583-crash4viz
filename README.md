@@ -58,216 +58,17 @@ The project has the following structure:
         |           |-- Weather_layer_map_test.html
         |-- data
         |   |-- coords-noaa
-        |   |   |-- 2013_coords_0.csv
-        |   |   |-- 2013_coords_1.csv
-        |   |   |-- 2013_coords_2.csv
-        |   |   |-- 2014_coords_0.csv
-        |   |   |-- 2014_coords_1.csv
-        |   |   |-- 2014_coords_2.csv
-        |   |   |-- 2014_coords_3.csv
-        |   |   |-- 2015_coords_0.csv
-        |   |   |-- 2015_coords_1.csv
-        |   |   |-- 2015_coords_2.csv
-        |   |   |-- 2015_coords_3.csv
-        |   |   |-- 2016_coords_0.csv
-        |   |   |-- 2016_coords_1.csv
-        |   |   |-- 2016_coords_2.csv
-        |   |   |-- 2016_coords_3.csv
-        |   |   |-- 2017_coords_0.csv
-        |   |   |-- 2017_coords_1.csv
-        |   |   |-- 2017_coords_2.csv
-        |   |   |-- 2017_coords_3.csv
+        |   |   |-- ...
         |   |-- coords2convert
-        |   |   |-- acc_13_0.csv
-        |   |   |-- acc_13_1.csv
-        |   |   |-- acc_13_10.csv
-        |   |   |-- acc_13_2.csv
-        |   |   |-- acc_13_3.csv
-        |   |   |-- acc_13_4.csv
-        |   |   |-- acc_13_5.csv
-        |   |   |-- acc_13_6.csv
-        |   |   |-- acc_13_7.csv
-        |   |   |-- acc_13_8.csv
-        |   |   |-- acc_13_9.csv
-        |   |   |-- acc_14_0.csv
-        |   |   |-- acc_14_1.csv
-        |   |   |-- acc_14_10.csv
-        |   |   |-- acc_14_11.csv
-        |   |   |-- acc_14_12.csv
-        |   |   |-- acc_14_2.csv
-        |   |   |-- acc_14_3.csv
-        |   |   |-- acc_14_4.csv
-        |   |   |-- acc_14_5.csv
-        |   |   |-- acc_14_6.csv
-        |   |   |-- acc_14_7.csv
-        |   |   |-- acc_14_8.csv
-        |   |   |-- acc_14_9.csv
-        |   |   |-- acc_15_0.csv
-        |   |   |-- acc_15_1.csv
-        |   |   |-- acc_15_10.csv
-        |   |   |-- acc_15_11.csv
-        |   |   |-- acc_15_12.csv
-        |   |   |-- acc_15_13.csv
-        |   |   |-- acc_15_2.csv
-        |   |   |-- acc_15_3.csv
-        |   |   |-- acc_15_4.csv
-        |   |   |-- acc_15_5.csv
-        |   |   |-- acc_15_6.csv
-        |   |   |-- acc_15_7.csv
-        |   |   |-- acc_15_8.csv
-        |   |   |-- acc_15_9.csv
-        |   |   |-- acc_16_0.csv
-        |   |   |-- acc_16_1.csv
-        |   |   |-- acc_16_10.csv
-        |   |   |-- acc_16_11.csv
-        |   |   |-- acc_16_12.csv
-        |   |   |-- acc_16_13.csv
-        |   |   |-- acc_16_14.csv
-        |   |   |-- acc_16_2.csv
-        |   |   |-- acc_16_3.csv
-        |   |   |-- acc_16_4.csv
-        |   |   |-- acc_16_5.csv
-        |   |   |-- acc_16_6.csv
-        |   |   |-- acc_16_7.csv
-        |   |   |-- acc_16_8.csv
-        |   |   |-- acc_16_9.csv
-        |   |   |-- acc_17_0.csv
-        |   |   |-- acc_17_1.csv
-        |   |   |-- acc_17_10.csv
-        |   |   |-- acc_17_11.csv
-        |   |   |-- acc_17_12.csv
-        |   |   |-- acc_17_13.csv
-        |   |   |-- acc_17_2.csv
-        |   |   |-- acc_17_3.csv
-        |   |   |-- acc_17_4.csv
-        |   |   |-- acc_17_5.csv
-        |   |   |-- acc_17_6.csv
-        |   |   |-- acc_17_7.csv
-        |   |   |-- acc_17_8.csv
-        |   |   |-- acc_17_9.csv
+        |   |   |-- ...
         |   |-- crash-merged
-        |   |   |-- 2013.csv
-        |   |   |-- 2014.csv
-        |   |   |-- 2015.csv
-        |   |   |-- 2016.csv
-        |   |   |-- 2017.csv
+        |   |   |-- ...
         |   |-- hsis
-        |   |   |-- wa13acc.xlsx
-        |   |   |-- wa13curv.xlsx
-        |   |   |-- wa13grad.xlsx
-        |   |   |-- wa13occ.xlsx
-        |   |   |-- wa13road.xlsx
-        |   |   |-- wa13veh.xlsx
-        |   |   |-- wa14acc.xlsx
-        |   |   |-- wa14curv.xlsx
-        |   |   |-- wa14grad.xlsx
-        |   |   |-- wa14occ.xlsx
-        |   |   |-- wa14road.xlsx
-        |   |   |-- wa14veh.xlsx
-        |   |   |-- wa15acc.xlsx
-        |   |   |-- wa15curv.xlsx
-        |   |   |-- wa15grad.xlsx
-        |   |   |-- wa15occ.xlsx
-        |   |   |-- wa15road.xlsx
-        |   |   |-- wa15veh.xlsx
-        |   |   |-- wa16acc.xlsx
-        |   |   |-- wa16curv.xlsx
-        |   |   |-- wa16grad.xlsx
-        |   |   |-- wa16occ.xlsx
-        |   |   |-- wa16road.xlsx
-        |   |   |-- wa16veh.xlsx
-        |   |   |-- wa17acc.xlsx
-        |   |   |-- wa17curv.xlsx
-        |   |   |-- wa17grad.xlsx
-        |   |   |-- wa17occ.xlsx
-        |   |   |-- wa17road.xlsx
-        |   |   |-- wa17veh.xlsx
+        |   |   |-- ...
         |   |-- hsis-csv
-        |   |   |-- wa13acc.csv
-        |   |   |-- wa13curv.csv
-        |   |   |-- wa13grad.csv
-        |   |   |-- wa13occ.csv
-        |   |   |-- wa13road.csv
-        |   |   |-- wa13veh.csv
-        |   |   |-- wa14acc.csv
-        |   |   |-- wa14curv.csv
-        |   |   |-- wa14grad.csv
-        |   |   |-- wa14occ.csv
-        |   |   |-- wa14road.csv
-        |   |   |-- wa14veh.csv
-        |   |   |-- wa15acc.csv
-        |   |   |-- wa15curv.csv
-        |   |   |-- wa15grad.csv
-        |   |   |-- wa15occ.csv
-        |   |   |-- wa15road.csv
-        |   |   |-- wa15veh.csv
-        |   |   |-- wa16acc.csv
-        |   |   |-- wa16curv.csv
-        |   |   |-- wa16grad.csv
-        |   |   |-- wa16occ.csv
-        |   |   |-- wa16road.csv
-        |   |   |-- wa16veh.csv
-        |   |   |-- wa17acc.csv
-        |   |   |-- wa17curv.csv
-        |   |   |-- wa17grad.csv
-        |   |   |-- wa17occ.csv
-        |   |   |-- wa17road.csv
-        |   |   |-- wa17veh.csv
+        |   |   |-- ...
         |   |-- milepost
-        |       |-- SRMilepostMarkers.dbf
-        |       |-- SRMilepostMarkers.htm
-        |       |-- SRMilepostMarkers.prj
-        |       |-- SRMilepostMarkers.sbn
-        |       |-- SRMilepostMarkers.sbx
-        |       |-- SRMilepostMarkers.shp
-        |       |-- SRMilepostMarkers.shp.xml
-        |       |-- SRMilepostMarkers.shx
-        |       |-- SRMilepostMarkers.gdb
-        |           |-- a00000001.TablesByName.atx
-        |           |-- a00000001.gdbindexes
-        |           |-- a00000001.gdbtable
-        |           |-- a00000001.gdbtablx
-        |           |-- a00000002.gdbtable
-        |           |-- a00000002.gdbtablx
-        |           |-- a00000003.gdbindexes
-        |           |-- a00000003.gdbtable
-        |           |-- a00000003.gdbtablx
-        |           |-- a00000004.CatItemsByPhysicalName.atx
-        |           |-- a00000004.CatItemsByType.atx
-        |           |-- a00000004.FDO_UUID.atx
-        |           |-- a00000004.freelist
-        |           |-- a00000004.gdbindexes
-        |           |-- a00000004.gdbtable
-        |           |-- a00000004.gdbtablx
-        |           |-- a00000004.spx
-        |           |-- a00000005.CatItemTypesByName.atx
-        |           |-- a00000005.CatItemTypesByParentTypeID.atx
-        |           |-- a00000005.CatItemTypesByUUID.atx
-        |           |-- a00000005.gdbindexes
-        |           |-- a00000005.gdbtable
-        |           |-- a00000005.gdbtablx
-        |           |-- a00000006.CatRelsByDestinationID.atx
-        |           |-- a00000006.CatRelsByOriginID.atx
-        |           |-- a00000006.CatRelsByType.atx
-        |           |-- a00000006.FDO_UUID.atx
-        |           |-- a00000006.gdbindexes
-        |           |-- a00000006.gdbtable
-        |           |-- a00000006.gdbtablx
-        |           |-- a00000007.CatRelTypesByBackwardLabel.atx
-        |           |-- a00000007.CatRelTypesByDestItemTypeID.atx
-        |           |-- a00000007.CatRelTypesByForwardLabel.atx
-        |           |-- a00000007.CatRelTypesByName.atx
-        |           |-- a00000007.CatRelTypesByOriginItemTypeID.atx
-        |           |-- a00000007.CatRelTypesByUUID.atx
-        |           |-- a00000007.gdbindexes
-        |           |-- a00000007.gdbtable
-        |           |-- a00000007.gdbtablx
-        |           |-- a00000009.gdbindexes
-        |           |-- a00000009.gdbtable
-        |           |-- a00000009.gdbtablx
-        |           |-- a00000009.spx
-        |           |-- gdb
-        |           |-- timestamps
+        |       |-- ...
         |-- docs
         |   |-- pre-final pre.pdf
         |   |-- data handbook
@@ -279,21 +80,10 @@ The project has the following structure:
         |   |-- final pre
         |   |   |-- index.html
         |   |-- misc
-        |   |   |-- get the data ready.ipynb
-        |   |   |-- publish.sh
+        |   |   |-- ...
         |   |-- tech review
-        |       |-- coords.ipynb
         |       |-- index.html
-        |       |-- tech_pre.pdf
-        |       |-- plots
-        |       |   |-- bokeh_year_2014.html
-        |       |   |-- bokeh_year_2015.html
-        |       |   |-- bokeh_year_2016.html
-        |       |   |-- bokeh_year_2017.html
-        |       |   |-- folium_fats_by_county.html
-        |       |   |-- folium_injuries_fats_by_county.html
-        |       |   |-- folium_year.html
-        |       |   |-- times.png
+        |       |-- ...
         |-- examples
         |   |-- EXAMPLES.md
         |   |-- interface.png
