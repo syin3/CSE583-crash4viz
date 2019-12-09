@@ -20,7 +20,6 @@ VARS_DICT = {}
 VARS_DICT['Weather'] = 'weather'
 VARS_DICT['Surface Condition'] = 'RDSURF'
 VARS_DICT['Lighting Condition'] = 'LIGHT'
-# VARS_DICT['District Type'] = 'rur_urb' maybe not district type since they are already selecting county
 VARS_DICT['Severity'] = 'SEVERITY'
 VARS_DICT['Day of the week'] = 'WEEKDAY'
 #VARS_DICT['TIME'] = 'Time'
@@ -35,7 +34,7 @@ COUNTY_DICT = {
     6: 'Clark',
     7:'Columbia',
     8: 'Cowlitz',
-    9: 'Douglas', 
+    9: 'Douglas',
     10: 'Ferry',
     11: 'Franklin',
     12: 'Garfield',
@@ -77,7 +76,7 @@ R_COUNTY_DICT = {
     'Clark': 6,
     'Columbia': 7,
     'Cowlitz': 8,
-    'Douglas': 9, 
+    'Douglas': 9,
     'Ferry': 10,
     'Franklin': 11,
     'Garfield': 12,
@@ -157,8 +156,7 @@ SUBGROUPS_DICT['Lighting Condition'] = {
     5.0: 'Dark, Street Lights Off',
     6.0: 'No Street Lights',
     7.0: 'Other',
-    9.0: 'Unknown',
-    np.nan: 'Unknown'}
+    9.0: 'Unknown'}
 SUBGROUPS_DICT['Day of the week'] = {
     1: 'Monday',
     2: 'Tuesday',
@@ -190,8 +188,7 @@ R_SUBGROUPS_DICT['Surface Condition'] = {
     'Oil': 6.0,
     'Standing Water': 7.0,
     'Other': 8.0,
-    'Unknown': 9.0,
-    'Unknown': np.nan}
+    'Unknown': 9.0}
 R_SUBGROUPS_DICT['Lighting Condition'] = {
     'Daylight': 1.0,
     'Dawn': 2.0,
@@ -200,8 +197,7 @@ R_SUBGROUPS_DICT['Lighting Condition'] = {
     'Dark, Street Lights Off': 5.0,
     'No Street Lights': 6.0,
     'Other': 7.0,
-    'Unknown': 9.0,
-    'Unknown': np.nan}
+    'Unknown': 9.0}
 R_SUBGROUPS_DICT['Day of the week'] = {
     'Monday': 1,
     'Tuesday': 2,

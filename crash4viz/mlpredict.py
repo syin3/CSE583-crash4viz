@@ -1,20 +1,24 @@
+"""
+Module that generates statistical plots and factor importance plot
+"""
+
 import matplotlib as mpl
 mpl.use('TkAgg')
 import matplotlib.pyplot as plt
-import pandas as pd
 import warnings
 import numpy as np
-from . import mapping_funcs
 from sklearn.model_selection import train_test_split
-warnings.filterwarnings('ignore')
-
 from sklearn.neural_network import MLPClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import LabelEncoder
+warnings.filterwarnings('ignore')
+
+from . import mapping_funcs
 
 def year_plot(year_count_list, plot_sink=None):
-
-    # plt.figure(figsize=(9, 7))
+    """
+    plot counts for years
+    """
     plt.bar([2013, 2014, 2015, 2016, 2017], year_count_list)
     plt.title("Accident counts by year")
     plt.ylabel("Accident counts")
@@ -23,10 +27,11 @@ def year_plot(year_count_list, plot_sink=None):
     if plot_sink is None:
         plot_sink = mapping_funcs.MAPS_DIR
     plt.savefig(plot_sink + '/year_plot.png')
-    pass
-
 
 def month_plot(dataframe, plot_sink=None):
+    """
+    plot counts for months
+    """
     count_by_month = dataframe['MONTH'].value_counts()
     x = []
     y = []
@@ -47,10 +52,11 @@ def month_plot(dataframe, plot_sink=None):
     if plot_sink is None:
         plot_sink = mapping_funcs.MAPS_DIR
     plt.savefig(plot_sink + '/month_plot.png')
-    pass
-
 
 def weekday_plot(dataframe, plot_sink=None):
+    """
+    plot counts for weekdays
+    """
     count_by_weekday = dataframe['WEEKDAY'].value_counts()
     # print(count_by_weekday)
     x = []
@@ -70,10 +76,11 @@ def weekday_plot(dataframe, plot_sink=None):
     if plot_sink is None:
         plot_sink = mapping_funcs.MAPS_DIR
     plt.savefig(plot_sink + '/weekday_plot.png')
-    pass
-
 
 def weather_plot(dataframe, plot_sink=None):
+    """
+    plot counts for weathers
+    """
     count_by_weather = dataframe['weather'].value_counts()
     # print(count_by_weather)
 
@@ -82,11 +89,9 @@ def weather_plot(dataframe, plot_sink=None):
     # print(s)
     x = []
     y = []
-    for i in range(len(s)):
-        y.append(s[i])
-        x.append(int(int(count_by_weather[s[i]]) / 47818 * 100))
-    # print(x)
-    # print(y)
+    for i in range(s):
+        y.append(i)
+        x.append(int(int(count_by_weather[i]) / 47818 * 100))
     # create the plot
     plt.figure(figsize=(10, 15))
     # fig.subplots_adjust(left=0.115, right=0.88)
@@ -106,11 +111,11 @@ def weather_plot(dataframe, plot_sink=None):
     if plot_sink is None:
         plot_sink = mapping_funcs.MAPS_DIR
     plt.savefig(plot_sink + '/weather_plot.png')
-    
-    pass
-
 
 def road_plot(dataframe, plot_sink=None):
+    """
+    plot counts for roads
+    """
     count_by_road = dataframe['RDSURF'].value_counts()
 
     s = dataframe.groupby(['RDSURF']).median().\
@@ -118,9 +123,9 @@ def road_plot(dataframe, plot_sink=None):
     # print(s)
     x = []
     y = []
-    for i in range(len(s)):
-        y.append(s[i])
-        x.append(int(int(count_by_road[s[i]]) / 47818 * 100))
+    for i in range(s):
+        y.append(i)
+        x.append(int(int(count_by_road[i]) / 47818 * 100))
 
     # # create the plot
     # plt.figure(figsize=(10, 15))
@@ -142,10 +147,10 @@ def road_plot(dataframe, plot_sink=None):
     plt.title("Accidents percentage count by roadsurface condition")
     plt.savefig(plot_sink + '/road_plot.png')
 
-    pass
-
-
 def light_plot(dataframe, plot_sink=None):
+    """
+    plot counts for lighting conditions
+    """
     count_by_LIGHT = dataframe['LIGHT'].value_counts()
     # print(count_by_LIGHT)
 
@@ -154,9 +159,9 @@ def light_plot(dataframe, plot_sink=None):
     # print(s)
     x = []
     y = []
-    for i in range(len(s)):
-        y.append(s[i])
-        x.append(int(int(count_by_LIGHT[s[i]]) / 47818 * 100))
+    for i in range(s):
+        y.append(i)
+        x.append(int(int(count_by_LIGHT[i]) / 47818 * 100))
     # print(x)
     # print(y)
     # # create the plot
@@ -177,10 +182,10 @@ def light_plot(dataframe, plot_sink=None):
         plot_sink = mapping_funcs.MAPS_DIR
     plt.savefig(plot_sink + '/light_plot.png')
 
-    pass
-
-
 def ml_prediction(dataframe, plot_sink=None):
+    """
+    predict statistics
+    """
     df = dataframe
     columns = ['CASENO',
                'weather',
@@ -230,11 +235,11 @@ def ml_prediction(dataframe, plot_sink=None):
     split = [0.8, 0.2]
     num = len(weather_list)
     train_num = int(num * split[0])
-    test_num = num - train_num
+    # test_num = num - train_num
 
     inds = np.random.permutation(np.arange(0, len(weather_list)))
     train_inds = inds[:train_num]
-    test_inds = inds[train_num:]
+    # test_inds = inds[train_num:]
 
     # train
     weather_train = weather_list[train_inds].reshape(train_num, 1)
@@ -245,12 +250,12 @@ def ml_prediction(dataframe, plot_sink=None):
     y_train = severity_list[train_inds]
 
     # test
-    weather_test = weather_list[test_inds].reshape(test_num, 1)
-    road_test = road_list[test_inds].reshape(test_num, 1)
-    light_test = light_list[test_inds].reshape(test_num, 1)
+    # weather_test = weather_list[test_inds].reshape(test_num, 1)
+    # road_test = road_list[test_inds].reshape(test_num, 1)
+    # light_test = light_list[test_inds].reshape(test_num, 1)
 
-    X_test = np.hstack((weather_test, road_test, light_test))
-    y_test = severity_list[test_inds]
+    # X_test = np.hstack((weather_test, road_test, light_test))
+    # y_test = severity_list[test_inds]
 
     # training model
     # Training Algorithm
@@ -277,7 +282,6 @@ def ml_prediction(dataframe, plot_sink=None):
     plt.savefig(plot_sink + '/weather_factor_importance.png')
 
     # more factors
-    
     lblE = LabelEncoder()
     df_clean = dataframe.dropna()
     for i in df_clean:
@@ -293,11 +297,11 @@ def ml_prediction(dataframe, plot_sink=None):
                 'REPORT',
                 'rur_urb']
     new_df = df_clean[column_1]
-    X_train, X_test, y_train, y_test = train_test_split(new_df.drop('REPORT',
-                                                        axis=1),
-                                                        new_df.REPORT,
-                                                        test_size=0.2,
-                                                        random_state=42)
+    X_train, _, y_train, _ = train_test_split(
+        new_df.drop('REPORT', axis=1),
+        new_df.REPORT,
+        test_size=0.2,
+        random_state=42)
 
     clf = RandomForestClassifier()
     clf = clf.fit(X_train, y_train)
@@ -323,7 +327,3 @@ def ml_prediction(dataframe, plot_sink=None):
     if plot_sink is None:
         plot_sink = mapping_funcs.MAPS_DIR
     plt.savefig(plot_sink + '/factors_importance.png')
-
-    pass
-
-

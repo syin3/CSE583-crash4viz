@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<head>    
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.5.1/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.5.1/dist/leaflet.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css"/>
+    <link rel="stylesheet" href="https://rawcdn.githack.com/python-visualization/folium/master/folium/templates/leaflet.awesome.rotate.css"/>
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    
+            <meta name="viewport" content="width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+            <style>
+                #map_1d94ebee93e7439e83f935f10459d7e4 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+            </style>
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/leaflet.markercluster.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.1.0/MarkerCluster.Default.css"/>
+</head>
+<body>    
+    
+            <div class="folium-map" id="map_1d94ebee93e7439e83f935f10459d7e4" ></div>
+        
+</body>
+<script>    
+    
+            var map_1d94ebee93e7439e83f935f10459d7e4 = L.map(
+                "map_1d94ebee93e7439e83f935f10459d7e4",
+                {
+                    center: [47.486305457, -120.21421594370001],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 8,
+                    zoomControl: true,
+                    preferCanvas: true,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_29b3400c82cb4cc5a5b777f466fefa82 = L.tileLayer(
+                "https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png",
+                {"attribution": "\u0026copy; \u003ca href=\"http://www.openstreetmap.org/copyright\"\u003eOpenStreetMap\u003c/a\u003e contributors \u0026copy; \u003ca href=\"http://cartodb.com/attributions\"\u003eCartoDB\u003c/a\u003e, CartoDB \u003ca href =\"http://cartodb.com/attributions\"\u003eattributions\u003c/a\u003e", "detectRetina": false, "maxNativeZoom": 18, "maxZoom": 18, "minZoom": 0, "noWrap": false, "opacity": 1, "subdomains": "abc", "tms": false}
+            ).addTo(map_1d94ebee93e7439e83f935f10459d7e4);
+        
+    
+            var feature_group_122463592f3b497f87c81072198daacb = L.featureGroup(
+                {}
+            ).addTo(map_1d94ebee93e7439e83f935f10459d7e4);
+        
+    
+            var feature_group_552ed166b0cf4d4a90bdf578f79617d7 = L.featureGroup(
+                {}
+            ).addTo(map_1d94ebee93e7439e83f935f10459d7e4);
+        
+    
+            var marker_cluster_5a899e05922d424a98870ec09b259b53 = L.markerClusterGroup(
+                {}
+            );
+            feature_group_552ed166b0cf4d4a90bdf578f79617d7.addLayer(marker_cluster_5a899e05922d424a98870ec09b259b53);
+        
+    
+            var marker_4370314341dc4c48be89ef6a0d1eb464 = L.marker(
+                [47.6232377691, -119.38478250600001],
+                {"fill": true, "fillColor": "#007849", "fillOpacity": 0.4, "radius": 8, "weight": 0.2}
+            ).addTo(marker_cluster_5a899e05922d424a98870ec09b259b53);
+        
+    
+        var popup_3c80e6fc09fb48eb979ca48caf769782 = L.popup({"maxWidth": 150});
+
+        
+            var html_4cb23415b5364d9f92a873221b3e0732 = $(`<div id="html_4cb23415b5364d9f92a873221b3e0732" style="width: 100.0%; height: 100.0%;">E303768, Injury Accident</div>`)[0];
+            popup_3c80e6fc09fb48eb979ca48caf769782.setContent(html_4cb23415b5364d9f92a873221b3e0732);
+        
+
+        marker_4370314341dc4c48be89ef6a0d1eb464.bindPopup(popup_3c80e6fc09fb48eb979ca48caf769782)
+        ;
+
+        
+    
+    
+            var marker_21b510bba37d41caa4170e92f4bd077b = L.marker(
+                [47.2310821793, -120.0069643133],
+                {"fill": true, "fillColor": "steelblue", "fillOpacity": 0.4, "radius": 4, "weight": 0.2}
+            ).addTo(marker_cluster_5a899e05922d424a98870ec09b259b53);
+        
+    
+        var popup_dcc52d445c444a9081b3a30a7ce9d800 = L.popup({"maxWidth": 150});
+
+        
+            var html_660a0c3f704d4cc5b3a5bb58a0573802 = $(`<div id="html_660a0c3f704d4cc5b3a5bb58a0573802" style="width: 100.0%; height: 100.0%;">E379401, Property Damage Only</div>`)[0];
+            popup_dcc52d445c444a9081b3a30a7ce9d800.setContent(html_660a0c3f704d4cc5b3a5bb58a0573802);
+        
+
+        marker_21b510bba37d41caa4170e92f4bd077b.bindPopup(popup_dcc52d445c444a9081b3a30a7ce9d800)
+        ;
+
+        
+    
+    
+            var marker_905111a0275f411b80bf3f2a80962f6b = L.marker(
+                [47.599322498999996, -119.60235348370001],
+                {"fill": true, "fillColor": "#007849", "fillOpacity": 0.4, "radius": 8, "weight": 0.2}
+            ).addTo(marker_cluster_5a899e05922d424a98870ec09b259b53);
+        
+    
+        var popup_d358c1594af3447f9fb32ef8df95e72b = L.popup({"maxWidth": 150});
+
+        
+            var html_74ec18b48e67426fa33fc94969f97143 = $(`<div id="html_74ec18b48e67426fa33fc94969f97143" style="width: 100.0%; height: 100.0%;">E383167, Injury Accident</div>`)[0];
+            popup_d358c1594af3447f9fb32ef8df95e72b.setContent(html_74ec18b48e67426fa33fc94969f97143);
+        
+
+        marker_905111a0275f411b80bf3f2a80962f6b.bindPopup(popup_d358c1594af3447f9fb32ef8df95e72b)
+        ;
+
+        
+    
+    
+            var marker_7ffb372e972a44bca3869ced8b9154cb = L.marker(
+                [47.7634602229, -120.1471395978],
+                {"fill": true, "fillColor": "steelblue", "fillOpacity": 0.4, "radius": 4, "weight": 0.2}
+            ).addTo(marker_cluster_5a899e05922d424a98870ec09b259b53);
+        
+    
+        var popup_2055ad177b1b41d5a2da7f1b8a8fbc19 = L.popup({"maxWidth": 150});
+
+        
+            var html_4988c93df122473695b426d29b88a7c8 = $(`<div id="html_4988c93df122473695b426d29b88a7c8" style="width: 100.0%; height: 100.0%;">E388701, Property Damage Only</div>`)[0];
+            popup_2055ad177b1b41d5a2da7f1b8a8fbc19.setContent(html_4988c93df122473695b426d29b88a7c8);
+        
+
+        marker_7ffb372e972a44bca3869ced8b9154cb.bindPopup(popup_2055ad177b1b41d5a2da7f1b8a8fbc19)
+        ;
+
+        
+    
+    
+            var marker_e72a86353eef48dfa26dec52db2228f9 = L.marker(
+                [47.7420021561, -120.1919593577],
+                {"fill": true, "fillColor": "#007849", "fillOpacity": 0.4, "radius": 8, "weight": 0.2}
+            ).addTo(marker_cluster_5a899e05922d424a98870ec09b259b53);
+        
+    
+        var popup_bf46b6c0e74c465ca5d4a80c7a273f27 = L.popup({"maxWidth": 150});
+
+        
+            var html_51b56686dc5e4c72b8ffd59e35f9ffea = $(`<div id="html_51b56686dc5e4c72b8ffd59e35f9ffea" style="width: 100.0%; height: 100.0%;">3653176, Injury Accident</div>`)[0];
+            popup_bf46b6c0e74c465ca5d4a80c7a273f27.setContent(html_51b56686dc5e4c72b8ffd59e35f9ffea);
+        
+
+        marker_e72a86353eef48dfa26dec52db2228f9.bindPopup(popup_bf46b6c0e74c465ca5d4a80c7a273f27)
+        ;
+
+        
+    
+    
+            var marker_b39fa6e564da49d6b723ec8546fc8054 = L.marker(
+                [47.607257785600005, -120.22641394629999],
+                {"fill": true, "fillColor": "steelblue", "fillOpacity": 0.4, "radius": 4, "weight": 0.2}
+            ).addTo(marker_cluster_5a899e05922d424a98870ec09b259b53);
+        
+    
+        var popup_fcae86e877734789bc8052e94a61676e = L.popup({"maxWidth": 150});
+
+        
+            var html_cec4dbb74d2845099e45b9259ecfe4b6 = $(`<div id="html_cec4dbb74d2845099e45b9259ecfe4b6" style="width: 100.0%; height: 100.0%;">2945693, Property Damage Only</div>`)[0];
+            popup_fcae86e877734789bc8052e94a61676e.setContent(html_cec4dbb74d2845099e45b9259ecfe4b6);
+        
+
+        marker_b39fa6e564da49d6b723ec8546fc8054.bindPopup(popup_fcae86e877734789bc8052e94a61676e)
+        ;
+
+        
+    
+    
+            var marker_2911794ceae8493f970ed90d1937ff75 = L.marker(
+                [47.7431787358, -120.1907042196],
+                {"fill": true, "fillColor": "steelblue", "fillOpacity": 0.4, "radius": 4, "weight": 0.2}
+            ).addTo(marker_cluster_5a899e05922d424a98870ec09b259b53);
+        
+    
+        var popup_6e8e042615784d5d8d118543ca20c7ae = L.popup({"maxWidth": 150});
+
+        
+            var html_150d7fcad27848ad88ea38ff2bc07ec9 = $(`<div id="html_150d7fcad27848ad88ea38ff2bc07ec9" style="width: 100.0%; height: 100.0%;">3653177, Property Damage Only</div>`)[0];
+            popup_6e8e042615784d5d8d118543ca20c7ae.setContent(html_150d7fcad27848ad88ea38ff2bc07ec9);
+        
+
+        marker_2911794ceae8493f970ed90d1937ff75.bindPopup(popup_6e8e042615784d5d8d118543ca20c7ae)
+        ;
+
+        
+    
+    
+            var feature_group_c90bbd9c5a7e46f3a6bc9a720b0bf5f2 = L.featureGroup(
+                {}
+            ).addTo(map_1d94ebee93e7439e83f935f10459d7e4);
+        
+    
+            var marker_cluster_8aa65e5bcdf34f5dbceb61568e8e4689 = L.markerClusterGroup(
+                {}
+            );
+            feature_group_c90bbd9c5a7e46f3a6bc9a720b0bf5f2.addLayer(marker_cluster_8aa65e5bcdf34f5dbceb61568e8e4689);
+        
+    
+            var marker_3b6a2de4d9be401fb03b47b161cb4efa = L.marker(
+                [47.6435174266, -119.3597234604],
+                {"fill": true, "fillColor": "#007849", "fillOpacity": 0.4, "radius": 8, "weight": 0.2}
+            ).addTo(marker_cluster_8aa65e5bcdf34f5dbceb61568e8e4689);
+        
+    
+        var popup_edb43a18e2c44d82996de74ad7df779c = L.popup({"maxWidth": 150});
+
+        
+            var html_b0ebee0d7369452c9f24b4522b03d4fa = $(`<div id="html_b0ebee0d7369452c9f24b4522b03d4fa" style="width: 100.0%; height: 100.0%;">E393532, Injury Accident</div>`)[0];
+            popup_edb43a18e2c44d82996de74ad7df779c.setContent(html_b0ebee0d7369452c9f24b4522b03d4fa);
+        
+
+        marker_3b6a2de4d9be401fb03b47b161cb4efa.bindPopup(popup_edb43a18e2c44d82996de74ad7df779c)
+        ;
+
+        
+    
+    
+            var marker_d5dd5de6434b40699ceea6c074db92e4 = L.marker(
+                [47.4098897988, -120.29209684930001],
+                {"fill": true, "fillColor": "steelblue", "fillOpacity": 0.4, "radius": 4, "weight": 0.2}
+            ).addTo(marker_cluster_8aa65e5bcdf34f5dbceb61568e8e4689);
+        
+    
+        var popup_48b99811ab5a49d58726bd0958585360 = L.popup({"maxWidth": 150});
+
+        
+            var html_81644dfcdf5547ccac833bf555650c22 = $(`<div id="html_81644dfcdf5547ccac833bf555650c22" style="width: 100.0%; height: 100.0%;">E394024, Property Damage Only</div>`)[0];
+            popup_48b99811ab5a49d58726bd0958585360.setContent(html_81644dfcdf5547ccac833bf555650c22);
+        
+
+        marker_d5dd5de6434b40699ceea6c074db92e4.bindPopup(popup_48b99811ab5a49d58726bd0958585360)
+        ;
+
+        
+    
+    
+            var feature_group_4e0324e3e4c84f4c9f8557411ed3f325 = L.featureGroup(
+                {}
+            ).addTo(map_1d94ebee93e7439e83f935f10459d7e4);
+        
+    
+            var marker_cluster_712c21f2a17e49a982424ef4fbd325d4 = L.markerClusterGroup(
+                {}
+            );
+            feature_group_4e0324e3e4c84f4c9f8557411ed3f325.addLayer(marker_cluster_712c21f2a17e49a982424ef4fbd325d4);
+        
+    
+            var marker_41389d952a654cc2b6c08a3ddb77470e = L.marker(
+                [47.3705708037, -120.1339048605],
+                {"fill": true, "fillColor": "#007849", "fillOpacity": 0.4, "radius": 8, "weight": 0.2}
+            ).addTo(marker_cluster_712c21f2a17e49a982424ef4fbd325d4);
+        
+    
+        var popup_3328bb8c2a4a4a5f91ae90ee85968d24 = L.popup({"maxWidth": 150});
+
+        
+            var html_9c163aeae28a4b38aa9c9f68c612cb79 = $(`<div id="html_9c163aeae28a4b38aa9c9f68c612cb79" style="width: 100.0%; height: 100.0%;">E508750, Injury Accident</div>`)[0];
+            popup_3328bb8c2a4a4a5f91ae90ee85968d24.setContent(html_9c163aeae28a4b38aa9c9f68c612cb79);
+        
+
+        marker_41389d952a654cc2b6c08a3ddb77470e.bindPopup(popup_3328bb8c2a4a4a5f91ae90ee85968d24)
+        ;
+
+        
+    
+    
+            var feature_group_f4b814840d5346a381abe7251e6b3685 = L.featureGroup(
+                {}
+            ).addTo(map_1d94ebee93e7439e83f935f10459d7e4);
+        
+    
+            var marker_cluster_aadbce13bab740c5a05eabba5edc7dd0 = L.markerClusterGroup(
+                {}
+            );
+            feature_group_f4b814840d5346a381abe7251e6b3685.addLayer(marker_cluster_aadbce13bab740c5a05eabba5edc7dd0);
+        
+    
+            var marker_844f00f16d5c43b9bc5ee74f59e86aba = L.marker(
+                [47.2647288562, -120.07277650190001],
+                {"fill": true, "fillColor": "#007849", "fillOpacity": 0.4, "radius": 8, "weight": 0.2}
+            ).addTo(marker_cluster_aadbce13bab740c5a05eabba5edc7dd0);
+        
+    
+        var popup_487fe9c6ef0849fcbcf3510ea38588d4 = L.popup({"maxWidth": 150});
+
+        
+            var html_88c29f8803464227a04edf1655cdf345 = $(`<div id="html_88c29f8803464227a04edf1655cdf345" style="width: 100.0%; height: 100.0%;">E634522, Injury Accident</div>`)[0];
+            popup_487fe9c6ef0849fcbcf3510ea38588d4.setContent(html_88c29f8803464227a04edf1655cdf345);
+        
+
+        marker_844f00f16d5c43b9bc5ee74f59e86aba.bindPopup(popup_487fe9c6ef0849fcbcf3510ea38588d4)
+        ;
+
+        
+    
+    
+            var marker_20e93cfb64ed4ea88fc3d8434c6b35a4 = L.marker(
+                [47.4675202066, -120.29941875739999],
+                {"fill": true, "fillColor": "steelblue", "fillOpacity": 0.4, "radius": 4, "weight": 0.2}
+            ).addTo(marker_cluster_aadbce13bab740c5a05eabba5edc7dd0);
+        
+    
+        var popup_6f4bee0e2f364252824ae1d55ec494c4 = L.popup({"maxWidth": 150});
+
+        
+            var html_b6fe0255a931405c8c356c5e78912aee = $(`<div id="html_b6fe0255a931405c8c356c5e78912aee" style="width: 100.0%; height: 100.0%;">E634516, Property Damage Only</div>`)[0];
+            popup_6f4bee0e2f364252824ae1d55ec494c4.setContent(html_b6fe0255a931405c8c356c5e78912aee);
+        
+
+        marker_20e93cfb64ed4ea88fc3d8434c6b35a4.bindPopup(popup_6f4bee0e2f364252824ae1d55ec494c4)
+        ;
+
+        
+    
+    
+            var marker_30faceb988dc40e5b9bfd18f85f26b16 = L.marker(
+                [47.6706365268, -120.20180406719999],
+                {"fill": true, "fillColor": "steelblue", "fillOpacity": 0.4, "radius": 4, "weight": 0.2}
+            ).addTo(marker_cluster_aadbce13bab740c5a05eabba5edc7dd0);
+        
+    
+        var popup_8dbbeb63382e46779c8a085d69a10232 = L.popup({"maxWidth": 150});
+
+        
+            var html_1b3666586e9c4a31a41cd621e153041a = $(`<div id="html_1b3666586e9c4a31a41cd621e153041a" style="width: 100.0%; height: 100.0%;">E634518, Property Damage Only</div>`)[0];
+            popup_8dbbeb63382e46779c8a085d69a10232.setContent(html_1b3666586e9c4a31a41cd621e153041a);
+        
+
+        marker_30faceb988dc40e5b9bfd18f85f26b16.bindPopup(popup_8dbbeb63382e46779c8a085d69a10232)
+        ;
+
+        
+    
+    
+            var layer_control_0fbd057047974a1194f85c50cb3e57ae = {
+                base_layers : {
+                    "bright" : tile_layer_29b3400c82cb4cc5a5b777f466fefa82,
+                },
+                overlays :  {
+                    "2013" : feature_group_122463592f3b497f87c81072198daacb,
+                    "2014" : feature_group_552ed166b0cf4d4a90bdf578f79617d7,
+                    "2015" : feature_group_c90bbd9c5a7e46f3a6bc9a720b0bf5f2,
+                    "2016" : feature_group_4e0324e3e4c84f4c9f8557411ed3f325,
+                    "2017" : feature_group_f4b814840d5346a381abe7251e6b3685,
+                },
+            };
+            L.control.layers(
+                layer_control_0fbd057047974a1194f85c50cb3e57ae.base_layers,
+                layer_control_0fbd057047974a1194f85c50cb3e57ae.overlays,
+                {"autoZIndex": true, "collapsed": true, "position": "topright"}
+            ).addTo(map_1d94ebee93e7439e83f935f10459d7e4);
+            feature_group_122463592f3b497f87c81072198daacb.remove();
+            feature_group_552ed166b0cf4d4a90bdf578f79617d7.remove();
+            feature_group_c90bbd9c5a7e46f3a6bc9a720b0bf5f2.remove();
+            feature_group_4e0324e3e4c84f4c9f8557411ed3f325.remove();
+            feature_group_f4b814840d5346a381abe7251e6b3685.remove();
+        
+</script>

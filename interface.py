@@ -31,6 +31,28 @@ def generate_ml(self, year):
             )
     mlpredict.year_plot(year_plot_list)
 
+def set_map_options(dropdown, var):
+    """
+    Set the different options for types of maps that the user can see
+    based on their selections in the previous drop-down menus.
+    """
+
+    dropdown.configure(state='normal')
+    menu = dropdown['menu']
+    menu.delete(0, 'end')
+    options = ['Basic road-map',
+               'Cluster map',
+               'Layers by year map',
+               'Cluster & Layer map']
+    for name in options:
+        menu.add_command(label=name, command=lambda name=name: var.set(name))
+
+def enable_next_dropdown(dropdown):
+    """
+    Enables next dropdown
+    """
+    dropdown.configure(state='normal') # enable drop-down
+
 class MainApp(tk.Tk):
 
     """
@@ -60,7 +82,7 @@ class MainApp(tk.Tk):
         tk.Button(
             self,
             text='Save year selection',
-            command=lambda: self.enable_next_dropdown(self.drop1)
+            command=lambda: enable_next_dropdown(self.drop1)
             ).pack()
 
         self.selection1 = tk.StringVar()
@@ -111,7 +133,7 @@ class MainApp(tk.Tk):
         tk.Button(
             self,
             text='Save county selection',
-            command=lambda: self.enable_next_dropdown(self.drop2)
+            command=lambda: enable_next_dropdown(self.drop2)
             ).pack()
 
         self.selection2 = tk.StringVar()
@@ -142,7 +164,7 @@ class MainApp(tk.Tk):
         tk.Button(
             self,
             text='Save subgroup selection',
-            command=lambda: self.set_map_options(self.drop4, self.selection4)
+            command=lambda: set_map_options(self.drop4, self.selection4)
             ).pack()
 
         self.selection4 = tk.StringVar()
@@ -166,12 +188,6 @@ class MainApp(tk.Tk):
             command=lambda: self.generate_ml(self.selection0.get())
             ).pack()
 
-    def enable_next_dropdown(self, dropdown):
-        """
-        Enables next dropdown
-        """
-        dropdown.configure(state='normal') # enable drop-down
-
     def set_options_init(self, dropdown, var):
         """
         Change the options in the third drop-down menu based on the user's
@@ -189,22 +205,6 @@ class MainApp(tk.Tk):
             for name in options:
                 # Add menu items.
                 menu.add_command(label=name, command=lambda name=name: var.set(name))
-
-    def set_map_options(self, dropdown, var):
-        """
-        Set the different options for types of maps that the user can see
-        based on their selections in the previous drop-down menus.
-        """
-
-        dropdown.configure(state='normal')
-        menu = dropdown['menu']
-        menu.delete(0, 'end')
-        options = ['Basic road-map',
-                   'Cluster map',
-                   'Layers by year map',
-                   'Cluster & Layer map']
-        for name in options:
-            menu.add_command(label=name, command=lambda name=name: var.set(name))
 
     def show_map(self):
         """Output the map that was chosen for the features that were selected,
@@ -248,7 +248,7 @@ class MainApp(tk.Tk):
                 an empty map was generated into the "outputs" folder'
             else:
                 my_text = 'Cluster map for {}, under {} conditions saved in \
-                    "outputs" folder'.format(self.selection3.get(), self.selection2.get())
+                "outputs" folder'.format(self.selection3.get(), self.selection2.get())
             tk.Label(ROOT, text=my_text).pack()
 
         if self.selection4.get() == 'Layers by year map':
@@ -262,7 +262,7 @@ class MainApp(tk.Tk):
             my_map.plot_folium_filtered_clusters_layers(
                 county_name, county, group, grp_feature, subgrp_feature)
             my_text = 'Cluster & layer map for {}, under {} conditions saved \
-                in "outputs" folder'.format(self.selection3.get(), self.selection2.get())
+            in "outputs" folder'.format(self.selection3.get(), self.selection2.get())
             tk.Label(ROOT, text=my_text).pack()
 
 
