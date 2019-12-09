@@ -1,12 +1,12 @@
 import matplotlib as mpl
-mpl.use('TkAgg')
 import matplotlib.pyplot as plt
 import pandas as pd
 import warnings
 import numpy as np
+from . import mapping_funcs
 from sklearn.model_selection import train_test_split
 warnings.filterwarnings('ignore')
-from . import mapping_funcs
+mpl.use('TkAgg')
 
 # Create the data frame of Traffic Accidents from 2013 - 2017
 merged_data_2013 = pd.read_csv(mapping_funcs.DATA_DIR + '/2013.csv')
@@ -14,9 +14,6 @@ merged_data_2014 = pd.read_csv(mapping_funcs.DATA_DIR + '/2014.csv')
 merged_data_2015 = pd.read_csv(mapping_funcs.DATA_DIR + '/2015.csv')
 merged_data_2016 = pd.read_csv(mapping_funcs.DATA_DIR + '/2016.csv')
 merged_data_2017 = pd.read_csv(mapping_funcs.DATA_DIR + '/2017.csv')
-
-# Create the data frame of Traffic Accidents from 2017
-#df_2017 = pd.read_csv("../data/crash-merged/2017.csv")
 
 
 def year_plot(merged_data_2013, merged_data_2014,
@@ -230,7 +227,7 @@ def ml_prediction(dataframe):
     train_inds = inds[:train_num]
     test_inds = inds[train_num:]
 
-    # traim
+    # train
     weather_train = weather_list[train_inds].reshape(train_num, 1)
     road_train = road_list[train_inds].reshape(train_num, 1)
     light_train = light_list[train_inds].reshape(train_num, 1)
@@ -263,6 +260,7 @@ def ml_prediction(dataframe):
     feature_list = ['weather', 'road surface condition', 'Daylight']
     x = list(range(len(importances)))
 
+    plt.figure()
     plt.bar(x, importances, orientation='vertical')
     plt.xticks(x, feature_list, rotation='horizontal')
     plt.ylabel('Importance')
@@ -309,6 +307,7 @@ def ml_prediction(dataframe):
                     'rur_urb']
     x = list(range(len(importances)))
 
+    plt.figure()
     plt.bar(x, importances, orientation='vertical')
     plt.xticks(x, feature_list, rotation='horizontal')
     plt.ylabel('Importance')
@@ -316,11 +315,3 @@ def ml_prediction(dataframe):
     plt.title('Variable Importances')
 
 
-#year_plot(merged_data_2013, merged_data_2014,
-          #merged_data_2015, merged_data_2016, merged_data_2017)
-#month_plot(df_2017)
-#weekday_plot(df_2017)
-#weather_plot(df_2017)
-#road_plot(df_2017)
-#light_plot(df_2017)
-#ml_prediction(df_2017)
