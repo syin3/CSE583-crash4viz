@@ -13305,23 +13305,56 @@ facilitates visualization and analysis of crashes for all levels of users;</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Demo-!!!">Demo !!!<a class="anchor-link" href="#Demo-!!!">&#182;</a></h2>
+</div>
+</div>
+</div><div class="fragment">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="n">python</span> <span class="o">../../</span><span class="n">interface</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+
+</div>
+</div>
+</div></div></section></section><section><section>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Design">Design<a class="anchor-link" href="#Design">&#182;</a></h2>
 </div>
 </div>
-</div></section><section>
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-<div class="prompt input_prompt">In&nbsp;[&nbsp;]:</div>
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span> 
-</pre></div>
+</div><div class="fragment">
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>Data manager: <br>
+Provides an interaction to the dataset, i.e. query based on users’ input, such as “2017 + rainy + King County” fed to data manager will return crash records that <ul>
+<li>Happens in 2017;</li>
+<li>Happened in rainy weather condition;</li>
+<li>Took place in King Count;</li>
+</ul>
+</li>
+<li><p>Analysis manager: <br></p>
+<ul>
+<li>recieves data from <strong>data manager</strong> and is activated by "generate report" button.</li>
+<li>conducts descriptive analysis;</li>
+<li>fits statistical models to the data and generate factor importance summary;</li>
+</ul>
+</li>
+<li><p>Visualization manager:</p>
+<ul>
+<li>is the most important component of our package;</li>
+<li>receives filtered data from data manager;</li>
+<li>renders HTML maps;</li>
+</ul>
+</li>
+</ul>
 
-    </div>
 </div>
 </div>
-
-</div></section></section><section><section>
+</div></div></section></section><section><section>
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
