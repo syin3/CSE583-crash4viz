@@ -6,7 +6,7 @@ install:
 - travis_retry pip install -e .
 
 script:
-- python -m unittest discover
+- coverage run -m unittest discover
 
 
 after_success:
