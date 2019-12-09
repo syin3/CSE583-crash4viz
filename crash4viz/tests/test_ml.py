@@ -13,17 +13,14 @@ from crash4viz import mlpredict
 
 TEST_OUTPUT = CURRENTDIR + '/test_output/'
 
-merged_data_2013 = pd.read_csv(mapping_funcs.DATA_DIR + '/2013.csv')
-merged_data_2014 = pd.read_csv(mapping_funcs.DATA_DIR + '/2014.csv')
-merged_data_2015 = pd.read_csv(mapping_funcs.DATA_DIR + '/2015.csv')
-merged_data_2016 = pd.read_csv(mapping_funcs.DATA_DIR + '/2016.csv')
-merged_data_2017 = pd.read_csv(mapping_funcs.DATA_DIR + '/2017.csv')
-df_2017 = pd.read_csv(mapping_funcs.DATA_DIR + "/2017.csv")
-
 def test_mlpredict():
-    mlpredict.year_plot(merged_data_2013, merged_data_2014,
-                        merged_data_2015, merged_data_2016,
-                        merged_data_2017, TEST_OUTPUT)
+    year_plot_list = []
+    for yr in range(2013, 2018):
+        year_plot_list.append(pd.read_csv(mapping_funcs.DATA_DIR + '/2013.csv').shape[0])
+    mlpredict.year_plot(year_plot_list, TEST_OUTPUT)
+
+    df_2017 = pd.read_csv(mapping_funcs.DATA_DIR + "/2017.csv")
+    
     mlpredict.month_plot(df_2017, TEST_OUTPUT)
     mlpredict.weekday_plot(df_2017, TEST_OUTPUT)
     mlpredict.weather_plot(df_2017, TEST_OUTPUT)

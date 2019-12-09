@@ -129,6 +129,7 @@ class MainApp(tk.Tk):
 
     def enable_next_dropdown(self, dropdown):
         dropdown.configure(state='normal') # enable drop-down
+        pass
         
     def set_options_init(self, dropdown, var):
         """Change the options in the third drop-down menu based on the user's
@@ -145,6 +146,7 @@ class MainApp(tk.Tk):
             for name in options:
                 # Add menu items.
                 menu.add_command(label=name, command=lambda name=name: var.set(name))
+        pass
 
     def set_map_options(self, dropdown, var):
         """Set the different options for types of maps that the user can see
@@ -159,25 +161,26 @@ class MainApp(tk.Tk):
                    'Cluster & Layer map']
         for name in options:
             menu.add_command(label=name, command=lambda name=name: var.set(name))
+        pass
 
 
     def generate_ml(self, year):
         
-        merged_data = pd.read_csv(mapping_funcs.DATA_DIR + f'/{year}.csv')
-        month = mlpredict.month_plot(merged_data)
-        weekday = mlpredict.weekday_plot(merged_data)
-        weather = mlpredict.weather_plot(merged_data)
-        road = mlpredict.road_plot(merged_data)
-        light = mlpredict.light_plot(merged_data)
-        ml_prediction = mlpredict.ml_prediction(merged_data)
+        merged_data = pd.read_csv(mapping_funcs.DATA_DIR + '/{}.csv'.format(year))
+        mlpredict.month_plot(merged_data)
+        mlpredict.weekday_plot(merged_data)
+        mlpredict.weather_plot(merged_data)
+        mlpredict.road_plot(merged_data)
+        mlpredict.light_plot(merged_data)
+        mlpredict.ml_prediction(merged_data)
 
-        merged_data_2013 = pd.read_csv(mapping_funcs.DATA_DIR + '/2013.csv')
-        merged_data_2014 = pd.read_csv(mapping_funcs.DATA_DIR + '/2014.csv')
-        merged_data_2015 = pd.read_csv(mapping_funcs.DATA_DIR + '/2015.csv')
-        merged_data_2016 = pd.read_csv(mapping_funcs.DATA_DIR + '/2016.csv')
-        merged_data_2017 = pd.read_csv(mapping_funcs.DATA_DIR + '/2017.csv')
-        years = mlpredict.year_plot(merged_data_2013, merged_data_2014,
-                                    merged_data_2015, merged_data_2016, merged_data_2017)
+        year_plot_list = []
+        for year in range(2013, 2018):
+            year_plot_list.append(
+                pd.read_csv(mapping_funcs.DATA_DIR + '/{}.csv'.format(year)).shape[0]
+                )
+        mlpredict.year_plot(year_plot_list)
+        pass
         
     def show_map(self):
         """Output the map that was chosen for the features that were selected,

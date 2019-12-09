@@ -6,36 +6,24 @@ import warnings
 import numpy as np
 from . import mapping_funcs
 from sklearn.model_selection import train_test_split
-
 warnings.filterwarnings('ignore')
 
-# Create the data frame of Traffic Accidents from 2013 - 2017
-merged_data_2013 = pd.read_csv(mapping_funcs.DATA_DIR + '/2013.csv')
-merged_data_2014 = pd.read_csv(mapping_funcs.DATA_DIR + '/2014.csv')
-merged_data_2015 = pd.read_csv(mapping_funcs.DATA_DIR + '/2015.csv')
-merged_data_2016 = pd.read_csv(mapping_funcs.DATA_DIR + '/2016.csv')
-merged_data_2017 = pd.read_csv(mapping_funcs.DATA_DIR + '/2017.csv')
+from sklearn.neural_network import MLPClassifier
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.preprocessing import LabelEncoder
 
+def year_plot(year_count_list, plot_sink=None):
 
-def year_plot(merged_data_2013, merged_data_2014,
-              merged_data_2015, merged_data_2016,
-              merged_data_2017, plot_sink=None):
-
-    fig, ax1 = plt.subplots(figsize=(9, 7))
-    fig.subplots_adjust(left=0.115, right=0.88)
-    fig.canvas.set_window_title('Eldorado K-8 Fitness Chart')
-
-    plt.bar([2013, 2014, 2015, 2016, 2017],
-            [merged_data_2013.shape[0], merged_data_2014.shape[0],
-            merged_data_2015.shape[0], merged_data_2016.shape[0],
-            merged_data_2017.shape[0]])
-    ax1.set_title("Accidents count by year")
-    plt.ylabel('Accidents count')
+    # plt.figure(figsize=(9, 7))
+    plt.bar([2013, 2014, 2015, 2016, 2017], year_count_list)
+    plt.title("Accident counts by year")
+    plt.ylabel("Accident counts")
     plt.xlabel("Year")
 
     if plot_sink is None:
         plot_sink = mapping_funcs.MAPS_DIR
     plt.savefig(plot_sink + '/year_plot.png')
+    pass
 
 
 def month_plot(dataframe, plot_sink=None):
@@ -47,19 +35,19 @@ def month_plot(dataframe, plot_sink=None):
         x.append(count_by_month[i + 1])
 
     # create the plot
-    fig, ax1 = plt.subplots(figsize=(9, 7))
-    fig.subplots_adjust(left=0.115, right=0.88)
-    fig.canvas.set_window_title('Eldorado K-8 Fitness Chart')
+    plt.figure(figsize=(9, 7))
+
     ind = np.arange(12)
-    ax1.set_title("Accidents count by month")
     plt.bar(y, x)
     plt.ylabel('Accidents count')
     plt.xlabel("Month")
     plt.xticks(ind, ('Jan', 'Feb', 'Mar', 'April', 'May',
                      "June", "July", "Aug", "Sep", "Oct", "Nov", "Dec"))
+    plt.title("Accidents count by month")
     if plot_sink is None:
         plot_sink = mapping_funcs.MAPS_DIR
     plt.savefig(plot_sink + '/month_plot.png')
+    pass
 
 
 def weekday_plot(dataframe, plot_sink=None):
@@ -73,16 +61,16 @@ def weekday_plot(dataframe, plot_sink=None):
     # print(x)
     # print(y)
     # create the plot
-    fig, ax1 = plt.subplots(figsize=(9, 7))
-    fig.subplots_adjust(left=0.115, right=0.88)
-    fig.canvas.set_window_title('Eldorado K-8 Fitness Chart')
-    ax1.set_title("Accidents count by weekdays")
+    plt.figure(figsize=(9, 7))
+    # fig.subplots_adjust(left=0.115, right=0.88)
+    plt.title("Accidents count by weekdays")
     plt.bar(y, x)
     plt.ylabel('Accidents count')
     plt.xlabel('Weekday')
     if plot_sink is None:
         plot_sink = mapping_funcs.MAPS_DIR
     plt.savefig(plot_sink + '/weekday_plot.png')
+    pass
 
 
 def weather_plot(dataframe, plot_sink=None):
@@ -100,9 +88,9 @@ def weather_plot(dataframe, plot_sink=None):
     # print(x)
     # print(y)
     # create the plot
-    fig, ax1 = plt.subplots(figsize=(10, 15))
-    fig.subplots_adjust(left=0.115, right=0.88)
-    fig.canvas.set_window_title('Eldorado K-8 Fitness Chart')
+    plt.figure(figsize=(10, 15))
+    # fig.subplots_adjust(left=0.115, right=0.88)
+    # fig.canvas.set_window_title('Eldorado K-8 Fitness Chart')
 
     labels = ['Unknown', 'Clear or Partly Cloudy', 'Overcast', 'Raining',
               'Snowing', 'Fog/Smog/Smoke', 'Sleet/Hail/Freezing Rain',
@@ -112,12 +100,14 @@ def weather_plot(dataframe, plot_sink=None):
         if x[i] <= 2:
             labels[i] = 'other'
 
-    ax1.set_title("Accidents percentage count by weather")
+    plt.title("Accidents percentage count by weather")
     plt.pie(x, labels=labels, counterclock=True,
             labeldistance=1.05, autopct='%.0f%%', pctdistance=0.8, shadow=True)
     if plot_sink is None:
         plot_sink = mapping_funcs.MAPS_DIR
     plt.savefig(plot_sink + '/weather_plot.png')
+    
+    pass
 
 
 def road_plot(dataframe, plot_sink=None):
@@ -131,12 +121,11 @@ def road_plot(dataframe, plot_sink=None):
     for i in range(len(s)):
         y.append(s[i])
         x.append(int(int(count_by_road[s[i]]) / 47818 * 100))
-    # print(x)
-    # print(y)
+
     # # create the plot
-    fig, ax1 = plt.subplots(figsize=(10, 15))
-    fig.subplots_adjust(left=0.115, right=0.88)
-    fig.canvas.set_window_title('Eldorado K-8 Fitness Chart')
+    # plt.figure(figsize=(10, 15))
+    # fig.subplots_adjust(left=0.115, right=0.88)
+    # fig.canvas.set_window_title('Eldorado K-8 Fitness Chart')
 
     labels = ['Dry', 'Wet', 'Snow/Slush', 'Ice', 'Sand/Mud/Dirt',
               'Oil', 'Standing Water', 'Other', 'Unknown']
@@ -144,13 +133,16 @@ def road_plot(dataframe, plot_sink=None):
         if x[i] < 2:
             labels[i] = 'other'
 
-    ax1.set_title("Accidents percentage count by roadsurface condition")
     plt.pie(x, labels=labels, counterclock=True,
             labeldistance=1.05, autopct='%.0f%%',
             pctdistance=0.88, shadow=True)
     if plot_sink is None:
         plot_sink = mapping_funcs.MAPS_DIR
+
+    plt.title("Accidents percentage count by roadsurface condition")
     plt.savefig(plot_sink + '/road_plot.png')
+
+    pass
 
 
 def light_plot(dataframe, plot_sink=None):
@@ -168,15 +160,15 @@ def light_plot(dataframe, plot_sink=None):
     # print(x)
     # print(y)
     # # create the plot
-    fig, ax1 = plt.subplots(figsize=(10, 15))
-    fig.subplots_adjust(left=0.115, right=0.88)
-    fig.canvas.set_window_title('Eldorado K-8 Fitness Chart')
+    # plt.figure(figsize=(10, 15))
+    # fig.subplots_adjust(left=0.115, right=0.88)
+    # fig.canvas.set_window_title('Eldorado K-8 Fitness Chart')
 
     # convert the light number to label
     labels = ['Daylight', 'Dawn', 'Dusk', 'Dark, Street Lights On',
               'Dark, Street Lights Off', 'No Street Lights',
               'Other', 'Unknown']
-    ax1.set_title("Accidents percentage count by day light condition")
+    plt.title("Accidents percentage count by day light condition")
 
     plt.pie(x, labels=labels, counterclock=True,
             labeldistance=1.05, autopct='%.0f%%', pctdistance=0.8, shadow=True)
@@ -184,6 +176,8 @@ def light_plot(dataframe, plot_sink=None):
     if plot_sink is None:
         plot_sink = mapping_funcs.MAPS_DIR
     plt.savefig(plot_sink + '/light_plot.png')
+
+    pass
 
 
 def ml_prediction(dataframe, plot_sink=None):
@@ -259,12 +253,10 @@ def ml_prediction(dataframe, plot_sink=None):
     y_test = severity_list[test_inds]
 
     # training model
-    from sklearn.neural_network import MLPClassifier
     # Training Algorithm
     clf = MLPClassifier(hidden_layer_sizes=(32, 32), alpha=1e-3)
     clf.fit(X_train, y_train)
 
-    from sklearn.ensemble import RandomForestClassifier
     clf = RandomForestClassifier()
     clf = clf.fit(X_train, y_train)
     print("The model accuarcy " + str(clf.score(X_train, y_train)))
@@ -285,7 +277,7 @@ def ml_prediction(dataframe, plot_sink=None):
     plt.savefig(plot_sink + '/weather_factor_importance.png')
 
     # more factors
-    from sklearn.preprocessing import LabelEncoder
+    
     lblE = LabelEncoder()
     df_clean = dataframe.dropna()
     for i in df_clean:
@@ -314,6 +306,7 @@ def ml_prediction(dataframe, plot_sink=None):
           str(clf.score(X_train, y_train)))
 
     importances = clf.feature_importances_
+    print(importances)
     # plt.style.use('fivethirtyeight')
     feature_list = ['WEEKDAY',
                     'weather',
@@ -322,7 +315,6 @@ def ml_prediction(dataframe, plot_sink=None):
                     'rur_urb']
     x = list(range(len(importances)))
 
-    plt.figure()
     plt.bar(x, importances, orientation='vertical')
     plt.xticks(x, feature_list, rotation='horizontal')
     plt.ylabel('Importance')
@@ -331,5 +323,7 @@ def ml_prediction(dataframe, plot_sink=None):
     if plot_sink is None:
         plot_sink = mapping_funcs.MAPS_DIR
     plt.savefig(plot_sink + '/factors_importance.png')
+
+    pass
 
 
