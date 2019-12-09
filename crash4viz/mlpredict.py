@@ -1,12 +1,12 @@
-import tkinter
 import matplotlib as mpl
-mpl.use('TkAgg')
 import matplotlib.pyplot as plt
 import pandas as pd
 import warnings
 import numpy as np
 from . import mapping_funcs
 from sklearn.model_selection import train_test_split
+mpl.use('TkAgg')
+
 warnings.filterwarnings('ignore')
 
 # Create the data frame of Traffic Accidents from 2013 - 2017
@@ -85,7 +85,7 @@ def weekday_plot(dataframe, plot_sink=None):
     plt.savefig(plot_sink + '/weekday_plot.png')
 
 
-def weather_plot(dataframe, plot_sink = None):
+def weather_plot(dataframe, plot_sink=None):
     count_by_weather = dataframe['weather'].value_counts()
     # print(count_by_weather)
 
@@ -328,5 +328,8 @@ def ml_prediction(dataframe, plot_sink=None):
     plt.ylabel('Importance')
     plt.xlabel('Variable')
     plt.title('Variable Importances')
+    if plot_sink is None:
+        plot_sink = mapping_funcs.MAPS_DIR
+    plt.savefig(plot_sink + '/factors_importance.png')
 
 
