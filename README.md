@@ -20,44 +20,28 @@ The project has the following structure:
         |-- requirements.txt
         |-- setup.py
         |-- crash4viz
-            |-- __init__.py
             |-- mapping.py
             |-- mapping_funcs.py
             |-- mlpredict.py
             |-- dataprep
-                |-- s1-xlsx2csv.py
-                |-- s2-coords_convert.py
-                |-- s3-merge.py
-                |-- s4-folium_prep.py
-                |-- milepost
-                        |-- plot-milepost.py
+                |-- ...
             |-- tests
                 |-- __init__.py
                 |-- test_mapping.py
                 |-- test_mapping_funcs.py
                 |-- test_ml.py
                 |-- test_output
-                    |-- ...
         |-- data
             |-- hsis-csv
             |-- crash-merged
         |-- docs
             |-- pre-final pre.pdf
             |-- data handbook
-                |-- hsis_data_guidebook.pdf
-                |-- var_explanation.pdf
             |-- design docs
-                |-- functional specification.md
-                |-- software components.md
             |-- final pre
-                |-- index.html
             |-- tech review
-                |-- index.html
         |-- examples
-            |-- EXAMPLES.md
-            |-- interface.png
         |-- outputs
-            |-- ...
 
 
 ## Install the program
