@@ -15,7 +15,7 @@ sys.path.insert(0, PARENT)
 from crash4viz import mapping
 from crash4viz import mapping_funcs
 
-TEST_OUTPUT = CURRENTDIR + '/test_output/generation_times.tsv'
+TEST_OUTPUT = CURRENTDIR + '/test_output/'
 
 class TestMapping(unittest.TestCase):
     """Test the different map options we have, the inputs to these mapping
@@ -52,8 +52,7 @@ class TestMapping(unittest.TestCase):
         test_group = test_grp_dict[test_grp_feature]
 
         testmap = mapping.Maps()
-        map_sink = CURRENTDIR + '/test_output/'
-        map_sink = map_sink + f'{test_group}_basic_map_test.html'
+        map_sink = TEST_OUTPUT + f'{test_group}_basic_map_test.html'
         t_zero = time.time()
         testmap.basic_map(
             test_county_name,
@@ -66,8 +65,9 @@ class TestMapping(unittest.TestCase):
 
         total = t_one - t_zero
         time_to_generate = 'basic map generation time is ' + str(total)
-
-        with open(TEST_OUTPUT, 'a+') as output:
+        
+        save_tsv = TEST_OUTPUT + 'generation_times.tsv'
+        with open(save_tsv, 'a+') as output:
             output.write(time_to_generate)
 
     def test_cluster_map(self):
@@ -96,8 +96,7 @@ class TestMapping(unittest.TestCase):
         test_group = test_grp_dict[test_grp_feature]
 
         testmap = mapping.Maps()
-        map_sink = CURRENTDIR + '/test_output/'
-        map_sink = map_sink + f'{test_group}_cluster_map_test.html'
+        map_sink = TEST_OUTPUT + f'{test_group}_cluster_map_test.html'
         t_zero = time.time()
 
         testmap.plot_folium_filtered_clusters(
@@ -112,7 +111,8 @@ class TestMapping(unittest.TestCase):
         total = t_one - t_zero
         time_to_generate = 'cluster map generation time is ' + str(total)
 
-        with open(TEST_OUTPUT, 'a+') as output:
+        save_tsv = TEST_OUTPUT + 'generation_times.tsv'
+        with open(save_tsv, 'a+') as output:
             output.write(time_to_generate)
 
     def test_layer_map(self):
@@ -141,8 +141,7 @@ class TestMapping(unittest.TestCase):
         test_group = test_grp_dict[test_grp_feature]
 
         testmap = mapping.Maps()
-        map_sink = CURRENTDIR + '/test_output/'
-        map_sink = map_sink + f'{test_group}_layer_map_test.html'
+        map_sink = TEST_OUTPUT + f'{test_group}_layer_map_test.html'
         t_zero = time.time()
 
         testmap.plot_folium_filtered_layers(
@@ -156,8 +155,8 @@ class TestMapping(unittest.TestCase):
 
         total = t_one - t_zero
         time_to_generate = 'layer map generation time is ' + str(total)
-
-        with open(TEST_OUTPUT, 'a+') as output:
+        save_tsv = TEST_OUTPUT + 'generation_times.tsv'
+        with open(save_tsv, 'a+') as output:
             output.write(time_to_generate)
 
     def test_layer_cluster_map(self):
@@ -186,8 +185,7 @@ class TestMapping(unittest.TestCase):
         test_group = test_grp_dict[test_grp_feature]
 
         testmap = mapping.Maps()
-        map_sink = CURRENTDIR + '/test_output/'
-        map_sink = map_sink + f'{test_group}_layer_cluster_map_test.html'
+        map_sink = TEST_OUTPUT + f'{test_group}_layer_cluster_map_test.html'
         t_zero = time.time()
 
         testmap.plot_folium_filtered_clusters_layers(
@@ -201,8 +199,8 @@ class TestMapping(unittest.TestCase):
 
         total = t_one - t_zero
         time_to_generate = 'layered cluster generation time is ' + str(total)
-
-        with open(TEST_OUTPUT, 'a+') as output:
+        save_tsv = TEST_OUTPUT + 'generation_times.tsv'
+        with open(save_tsv, 'a+') as output:
             output.write(time_to_generate)
 
 if __name__ == '__main__':
