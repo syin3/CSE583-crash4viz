@@ -16,78 +16,48 @@ https://syin3.github.io/WA-Crash-Viz-and-Analysis/technology%20review/#/).
 The project has the following structure:
 
     |-- crash4viz
-        |-- .coveragerc
-        |-- .travis.yml
-        |-- LICENSE
-        |-- README.md
         |-- interface.py
-        |-- requirements-dev.txt
         |-- requirements.txt
         |-- setup.py
         |-- crash4viz
-        |   |-- __init__.py
-        |   |-- mapping.py
-        |   |-- mapping_funcs.py
-        |   |-- mlpredict.py
-        |   |-- dataprep
-        |   |   |-- s1-xlsx2csv.py
-        |   |   |-- s2-coords_convert.py
-        |   |   |-- s3-merge.py
-        |   |   |-- s4-folium_prep.py
+            |-- __init__.py
+            |-- mapping.py
+            |-- mapping_funcs.py
+            |-- mlpredict.py
+            |-- dataprep
+                |-- s1-xlsx2csv.py
+                |-- s2-coords_convert.py
+                |-- s3-merge.py
+                |-- s4-folium_prep.py
                 |-- milepost
                         |-- plot-milepost.py
-        |   |-- tests
-        |       |-- __init__.py
-        |       |-- test_mapping.py
-        |       |-- test_mapping_funcs.py
-        |       |-- test_ml.py
-        |       |-- test_data
-        |       |   |-- sample.csv
-        |       |-- test_output
-        |           |-- Weather_basic_map_test.html
-        |           |-- Weather_cluster_map_test.html
-        |           |-- Weather_layer_cluster_map_test.html
-        |           |-- Weather_layer_map_test.html
+            |-- tests
+                |-- __init__.py
+                |-- test_mapping.py
+                |-- test_mapping_funcs.py
+                |-- test_ml.py
+                |-- test_output
+                    |-- ...
         |-- data
-        |   |-- coords-noaa
-        |   |   |-- ...
-        |   |-- coords2convert
-        |   |   |-- ...
-        |   |-- crash-merged
-        |   |   |-- ...
-        |   |-- hsis
-        |   |   |-- ...
-        |   |-- hsis-csv
-        |   |   |-- ...
-        |   |-- milepost
-        |       |-- ...
+            |-- hsis-csv
+            |-- crash-merged
         |-- docs
-        |   |-- pre-final pre.pdf
-        |   |-- data handbook
-        |   |   |-- hsis_data_guidebook.pdf
-        |   |   |-- var_explanation.pdf
-        |   |-- design docs
-        |   |   |-- functional specification.md
-        |   |   |-- software components.md
-        |   |-- final pre
-        |   |   |-- index.html
-        |   |-- misc
-        |   |   |-- ...
-        |   |-- tech review
-        |       |-- index.html
-        |       |-- ...
+            |-- pre-final pre.pdf
+            |-- data handbook
+                |-- hsis_data_guidebook.pdf
+                |-- var_explanation.pdf
+            |-- design docs
+                |-- functional specification.md
+                |-- software components.md
+            |-- final pre
+                |-- index.html
+            |-- tech review
+                |-- index.html
         |-- examples
-        |   |-- EXAMPLES.md
-        |   |-- interface.png
+            |-- EXAMPLES.md
+            |-- interface.png
         |-- outputs
-            |-- Adams_Weather_basic_map.html
-            |-- light_plot.png
-            |-- month_plot.png
-            |-- road_plot.png
-            |-- weather_factor_importance.png
-            |-- weather_plot.png
-            |-- weekday_plot.png
-            |-- year_plot.png
+            |-- ...
 
 
 ## Install the program
