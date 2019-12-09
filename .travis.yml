@@ -7,8 +7,9 @@ install:
 
 script:
 - flake8
-- pytest
-- python -m unittest discover
+- cd crash4viz/tests
+- pytest test_ml.py
+# - python -m unittest discover
 
 after_success:
 - coveralls
