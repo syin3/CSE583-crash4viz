@@ -1,11 +1,11 @@
 import matplotlib as mpl
+mpl.use('TkAgg')
 import matplotlib.pyplot as plt
 import pandas as pd
 import warnings
 import numpy as np
 from . import mapping_funcs
 from sklearn.model_selection import train_test_split
-mpl.use('TkAgg')
 
 warnings.filterwarnings('ignore')
 
