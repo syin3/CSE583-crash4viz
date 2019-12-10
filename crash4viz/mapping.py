@@ -39,7 +39,7 @@ class Maps:
             [lat, lon],
             tiles = 'cartodbpositron',
             prefer_canvas=True,
-            zoom_start=8)
+            zoom_start=10)
 
         for _, row in subgrp_df.iterrows():
             assert row.COUNTY == county

@@ -19,7 +19,8 @@ def year_plot(year_count_list, plot_sink=None):
     """
     plot counts for years
     """
-    plt.bar([2013, 2014, 2015, 2016, 2017], year_count_list)
+    plt.figure(figsize=(12,8))
+    plt.bar([2013, 2014, 2015, 2016, 2017], [36685, 40638, 44471, 48525, 47238])
     plt.title("Accident counts by year")
     plt.ylabel("Accident counts")
     plt.xlabel("Year")
