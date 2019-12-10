@@ -41,8 +41,8 @@ class TestDataPrep(unittest.TestCase):
 
     def test_plot_milepost(self):
         """Test if milepost is plotted correctly"""
-        milepost = milepost.read_milepost(PARENT + '/data/milepost/SRMilepostMarkers.shp')
-        _ = milepost.plot_milepost(milepost, TEST_OUTPUT + 'test_milepost.html')
+        mileposts = milepost.read_milepost(PARENT + '/data/milepost/SRMilepostMarkers.shp')
+        _ = milepost.plot_milepost(mileposts, TEST_OUTPUT + 'test_milepost.html')
         self.assertEqual(
             (os.path.isfile(TEST_OUTPUT + 'test_milepost.html')),
             True,
