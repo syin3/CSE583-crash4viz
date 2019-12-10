@@ -54,6 +54,8 @@ def month_plot(dataframe, plot_sink=None):
         plot_sink = mapping_funcs.MAPS_DIR
     plt.savefig(plot_sink + '/month_plot.png')
 
+    return count_by_month
+
 def weekday_plot(dataframe, plot_sink=None):
     """
     plot counts for weekdays
@@ -77,6 +79,8 @@ def weekday_plot(dataframe, plot_sink=None):
     if plot_sink is None:
         plot_sink = mapping_funcs.MAPS_DIR
     plt.savefig(plot_sink + '/weekday_plot.png')
+
+    return count_by_weekday
 
 def weather_plot(dataframe, plot_sink=None):
     """
@@ -113,6 +117,8 @@ def weather_plot(dataframe, plot_sink=None):
         plot_sink = mapping_funcs.MAPS_DIR
     plt.savefig(plot_sink + '/weather_plot.png')
 
+    return count_by_weather
+
 def road_plot(dataframe, plot_sink=None):
     """
     plot counts for roads
@@ -148,6 +154,8 @@ def road_plot(dataframe, plot_sink=None):
     plt.title("Accidents percentage count by roadsurface condition")
     plt.savefig(plot_sink + '/road_plot.png')
 
+    return count_by_road
+
 def light_plot(dataframe, plot_sink=None):
     """
     plot counts for lighting conditions
@@ -182,6 +190,8 @@ def light_plot(dataframe, plot_sink=None):
     if plot_sink is None:
         plot_sink = mapping_funcs.MAPS_DIR
     plt.savefig(plot_sink + '/light_plot.png')
+
+    return count_by_LIGHT
 
 def ml_prediction(dataframe, plot_sink=None):
     """
@@ -328,3 +338,5 @@ def ml_prediction(dataframe, plot_sink=None):
     if plot_sink is None:
         plot_sink = mapping_funcs.MAPS_DIR
     plt.savefig(plot_sink + '/factors_importance.png')
+
+    return importances
