@@ -18,13 +18,57 @@ from crash4viz import mapping_funcs
 TEST_OUTPUT = CURRENTDIR + '/test_output/'
 
 class TestMapping(unittest.TestCase):
-    """Test the different map options we have, the inputs to these mapping
-    functions are set within each function, so will differ slightly for
+    """Test the different map options/functions we have, the inputs to these
+    mapping functions are set within each function, so will differ slightly for
     different features.
     """
 
     def setUp(self):
         warnings.simplefilter('ignore')
+
+    def test_data_prep_mapping(self):
+        """Test that the features being drawn from dictionaries that the
+        mapping function will call on for plotting are correct."""
+        
+        vars_dict = mapping_funcs.VARS_DICT
+        self.assertEqual(len(vars_dict), 5,
+                         "The variables dict doesn't contain the right features")
+        subgroups_dict = mapping_funcs.R_SUBGROUPS_DICT
+        self.assertEqual(len(subgroups_dict), 4,
+                         "The subgroups dict doesn't contain the right features")
+        incident_dict = mapping_funcs.R_INCIDENT_DICT
+        self.assertEqual(len(incident_dict), 3,
+                         "The severity dict doesn't contain the right features")
+        county_dict = mapping_funcs.R_COUNTY_DICT
+        self.assertEqual(len(county_dict), 40,
+                         "There should be 40 counties.")
+        test_year = '2013'
+        test_county = county_dict['Adams']
+        self.assertEqual(test_county, 1,
+                         "County name:number-ID dict not accessed correctly")
+        test_county_name = mapping_funcs.COUNTY_DICT[test_county]
+        self.assertEqual(test_county_name, 'Adams',
+                         "Number-ID:county name dict not accessed correctly")
+        test_grp_feature = vars_dict['Weather']
+        self.assertEqual(test_grp_feature, 'weather',
+                         "Variables dictionary not accessed correctly.")
+        test_subgrp_feature = subgroups_dict['Weather']['Raining']
+        self.assertEqual(test_subgrp_feature, 3,
+                         "Subgroups dict not accessed correctly.")
+        test_df = mapping_funcs.read_dataframe(test_year)
+        test_dataframe = test_df[test_df.COUNTY == test_county]
+        test_group_df = test_dataframe.groupby(test_grp_feature)
+        self.assertIsNotNone(test_group_df.CASENO,
+                             "Dataframe grouping is excluding certain features.")
+        test_subgrp_df = test_group_df.apply(lambda g: g[g['weather'] == test_subgrp_feature])
+        self.assertIsNotNone(test_subgrp_df.CASENO,
+                             "Subgrouping the dataframe is not working.")
+        test_grp_dict = mapping_funcs.GRP_DICT
+        self.assertEqual(len(test_grp_dict), 6,
+                         "Groups dict doesn't contain the right features.")
+        test_group = test_grp_dict[test_grp_feature]
+        self.assertEqual(test_group, 'Weather',
+                         "The groups dict not accessed correctly.")
 
     def test_basic_map(self):
 
