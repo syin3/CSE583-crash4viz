@@ -113,12 +113,12 @@ class TestDataPrep(unittest.TestCase):
             self.assertEqual('CASENO' in list(occ[key].columns), True, 'supporting doc reading problematic.')
             self.assertEqual('CASENO' in list(veh[key].columns), True, 'supporting doc reading problematic..')
 
-        met = s3_merge.meta_merge(crashes, curv, grad, occ, road, veh)
-        self.assertEqual(len(met), 5, "meta merge wrong.")
+        meta = s3_merge.meta_merge(crashes, curv, grad, occ, road, veh)
+        self.assertEqual(len(meta), 5, "meta merge wrong.")
 
-        for each in met:
-            self.assertEqual(each.shape[1], 22, "Meta merging problem.")
-            self.assertEqual(each.isna().sum().sum(), 0, "Meta merging did not drop na.")
+        for key in meta.keys():
+            self.assertEqual(meta[key].shape[1], 22, "Meta merging problem.")
+            self.assertEqual(meta[key].isna().sum().sum(), 0, "Meta merging did not drop na.")
 
 if __name__ == '__main__':
     unittest.main()
