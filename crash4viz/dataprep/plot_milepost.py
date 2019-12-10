@@ -32,7 +32,7 @@ def read_milepost(mile_shapefile):
             x.append(i[0])
             y.append(i[1])
 
-    return (np.array(y), np.array(x))
+    return (y, x)
 
 def plot_milepost(coords, mapSaveLoc):
     '''
@@ -40,13 +40,12 @@ def plot_milepost(coords, mapSaveLoc):
     @param mapSaveLoc: saving destination of generated folium map
     @output waMilePost: milepost folium map in html format
     @test:
-        (1) if coords are empty
         (1) if the milepost output exists
     '''
     lat, lng = coords
     # create map background
     waMilePost = folium.Map(
-        [np.median(lat), np.median(lng)],
+        [np.median(np.array(lat)), np.median(np.array(lng))],
         tiles='',
         prefer_canvas=True,
         zoom_start=8)

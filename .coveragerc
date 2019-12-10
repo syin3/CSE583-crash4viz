@@ -1,5 +1,0 @@
-[run]
-source = crash4viz/tests
-
-[report]
-ignore_errors = True
