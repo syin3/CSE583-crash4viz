@@ -52,5 +52,10 @@ class TestDataPrep(unittest.TestCase):
             True,
             "Milepost did not output correctly")
 
+    def test_find_excel(self):
+        """Test if excel files can be found successfully"""
+        file_list = s1_xlsx2csv.find_excel(PARENT + '/data/hsis')
+        self.assertEqual(len(file_list), 30, "Find excel is not counting right")
+
 if __name__ == '__main__':
     unittest.main()
