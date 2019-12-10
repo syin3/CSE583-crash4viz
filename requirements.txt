@@ -6,4 +6,4 @@ numpy==1.17.4
 pandas==0.25.3
 sklearn
 matplotlib>=3.0
-shapefile>=2.0
+pyshp==2.1.0

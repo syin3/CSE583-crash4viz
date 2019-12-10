@@ -57,5 +57,15 @@ class TestDataPrep(unittest.TestCase):
         file_list = s1_xlsx2csv.find_excel(PARENT + '/data/hsis')
         self.assertEqual(len(file_list), 30, "Find excel is not counting right")
 
+    def test_convert_xlsx2csv(self):
+        """Test if excel files can be found successfully"""
+        file_list = s1_xlsx2csv.find_excel(PARENT + '/data/hsis')
+        convert_xlsx2csv(PARENT + '/data/hsis', PARENT + '/data/hsis-csv', file_list)
+        csv_list = []
+        for file in os.listdir(direct):
+            if file.endswith(".csv"):
+                csv_list.append(file)
+        self.assertEqual(len(csv_list), 30, "CSV conversion is not correct")
+
 if __name__ == '__main__':
     unittest.main()
