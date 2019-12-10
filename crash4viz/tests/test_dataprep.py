@@ -60,7 +60,7 @@ class TestDataPrep(unittest.TestCase):
     def test_convert_xlsx2csv(self):
         """Test if excel files can be found successfully"""
         file_list = s1_xlsx2csv.find_excel(PARENT + '/data/hsis')
-        convert_xlsx2csv(PARENT + '/data/hsis', PARENT + '/data/hsis-csv', file_list)
+        s1_xlsx2csv.convert_xlsx2csv(PARENT + '/data/hsis', PARENT + '/data/hsis-csv', file_list)
         csv_list = []
         for file in os.listdir(direct):
             if file.endswith(".csv"):
