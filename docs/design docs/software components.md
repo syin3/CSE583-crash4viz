@@ -1,21 +1,27 @@
 Software components: 
 
-    (1) Data manager: 
-        Provides an interface to the dataset and further provides application features. Since our product allows users to select conditions of all aspects, the most important task for the data manager is to query the dataset. More specifically, the manager will “select” data based on users’ input, such as “2017 + rainy + young driver” fed to data manager will return crash records that 
-            (a) Happens in 2017;
-            (b) Happened in rainy weather condition;
-            (c) Involved young drivers;
++ Data manager: 
+    - Provides an interaction to the dataset, i.e. query based on users’ input, such as “2017 + rainy + King County” fed to data manager will return crash records that
+        * Happens in 2017;
+        * Happened in rainy weather condition;
+        * Involved young drivers;
 
-    (2) Analysis manager:
-        Our users may also be interested in seeing a report of the crashes. To meet this requirement, an analysis manager is in place. Analysis manager waits for a click on the “analyze and generate report” button by the user. When initiated, based on the data by data manager, the analysis manager will plot defined graphs for the data and render a PDF file that is available for download.
++ Analysis manager:
+    - recieves data from data manager and is activated by "generate report" button;
+    - conducts mostly descriptive analysis for now;
+    - fits statistical models to the data and generate factor importance summary;
 
-    (3) Visualization manager:
-        The most important task for our project is to visualize crashes on maps. With data from the data manager, the visualization manager will generate a base map first and then plot the records on the map, with lat/lon information of the records. Users will only see selected data on the map.
++ Visualization manager:
+    - is the most important task for our projectis;
+    - visualizes crashes on maps;
+    - with data from the data manager, generates a base map first and then plot the records on the map, with lat/lon information of the records;
+    - also allows for plotting of more complex maps with clusters and layers;
+    - only shows user's selected data on the map.
 
 
 A typical interaction is as follows:
     User select “2017” as a criteria for data. Receiving this button click, the data manager queries the dataset in SQL “SELECT * FROM table WHERE year=2017”. The data subset returned is passed to visualization manager, who renders the base map with these records from the subset and displays the plot on the webpage. Lastly, if the user clicks the analysis button, the analysis manager will generate plots on the data and render a PDF file containing the plots.
 
 
-Preliminary plan:
+Preliminary plan (written at tech review):
 Finish functional design of app features, develop test cases, develop the interface, and finally put together examples for publish
