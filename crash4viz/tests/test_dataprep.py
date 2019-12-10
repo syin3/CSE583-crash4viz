@@ -86,8 +86,8 @@ class TestDataPrep(unittest.TestCase):
         noaa_coords = {}
         for yr in range(2013, 2018):
             noaa_coords[yr] = s3_merge.read_noaa_coords(yr, PARENT + '/data/coords-noaa/')
-        acc_file_list = detect_files(PARENT + "/data/hsis-csv", 'acc')
-        crashes = acc_merge(acc_file_list, noaa_coords, PARENT + '/data/hsis-csv')
+        acc_file_list = s3_merge.detect_files(PARENT + "/data/hsis-csv", 'acc')
+        crashes = s3_merge.acc_merge(acc_file_list, noaa_coords, PARENT + '/data/hsis-csv')
 
         self.assertEqual(len(crashes), 5, "accident merging with NOAA coords is wrong.")
         for each in crashes:
