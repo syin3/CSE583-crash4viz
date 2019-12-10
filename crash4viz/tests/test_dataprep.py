@@ -17,7 +17,11 @@ PARENTDIR = os.path.dirname(CURRENTDIR)
 PARENT = os.path.dirname(PARENTDIR)
 sys.path.insert(0, PARENT)
 
-from crash4viz.dataprep import *
+from crash4viz.dataprep import milepost
+from crash4viz.dataprep import s1_xlsx2csv
+from crash4viz.dataprep import s2_coords_convert
+from crash4viz.dataprep import s3_merge
+from crash4viz.dataprep import s4_folium_prep
 
 TEST_OUTPUT = CURRENTDIR + '/test_output/'
 
