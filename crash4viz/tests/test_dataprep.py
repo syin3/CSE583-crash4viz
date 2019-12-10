@@ -33,7 +33,7 @@ class TestDataPrep(unittest.TestCase):
         """Test that the features being drawn from dictionaries that the
         mapping function will call on for plotting are correct."""
         
-        milepost = read_milepost(PARENT + '/data/milepost/SRMilepostMarkers.shp')
+        milepost = milepost.read_milepost(PARENT + '/data/milepost/SRMilepostMarkers.shp')
         self.assertNotEqual(len(milepost[0]), 0,
                          "Milepost function didn't read any latitude")
         self.assertNotEqual(len(milepost[1]), 0,
@@ -41,8 +41,8 @@ class TestDataPrep(unittest.TestCase):
 
     def test_plot_milepost(self):
         """Test if milepost is plotted correctly"""
-        milepost = read_milepost(PARENT + '/data/milepost/SRMilepostMarkers.shp')
-        _ = plot_milepost(milepost, TEST_OUTPUT + 'test_milepost.html')
+        milepost = milepost.read_milepost(PARENT + '/data/milepost/SRMilepostMarkers.shp')
+        _ = milepost.plot_milepost(milepost, TEST_OUTPUT + 'test_milepost.html')
         self.assertEqual(
             (os.path.isfile(TEST_OUTPUT + 'test_milepost.html')),
             True,
