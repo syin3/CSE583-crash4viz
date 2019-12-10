@@ -1,3 +1,5 @@
+"""Tests for ML predictions script."""
+
 import os
 import unittest
 import pandas as pd
@@ -14,6 +16,9 @@ from crash4viz import mlpredict
 TEST_OUTPUT = CURRENTDIR + '/test_output/'
 
 def test_mlpredict():
+    """Test that the different functions being called in mlpredict.py produce
+    the plots it's supposed to in the location that it's supposed to."""
+
     year_plot_list = []
     for yr in range(2013, 2018):
         year_plot_list.append(pd.read_csv(mapping_funcs.DATA_DIR + '/2013.csv').shape[0])
