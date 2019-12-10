@@ -90,8 +90,8 @@ class TestDataPrep(unittest.TestCase):
         crashes = s3_merge.acc_merge(acc_file_list, noaa_coords, PARENT + '/data/hsis-csv')
 
         self.assertEqual(len(crashes), 5, "accident merging with NOAA coords is wrong.")
-        for each in crashes:
-            self.assertEqual(each.shape[1], 16, "Merged accident files subsetting is wrong.")
+        for key in crashes.keys():
+            self.assertEqual(crashes[key].shape[1], 16, "Merged accident files subsetting is wrong.")
 
     def test_meta_merge(self):
         """Test meta merge"""
