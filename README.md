@@ -29,6 +29,7 @@ The project has the following structure:
             |-- mlpredict.py
             |-- dataprep/
             |-- tests
+            |-- test_dataprep.py
                 |-- test_mapping.py
                 |-- test_mapping_funcs.py
                 |-- test_ml.py
@@ -36,7 +37,6 @@ The project has the following structure:
         |-- data
             |-- hsis-csv/
             |-- crash-merged/
-            |-- ...
         |-- docs
             |-- pre-final pre.pdf
             |-- examples/
