@@ -58,8 +58,8 @@ def plot_milepost(coords, mapSaveLoc):
 
     # plot the mileposts on the map
     # honestly, we don't knwo verbal info of the points
-    for i in range(len(x)):
-        folium.CircleMarker([y[i], x[i]],
+    for i in range(len(lng)):
+        folium.CircleMarker([lat[i], lng[i]],
                     radius=2,
                     popup=folium.Popup("milepost {}".format(3), max_width=150),
                     weight = 0.1,
