@@ -48,7 +48,7 @@ def convert_xlsx2csv(xlsx_direct, csv_direct, file_list):
         curr.columns = attributes[file.split('.')[0][4:]]
 
         # save as corresponding csv files in output directory
-        curr.to_csv(csv_firect + file.split('.')[0] + '.csv', index=False)
+        curr.to_csv(csv_direct + file.split('.')[0] + '.csv', index=False)
 
     # return nothing
     pass

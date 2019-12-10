@@ -70,7 +70,7 @@ def acc_merge(acc_file_list, noaa_coords, directory):
     @param directory: directory of accident files
     @output crashes: dictionary of merged crahses
     @test:
-        (1) crash dictionary should have 6 key-values, 2013-2017
+        (1) crash dictionary should have 5 key-values, 2013-2017
         (2) 16 columns in merged datasets
         (3) weather and light should be in float, but may have NaN
         (4) crash should not be empty
@@ -140,7 +140,7 @@ def meta_merge(crashes, curv, grad, occ, road, veh):
         (6) -2 column are all string type
     '''
     meta = {}
-    for yr in range(2013, 2018):
+    for yr in range(2013, 2013 + len(crashes)):
         # first merge veh count with crashes
         veh_count = veh[yr]['CASENO'].value_counts().sort_index()
         veh_count = veh_count.to_frame().reset_index()
