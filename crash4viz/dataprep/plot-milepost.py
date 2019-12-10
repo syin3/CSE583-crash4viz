@@ -1,37 +1,24 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
-
-
 '''
 plot-milepost.py
 plots the milepost markers on map
 '''
 
-
-# ### import
-
-# In[1]:
-
-
 import numpy as np
 import shapefile as shp
 import folium
 
-
-# ### plot
-
-# In[2]:
-
-
-def plotMilePost(mile_shapefile, mapSaveLoc):
+def read_milepost(mile_shapefile):
     '''
-    @param mile_shapefile: shape file of original data
-    @param mapSaveLoc: saving destination of generated folium map
-    @output waMilePost: milepost folium map in html format
+    reads milepost data and output np array
+    @param mile_shapefile: shapfile containing milepost data
+    @output (lng, lat): tuple of np arrays
+    @test:
+        (1) if x, y are empty
     '''
-    
+
     # read shape file
     milepost = shp.Reader(mile_shapefile)
     
@@ -45,14 +32,24 @@ def plotMilePost(mile_shapefile, mapSaveLoc):
             x.append(i[0])
             y.append(i[1])
 
+    return (np.array(y), np.array(x))
+
+def plot_milepost(coords, mapSaveLoc):
+    '''
+    @param mile_shapefile: shape file of original data
+    @param mapSaveLoc: saving destination of generated folium map
+    @output waMilePost: milepost folium map in html format
+    @test:
+        (1) if coords are empty
+        (1) if the milepost output exists
+    '''
+    lat, lng = coords
     # create map background
-    waMilePost = folium.Map([np.median(np.array(y)), np.median(np.array(x))],
-               # tiles="cartodbpositron",
-               tiles='',
-               # width='80%',
-               # height='80%',
-               prefer_canvas=True,
-               zoom_start=7)
+    waMilePost = folium.Map(
+        [np.median(lat), np.median(lng)],
+        tiles='',
+        prefer_canvas=True,
+        zoom_start=8)
     
     folium.TileLayer('cartodbpositron', name = 'bright').add_to(waMilePost)
     
@@ -66,8 +63,6 @@ def plotMilePost(mile_shapefile, mapSaveLoc):
         folium.CircleMarker([y[i], x[i]],
                     radius=2,
                     popup=folium.Popup("milepost {}".format(3), max_width=150),
-                    # fill_color="#3db7e4",
-                    # color='red',
                     weight = 0.1,
                     fill_color='yaleblue',
                     fill=True,
@@ -79,20 +74,7 @@ def plotMilePost(mile_shapefile, mapSaveLoc):
     
     # save and return
     waMilePost.save(mapSaveLoc)
-    
+
     return waMilePost
 
-
-# ### use case
-
-# In[ ]:
-
-
-_ = plotMilePost('../../data/milepost/SRMilepostMarkers.shp', '../../outputs/waMilePost.html')
-
-
-# In[ ]:
-
-
-
-
+# _ = plotMilePost('../../data/milepost/SRMilepostMarkers.shp', '../../outputs/waMilePost.html')

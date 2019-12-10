@@ -1,33 +1,26 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
-
-
 '''
 merge.py
 reads in NOAA converted coordinates and merge with accident, road, grade, curve files
 '''
 
-
-# ### import
-
-# In[1]:
-
-
 import os
 import pandas as pd
 import sqlite3
 
-
-# ### function
-
-# #### read noaa coords
-
-# In[2]:
-
-
 def read_noaa_coords(yr, directory):
+    '''
+    read from NOAA converted coords
+    @param yr: year to combine
+    @param directory: where to read NOAA converted files from
+    @output records: combined coords for the specified year
+    @test
+        (1) if number of files is greater than zero
+        (2) if records has non-zero length
+        (3) if records' num of columns is three
+    '''
     columns = ['ID', 'destLat', 'destLon']
     
     # detect all csv files of the year
@@ -53,13 +46,15 @@ def read_noaa_coords(yr, directory):
     records.columns = ['ID', 'lat', 'lon']
     return records
 
-
-# #### detect files with keywords in name
-
-# In[3]:
-
-
 def detect_files(directory, keyword):
+    '''
+    detect files in specified directory with specified keyword
+    @param directory: dir to search
+    @param keyword: keyword to look for
+    @output sorted list of file names
+    @test:
+        (1) if output has larger than length
+    '''
     file_list = []
     for file in os.listdir(directory):
         if keyword in file:
@@ -67,13 +62,20 @@ def detect_files(directory, keyword):
     
     return sorted(file_list)
 
-
-# #### merge noaa coords with acc and clean
-
-# In[9]:
-
-
 def acc_merge(acc_file_list, noaa_coords, directory):
+    '''
+    merge accidents with NOAA coords
+    @param acc_file_list: sorted list of accident file names
+    @param noaa_coords: combined NOAA records
+    @param directory: directory of accident files
+    @output crashes: dictionary of merged crahses
+    @test:
+        (1) crash dictionary should have 6 key-values, 2013-2017
+        (2) 16 columns in merged datasets
+        (3) weather and light should be in float, but may have NaN
+        (4) crash should not be empty
+    '''
+    # create dictionary of crashes, key is year
     crashes = {}
     for file in acc_file_list:
         yr = file[2:4]
@@ -83,15 +85,18 @@ def acc_merge(acc_file_list, noaa_coords, directory):
         tmp['ID'] = tmp.index + 1
         crashes[2000+int(yr)] = tmp
     
+    # merge noaa records with corresponding year of accidents
     for yr in noaa_coords.keys():
         crashes[yr] = crashes[yr].merge(noaa_coords[yr], on='ID', how='inner')
     
+    # specify columns to keep
     columns = ['CASENO', 'FORM_REPT_NO', 'rd_inv', 'milepost', 'RTE_NBR',
            'lat', 'lon', 
            'MONTH', 'DAYMTH', 'WEEKDAY', 
            'RDSURF', 'LIGHT', 'weather', 'rur_urb',
            'REPORT', 'SEVERITY']
 
+    # convert string of light and weather to float, but keep NaN
     for yr in crashes.keys():
         crashes[yr] = crashes[yr][columns]
         crashes[yr].LIGHT = pd.to_numeric(crashes[yr].LIGHT, errors='coerce')
@@ -99,29 +104,41 @@ def acc_merge(acc_file_list, noaa_coords, directory):
     
     return crashes
 
-
-# #### read files with keyword and directory
-
-# In[5]:
-
-
 def read_files(directory, keyword):
+    '''
+    read files with specified keyword
+    @param directory: directory to read files from
+    @param keyword: keyword to search for
+    @output output_dic: dictionary of datasets
+    @test:
+        (1) output_dic should have length 5
+        (2) keyword should not be empty
+    '''
     output_dic = {}
     file_list = detect_files(directory, keyword)
     for yr in range(2013, 2018):
         output_dic[yr] = pd.read_csv(directory + '/' + file_list[yr-2013])
     return output_dic
 
-
-# #### final meta merge func
-
-# In[20]:
-
-
 def meta_merge(crashes, curv, grad, occ, road, veh):
-    """
+    '''
     they have the same keys (of year 2013 to 2017)
-    """
+    merge various sources to final accident files
+    @param crashes: crashes with noaa coords
+    @param curv: curv dictionary with 5 years of data
+    @param grad: grade dictionary with 5 years of data
+    @param occ: occupant dictionary with 5 years of data
+    @param raod: road dictionary with 5 years of data
+    @param veh: vehicle dictionary with 5 years of data
+    @output meta: dictionary of 5 years of merged meta dataset
+    @test:
+        (1) every input has length 5
+        (2) crashes, occ, veh have key 'CASENO'
+        (3) 22 columns in output datasets
+        (4) output has length 5
+        (5) no nan in final output datasets
+        (6) -2 column are all string type
+    '''
     meta = {}
     for yr in range(2013, 2018):
         # first merge veh count with crashes
@@ -136,7 +153,10 @@ def meta_merge(crashes, curv, grad, occ, road, veh):
         conn = sqlite3.connect(":memory:")
         acc_this_yr.to_sql("crash", conn, index=False)
         road_this_yr.to_sql("road", conn, index=False)
-        query =             "SELECT *             FROM crash, road            WHERE crash.rd_inv = road.ROAD_INV            AND crash.milepost >= road.BEGMP            AND crash.milepost <= road.ENDMP"
+        query =  "SELECT * FROM crash, road \
+        WHERE crash.rd_inv = road.ROAD_INV\
+        AND crash.milepost >= road.BEGMP\
+        AND crash.milepost <= road.ENDMP"
         records = pd.read_sql_query(query, conn)
         
         ## remove duplicates randomly
@@ -164,7 +184,10 @@ def meta_merge(crashes, curv, grad, occ, road, veh):
         records.to_sql("records", conn, index=False)
         grad_this_yr.to_sql("grad", conn, index=False)
         
-        query =             "SELECT *             FROM records LEFT JOIN grad ON records.rd_inv = grad.grad_inv            AND records.milepost >= grad.begmp            AND records.milepost <= grad.endmp"
+        query = "SELECT * FROM records \
+        LEFT JOIN grad ON records.rd_inv = grad.grad_inv\
+        AND records.milepost >= grad.begmp\
+        AND records.milepost <= grad.endmp"
         
         records = pd.read_sql_query(query, conn)
         
@@ -188,55 +211,21 @@ def meta_merge(crashes, curv, grad, occ, road, veh):
         meta[yr] = records
     return meta
 
+# noaa_coords = {}
+# for yr in range(2013, 2018):
+#     noaa_coords[yr] = read_noaa_coords(yr, '../../data/coords-noaa')
 
-# ### read NOAA converted coordinates
+# acc_file_list = detect_files("../../data/hsis-csv", 'acc')
+# crashes = acc_merge(acc_file_list, noaa_coords, '../../data/hsis-csv')
 
-# In[7]:
+# curv = read_files("../../data/hsis-csv", 'curv')
+# grad = read_files("../../data/hsis-csv", 'grad')
+# occ = read_files("../../data/hsis-csv", 'occ')
+# road = read_files("../../data/hsis-csv", 'road')
+# veh = read_files("../../data/hsis-csv", 'veh')
 
-
-noaa_coords = {}
-for yr in range(2013, 2018):
-    noaa_coords[yr] = read_noaa_coords(yr, '../../data/coords-noaa')
-
-
-# ### merge NOAA coodinates to acc records
-
-# #### detect and read all acc files
-
-# In[10]:
-
-
-acc_file_list = detect_files("../../data/hsis-csv", 'acc')
-crashes = acc_merge(acc_file_list, noaa_coords, '../../data/hsis-csv')
-
-
-# ### Merge with other files
-
-# #### read them first
-
-# In[11]:
-
-
-curv = read_files("../../data/hsis-csv", 'curv')
-grad = read_files("../../data/hsis-csv", 'grad')
-occ = read_files("../../data/hsis-csv", 'occ')
-road = read_files("../../data/hsis-csv", 'road')
-veh = read_files("../../data/hsis-csv", 'veh')
-
-
-# #### meta merge
-
-# In[21]:
-
-
-met = meta_merge(crashes, curv, grad, occ, road, veh)
-for yr in range(2013, 2018):
-    met[yr].to_csv('../../data/crash-merged/{}.csv'.format(yr), index=False)
-    print('finished {}'.format(yr))
-
-
-# In[ ]:
-
-
-
+# met = meta_merge(crashes, curv, grad, occ, road, veh)
+# for yr in range(2013, 2018):
+#     met[yr].to_csv('../../data/crash-merged/{}.csv'.format(yr), index=False)
+#     print('finished {}'.format(yr))
 

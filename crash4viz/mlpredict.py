@@ -17,7 +17,12 @@ from . import mapping_funcs
 
 def year_plot(year_count_list, plot_sink=None):
     """
-    plot counts for years
+    plot accident counts for years
+    @param year_count_list: list of num of accidents, by year
+    @plot_sink: plot destination folder
+    @test:
+        (1) if year_count_list has length 5
+        (2) if output year_plot.png exists
     """
     plt.figure(figsize=(12,8))
     plt.bar([2013, 2014, 2015, 2016, 2017], [36685, 40638, 44471, 48525, 47238])
@@ -28,6 +33,7 @@ def year_plot(year_count_list, plot_sink=None):
     if plot_sink is None:
         plot_sink = mapping_funcs.MAPS_DIR
     plt.savefig(plot_sink + '/year_plot.png')
+    return year_count_list
 
 def month_plot(dataframe, plot_sink=None):
     """
@@ -171,8 +177,6 @@ def light_plot(dataframe, plot_sink=None):
     for i in s:
         y.append(i)
         x.append(int(int(count_by_LIGHT[i]) / 47818 * 100))
-    # print(x)
-    # print(y)
     # # create the plot
     # plt.figure(figsize=(10, 15))
     # fig.subplots_adjust(left=0.115, right=0.88)
@@ -275,7 +279,7 @@ def ml_prediction(dataframe, plot_sink=None):
 
     clf = RandomForestClassifier()
     clf = clf.fit(X_train, y_train)
-    print("The model accuarcy " + str(clf.score(X_train, y_train)))
+    # print("The model accuarcy " + str(clf.score(X_train, y_train)))
 
     importances = clf.feature_importances_
     # plt.style.use('fivethirtyeight')
@@ -317,11 +321,9 @@ def ml_prediction(dataframe, plot_sink=None):
     clf = RandomForestClassifier()
     clf = clf.fit(X_train, y_train)
 
-    print("The model accuracy with more factors " +
-          str(clf.score(X_train, y_train)))
+    # print("The model accuracy with more factors " + str(clf.score(X_train, y_train)))
 
     importances = clf.feature_importances_
-    print(importances)
     # plt.style.use('fivethirtyeight')
     feature_list = ['WEEKDAY',
                     'weather',

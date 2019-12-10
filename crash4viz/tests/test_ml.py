@@ -31,17 +31,17 @@ class TestMappingFuncs(unittest.TestCase):
 
         year_plot_list = []
         for yr in range(2013, 2018):
-            year_plot_list.append(pd.read_csv(mapping_funcs.DATA_DIR + '/2013.csv').shape[0])
-            mlpredict.year_plot(year_plot_list, TEST_OUTPUT)
+            year_plot_list.append(pd.read_csv(mapping_funcs.DATA_DIR + '/{}.csv'.format(yr)).shape[0])
+        _ = mlpredict.year_plot(year_plot_list, TEST_OUTPUT)
 
         df_2017 = pd.read_csv(mapping_funcs.DATA_DIR + "/2017.csv")
 
-        mlpredict.month_plot(df_2017, TEST_OUTPUT)
-        mlpredict.weekday_plot(df_2017, TEST_OUTPUT)
-        mlpredict.weather_plot(df_2017, TEST_OUTPUT)
-        mlpredict.road_plot(df_2017, TEST_OUTPUT)
-        mlpredict.light_plot(df_2017, TEST_OUTPUT)
-        mlpredict.ml_prediction(df_2017, TEST_OUTPUT)
+        _ = mlpredict.month_plot(df_2017, TEST_OUTPUT)
+        _ = mlpredict.weekday_plot(df_2017, TEST_OUTPUT)
+        _ = mlpredict.weather_plot(df_2017, TEST_OUTPUT)
+        _ = mlpredict.road_plot(df_2017, TEST_OUTPUT)
+        _ = mlpredict.light_plot(df_2017, TEST_OUTPUT)
+        _ = mlpredict.ml_prediction(df_2017, TEST_OUTPUT)
         self.assertEqual((os.path.isfile(TEST_OUTPUT + '/year_plot.png') and
                               os.path.isfile(TEST_OUTPUT + '/month_plot.png') and
                               os.path.isfile(TEST_OUTPUT + 'weekday_plot.png') and

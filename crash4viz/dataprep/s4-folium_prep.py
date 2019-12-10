@@ -1,23 +1,12 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[43]:
-
-
 import pandas as pd
 import folium
 import folium.plugins
-import warnings
 import numpy as np
-warnings.filterwarnings('ignore')
 from matplotlib import pyplot as plt
 from matplotlib.pyplot import rc
-
-
-# In[2]:
-
-
-# features that can be used in plot:
 
 # REPORT (accident severity)
 severity_dict = {1: 'Property Damage Only', 2: 'Injury Accident', 3: 'Fatal Accident'}
@@ -51,33 +40,17 @@ county_dict = {0: 'Not Stated', 1:'Adams', 2: 'Asotin', 3: 'Benton', 4: 'Chelan'
 weekday_dict = {1: 'Monday', 2: 'Tuesday', 3: 'Wednesday', 4: 'Thursday', 5: 'Friday',
                 6: 'Saturday', 7: 'Sunday'}
 
-# rur_urb (rural or urban)
-# be careful on nan, use np.isnan() to judge
-# np.nan: 'not stated'
 rur_urb_dict = {'R': 'rural', 'U': 'urban'}
 
-# RDSURF (roadway surface condition)
-# np.nan: 'Unknown'
 roadway_surf_dict = {1.0: 'Dry', 2.0: 'Wet', 3.0: 'Snow/Slush', 4.0: 'Ice',
                      5.0: 'Sand/Mud/Dirt', 6.0: 'Oil', 7.0: 'Standing Water',
                      8.0: 'Other', 9.0: 'Unknown'}
 
-
-# In[58]:
-
-
-# basic
-# user input: year, county
-
-# changes:
-# zoom level
-# opacity
-# when focus on county, things are too dense
-# moved df = df[df.COUNTY == county] up so that map can start correctly
-
 def plot_basic(year, county, map_sink):
     """
-    with specified year and county
+    basic plot
+    @test:
+        (1) year, county, map_sink cannot be None
     """
 
     df = pd.read_csv('../data/crash-merged/{}.csv'.format(year))
@@ -128,19 +101,13 @@ def plot_basic(year, county, map_sink):
     accWA.save(map_sink)
     return accWA
 
-
-# In[59]:
-
-
-_ = plot_basic(2017, 18, "test.html")
-
-
-# In[60]:
-
+# _ = plot_basic(2017, 18, "test.html")
 
 def plot_layer_by_year(county, map_sink):
     """
     with specified county
+    @test:
+        (1) county, map_sink cannot be None
     """
 
     # read data
@@ -216,19 +183,13 @@ def plot_layer_by_year(county, map_sink):
     
     return accWA
 
-
-# In[61]:
-
-
-_ = plot_layer_by_year(17, "test.html")
-
-
-# In[40]:
-
+# _ = plot_layer_by_year(17, "test.html")
 
 def plot_cluster(map_sink):
     """
     for cluster
+    @test:
+        (1) map_sink cannot be None
     """
     
     # start the map at roughly the center of WA state
@@ -268,15 +229,4 @@ def plot_cluster(map_sink):
     
     return accWA
 
-
-# In[42]:
-
-
-_ = plot_cluster("test.html")
-
-
-# In[ ]:
-
-
-
-
+# _ = plot_cluster("test.html")
