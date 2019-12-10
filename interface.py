@@ -11,7 +11,7 @@ from crash4viz import mapping_funcs
 from crash4viz import mapping
 from crash4viz import mlpredict
 
-def generate_ml(self, year):
+def generate_ml(year):
     """
     generate statistical analysis plots in the outputs folder
     """
@@ -185,7 +185,7 @@ class MainApp(tk.Tk):
         tk.Button(
             self,
             text='Generate ML reports',
-            command=lambda: self.generate_ml(self.selection0.get())
+            command=lambda: generate_ml(self.selection0.get())
             ).pack()
 
     def set_options_init(self, dropdown, var):

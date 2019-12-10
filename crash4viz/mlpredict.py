@@ -89,7 +89,7 @@ def weather_plot(dataframe, plot_sink=None):
     # print(s)
     x = []
     y = []
-    for i in range(s):
+    for i in s:
         y.append(i)
         x.append(int(int(count_by_weather[i]) / 47818 * 100))
     # create the plot
@@ -123,7 +123,7 @@ def road_plot(dataframe, plot_sink=None):
     # print(s)
     x = []
     y = []
-    for i in range(s):
+    for i in s:
         y.append(i)
         x.append(int(int(count_by_road[i]) / 47818 * 100))
 
@@ -159,7 +159,7 @@ def light_plot(dataframe, plot_sink=None):
     # print(s)
     x = []
     y = []
-    for i in range(s):
+    for i in s:
         y.append(i)
         x.append(int(int(count_by_LIGHT[i]) / 47818 * 100))
     # print(x)
