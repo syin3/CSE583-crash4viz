@@ -2,7 +2,7 @@ pytest==4.6.3
 coveralls
 pytest-cov
 folium==0.10.0
-numpy==1.17.4
+numpy==1.22.0
 pandas==0.25.3
 sklearn
 matplotlib>=3.0
